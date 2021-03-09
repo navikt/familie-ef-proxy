@@ -1,0 +1,5 @@
+springProfile: prod
+namespace: teamfamilie
+ingress: https://familie-ef-proxy.intern.nav.no
+serviceuserEnv: prod
+tenant: nav.no

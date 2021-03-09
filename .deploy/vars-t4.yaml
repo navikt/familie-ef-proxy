@@ -1,0 +1,7 @@
+springProfile: dev
+namespace: t4
+ingress: https://familie-ef-proxy-t4.dev.intern.nav.no
+serviceuserEnv: test
+tenant: trygdeetaten.no
+env:
+  STS_URL_ENV: https://security-token-service-t4.nais.preprod.local

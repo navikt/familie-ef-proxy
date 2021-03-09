@@ -1,0 +1,49 @@
+application:
+  name: familie-ef-proxy
+server:
+  servlet:
+    context-path: /
+
+no.nav.security.jwt:
+  issuer:
+    sts:
+      discoveryurl: ${STS_DISCOVERY_URL}
+      accepted_audience: ${GYLDIGE_SERVICE_BRUKERE}
+    azuread:
+      discoveryurl: ${AZURE_APP_WELL_KNOWN_URL}
+      accepted_audience: ${AZURE_APP_CLIENT_ID}
+      cookie_name: azure_token
+  client:
+    registration:
+      familie-ef-sak:
+        resource-url: ${EF_SAK_URL}
+        token-endpoint-url: ${AZUREAD_TOKEN_ENDPOINT_URL}
+        grant-type: client_credentials
+        scope: api://${GCP_ENV}-gcp.teamfamilie.familie-ef-sak/.default
+        authentication:
+          client-id: ${AZURE_APP_CLIENT_ID}
+          client-secret: ${AZURE_APP_CLIENT_SECRET}
+          client-auth-method: client_secret_basic
+
+spring:
+  autoconfigure.exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+  main:
+    allow-bean-definition-overriding: true
+    banner-mode: "off"
+
+management:
+  endpoint.health.show-details: always
+  endpoints.web:
+    exposure.include: info, health, metrics, prometheus
+    base-path: "/internal"
+    path-mapping:
+      info: "status/isAlive"
+  metrics.export.prometheus.enabled: true
+  metrics.web.server.request.autotime.enabled: true
+
+GCP_ENV: prod
+EF_SAK_URL: https://familie-ef-sak.intern.nav.no
+
+STS_PREFIX: ${STS_URL_ENV:http://security-token-service.default.svc.nais.local}
+STS_URL: ${STS_PREFIX}/rest/v1/sts/token?grant_type=client_credentials&scope=openid
+STS_DISCOVERY_URL: ${STS_PREFIX}/rest/v1/sts/.well-known/openid-configuration

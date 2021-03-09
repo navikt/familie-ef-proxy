@@ -1,0 +1,64 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: familie-ef-proxy
+  namespace: {{ namespace }}
+  labels:
+    team: teamfamilie
+
+spec:
+  image: {{ image }}
+  liveness:
+    path: /internal/status/isAlive
+    initialDelay: 30
+    failureThreshold: 10
+  readiness:
+    path: /internal/status/isAlive
+    initialDelay: 30
+    failureThreshold: 10
+  prometheus:
+    enabled: true
+    path: /internal/prometheus
+  replicas:
+    min: 2
+    max: 2
+    cpuThresholdPercentage: 50
+  resources:
+    limits:
+      memory: 256Mi
+      cpu: 200m
+    requests:
+      memory: 256Mi
+      cpu: 200m
+  secureLogs:
+    enabled: true
+  ingresses:
+    - {{ingress}}
+  accessPolicy:
+    outbound:
+      rules:
+        - application: familie-brev
+      external:
+        {{#each externalHosts as |host|}}
+        - host: {{host}}
+        {{/each}}
+  vault:
+    enabled: true
+    paths:
+      - kvPath: /serviceuser/data/{{serviceuserEnv}}/srvfamilie-ef-sak
+        mountPath: /var/run/secrets/nais.io/srvfamilie-ef-sak
+  azure:
+    application:
+      enabled: true
+      tenant: {{tenant}}
+  env:
+    - name: SPRING_PROFILES_ACTIVE
+      value: {{springProfile}}
+    - name: CREDENTIAL_USERNAME_PATH
+      value: /run/secrets/nais.io/srvfamilie-ef-sak/username
+    - name: CREDENTIAL_PASSWORD_PATH
+      value: /run/secrets/nais.io/srvfamilie-ef-sak/password
+    {{#each env}}
+    - name: "{{@key}}"
+      value: "{{{this}}}"
+    {{/each}}
