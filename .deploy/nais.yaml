@@ -34,14 +34,6 @@ spec:
     enabled: true
   ingresses:
     - {{ingress}}
-  accessPolicy:
-    outbound:
-      rules:
-        - application: familie-brev
-      external:
-        {{#each externalHosts as |host|}}
-        - host: {{host}}
-        {{/each}}
   vault:
     enabled: true
     paths:
