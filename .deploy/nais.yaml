@@ -34,6 +34,12 @@ spec:
     enabled: true
   ingresses:
     - {{ingress}}
+  accessPolicy:
+    inbound:
+      # remove
+      rules:
+        - application: familie-ef-sak
+          namespace: default
   vault:
     enabled: true
     paths:
