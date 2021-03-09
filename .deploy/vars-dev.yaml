@@ -1,5 +1,5 @@
 springProfile: dev
-namespace: teamfamilie
+name: familie-ef-proxy
 ingress: https://familie-ef-proxy.dev.intern.nav.no
 serviceuserEnv: dev
 tenant: trygdeetaten.no

@@ -48,3 +48,4 @@ EF_SAK_URL: https://familie-ef-sak.intern.nav.no
 STS_PREFIX: ${STS_URL_ENV:http://security-token-service.default.svc.nais.local}
 STS_URL: ${STS_PREFIX}/rest/v1/sts/token?grant_type=client_credentials&scope=openid
 STS_DISCOVERY_URL: ${STS_PREFIX}/rest/v1/sts/.well-known/openid-configuration
+GYLDIGE_SERVICE_BRUKERE: srvArena

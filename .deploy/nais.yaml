@@ -1,8 +1,8 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: familie-ef-proxy
-  namespace: {{ namespace }}
+  name: {{name}}
+  namespace: teamfamilie
   labels:
     team: teamfamilie
 
@@ -52,5 +52,5 @@ spec:
       value: /run/secrets/nais.io/srvfamilie-ef-sak/password
     {{#each env}}
     - name: "{{@key}}"
-      value: "{{{this}}}"
+      value: "{{this}}"
     {{/each}}

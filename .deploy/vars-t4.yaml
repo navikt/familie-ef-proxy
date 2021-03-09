@@ -1,6 +1,6 @@
 springProfile: dev
-namespace: t4
-ingress: https://familie-ef-proxy-t4.dev.intern.nav.no
+name: familie-ef-proxy-test
+ingress: https://familie-ef-proxy-test.dev.intern.nav.no
 serviceuserEnv: test
 tenant: trygdeetaten.no
 env:
