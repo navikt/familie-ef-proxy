@@ -1,7 +1,7 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: {{name}}
+  name: familie-ef-proxy
   namespace: teamfamilie
   labels:
     team: teamfamilie
@@ -21,7 +21,7 @@ spec:
     path: /internal/prometheus
   replicas:
     min: 2
-    max: 2
+    max: 3
     cpuThresholdPercentage: 50
   resources:
     limits:
@@ -35,10 +35,7 @@ spec:
   ingresses:
     - {{ingress}}
   vault:
-    enabled: true
-    paths:
-      - kvPath: /serviceuser/data/{{serviceuserEnv}}/srvfamilie-ef-sak
-        mountPath: /var/run/secrets/nais.io/srvfamilie-ef-sak
+    enabled: false
   azure:
     application:
       enabled: true
@@ -50,7 +47,3 @@ spec:
       value: /run/secrets/nais.io/srvfamilie-ef-sak/username
     - name: CREDENTIAL_PASSWORD_PATH
       value: /run/secrets/nais.io/srvfamilie-ef-sak/password
-    {{#each env}}
-    - name: "{{@key}}"
-      value: "{{this}}"
-    {{/each}}

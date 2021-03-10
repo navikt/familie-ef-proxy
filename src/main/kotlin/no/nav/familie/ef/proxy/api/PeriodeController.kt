@@ -24,18 +24,4 @@ class PeriodeController(private val sakClient: SakClient, private val stsValidat
         return sakClient.post(request, "api/ekstern/periode/overgangsstonad/azure")
     }
 
-    @PostMapping("test")
-    @Protected
-    fun hentPerioderTest(@RequestBody request: Any): Any {
-        stsValidator.validateSts("srvfamilie-ef-sak")
-        return sakClient.post(request, "api/ekstern/periode/overgangsstonad/azure")
-    }
-
-    // TODO remove
-    @PostMapping("azure")
-    @ProtectedWithClaims(issuer = "azuread")
-    fun hentPerioderAzure(@RequestBody request: Any): Any {
-        return sakClient.post(request, "api/ekstern/periode/overgangsstonad/azure")
-    }
-
 }
