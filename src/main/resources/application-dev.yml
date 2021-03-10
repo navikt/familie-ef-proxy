@@ -1,2 +1,9 @@
+
+no.nav.security.jwt:
+  issuer:
+    stsTest:
+      discoveryurl: https://security-token-service-t4.nais.preprod.local${STS_DISCOVERY_SUFFIX}
+      accepted_audience: ${GYLDIGE_SERVICE_BRUKERE}
+
 GCP_ENV: dev
 EF_SAK_URL: https://familie-ef-sak.dev.intern.nav.no

@@ -55,20 +55,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-#      - name: Deploy til dev-fss (teamfamilie)
-#        uses: nais/deploy/actions/deploy@v1
-#        env:
-#          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-#          CLUSTER: dev-fss
-#          RESOURCE: .deploy/nais.yaml
-#          VARS: .deploy/vars-dev.yaml
-      - name: Deploy til t4 (dev)
+      - name: Deploy til dev-fss (teamfamilie)
         uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-fss
           RESOURCE: .deploy/nais.yaml
-          VARS: .deploy/vars-t4.yaml
+          VARS: .deploy/vars-dev.yaml
+#      - name: Deploy til t4 (dev)
+#        uses: nais/deploy/actions/deploy@v1
+#        env:
+#          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+#          CLUSTER: dev-fss
+#          RESOURCE: .deploy/nais.yaml
+#          VARS: .deploy/vars-t4.yaml
 #      - name: Deploy til prod-fss
 #        uses: nais/deploy/actions/deploy@v1
 #        env:

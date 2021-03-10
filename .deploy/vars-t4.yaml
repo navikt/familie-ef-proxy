@@ -3,5 +3,6 @@ name: familie-ef-proxy-test
 ingress: https://familie-ef-proxy-test.dev.intern.nav.no
 serviceuserEnv: test
 tenant: trygdeetaten.no
+#TODO remove?
 env:
   STS_URL_ENV: https://security-token-service-t4.nais.preprod.local
