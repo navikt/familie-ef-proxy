@@ -1,7 +1,6 @@
 name: Build, push, and deploy app to dev and prod
 
 on:
-  workflow_dispatch: # TODO remove
   push:
     branches:
       - 'master'
@@ -45,8 +44,7 @@ jobs:
       - name: Post build failures to Slack
         if: failure()
         run: |
-          echo "feilet"
-#          curl -X POST --data "{\"text\": \"Build av $GITHUB_REPOSITORY feilet - $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID\"}" $WEBHOOK_URL
+          curl -X POST --data "{\"text\": \"Build av $GITHUB_REPOSITORY feilet - $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID\"}" $WEBHOOK_URL
         env:
           WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   deploy:
@@ -72,8 +70,7 @@ jobs:
       - name: Post deploy failures to Slack
         if: failure()
         run: |
-          echo "feilet"
- #         curl -X POST --data "{\"text\": \"Deploy av $GITHUB_REPOSITORY feilet - $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID\"}" $WEBHOOK_URL
+          curl -X POST --data "{\"text\": \"Deploy av $GITHUB_REPOSITORY feilet - $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID\"}" $WEBHOOK_URL
         env:
           MESSAGE: "Deploy av feilet"
           WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
