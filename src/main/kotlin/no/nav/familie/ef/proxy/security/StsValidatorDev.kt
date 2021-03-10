@@ -5,6 +5,9 @@ import no.nav.security.token.support.core.exceptions.JwtTokenMissingException
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 
+/**
+ * Gjør det mulig å validere token utstedt fra både sts i Q och T(stsTest)
+ */
 @Profile("dev")
 @Component
 class StsValidatorDev(private val tokenValidationContextHolder: TokenValidationContextHolder) : StsValidator {
