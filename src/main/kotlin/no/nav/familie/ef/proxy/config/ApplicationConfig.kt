@@ -21,7 +21,7 @@ import org.springframework.scheduling.annotation.EnableScheduling
 @ConfigurationPropertiesScan
 @ComponentScan("no.nav.familie.ef.proxy", "no.nav.familie.sikkerhet")
 @EnableJwtTokenValidation(ignore = ["org.springframework", "springfox.documentation.swagger"])
-@Import(RestTemplateAzure::class, RestTemplateSts::class, StsRestClient::class)
+@Import(RestTemplateAzure::class)
 @EnableOAuth2Client(cacheEnabled = true)
 @EnableScheduling
 class ApplicationConfig {

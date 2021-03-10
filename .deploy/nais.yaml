@@ -43,7 +43,3 @@ spec:
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: {{springProfile}}
-    - name: CREDENTIAL_USERNAME_PATH
-      value: /run/secrets/nais.io/srvfamilie-ef-sak/username
-    - name: CREDENTIAL_PASSWORD_PATH
-      value: /run/secrets/nais.io/srvfamilie-ef-sak/password
