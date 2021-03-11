@@ -1,0 +1,3 @@
+springProfile: prod
+ingress: https://familie-ef-proxy.intern.nav.no
+tenant: nav.no

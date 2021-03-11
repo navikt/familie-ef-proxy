@@ -1,0 +1,45 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: familie-ef-proxy
+  namespace: teamfamilie
+  labels:
+    team: teamfamilie
+
+spec:
+  image: {{ image }}
+  liveness:
+    path: /internal/status/isAlive
+    initialDelay: 30
+    failureThreshold: 10
+  readiness:
+    path: /internal/status/isAlive
+    initialDelay: 30
+    failureThreshold: 10
+  prometheus:
+    enabled: true
+    path: /internal/prometheus
+  replicas:
+    min: 2
+    max: 3
+    cpuThresholdPercentage: 50
+  resources:
+    limits:
+      memory: 256Mi
+      cpu: 200m
+    requests:
+      memory: 256Mi
+      cpu: 200m
+  secureLogs:
+    enabled: true
+  ingresses:
+    - {{ingress}}
+  vault:
+    enabled: false
+  azure:
+    application:
+      enabled: true
+      tenant: {{tenant}}
+  env:
+    - name: SPRING_PROFILES_ACTIVE
+      value: {{springProfile}}
