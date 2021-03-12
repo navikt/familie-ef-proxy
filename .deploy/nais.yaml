@@ -35,7 +35,7 @@ spec:
   ingresses:
     - {{ingress}}
   vault:
-    enabled: false
+    enabled: true
   azure:
     application:
       enabled: true
