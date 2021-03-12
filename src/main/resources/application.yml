@@ -45,6 +45,8 @@ management:
 GCP_ENV: prod
 EF_SAK_URL: https://familie-ef-sak.intern.nav.no
 
+FAMILIE_INTEGRASJONER_URL: http://familie-integrasjoner.default
+
 STS_URL: http://security-token-service.default
 STS_DISCOVERY_SUFFIX: /rest/v1/sts/.well-known/openid-configuration
 STS_DISCOVERY_URL: ${STS_URL}${STS_DISCOVERY_SUFFIX}
