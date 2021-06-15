@@ -6,7 +6,6 @@ import com.github.tomakehurst.wiremock.client.WireMock.post
 import com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
 import io.mockk.mockk
-import no.nav.familie.ef.proxy.integration.FamilieIntegrasjonerClient
 import no.nav.familie.ef.proxy.integration.SakClient
 import no.nav.familie.ef.proxy.security.StsValidator
 import no.nav.familie.kontrakter.felles.ef.PerioderOvergangsstønadRequest
@@ -39,7 +38,6 @@ internal class PeriodeControllerTest {
             wiremockServerItem = WireMockServer(wireMockConfig().dynamicPort())
             wiremockServerItem.start()
             val stsValidator = mockk<StsValidator>(relaxed = true)
-            val integrasjonerUri = URI.create("http://localhost:${wiremockServerItem.port()}/integrasjoner")
             val sakUri = URI.create("http://localhost:${wiremockServerItem.port()}/sak")
 
             val response = """{"status": "SUKSESS", "data": {"perioder":[]}, "melding": ""}"""
@@ -47,9 +45,8 @@ internal class PeriodeControllerTest {
             wiremockServerItem.stubFor(post(urlEqualTo("/integrasjoner/api/infotrygd/vedtak-perioder")).willReturn(okJson(response)))
             wiremockServerItem.stubFor(post(urlEqualTo("/sak/api/ekstern/perioder")).willReturn(okJson(response)))
 
-            val familieIntegrasjoner = FamilieIntegrasjonerClient(restOperations, integrasjonerUri)
             val sakClient = SakClient(restOperations, sakUri)
-            periodeController = PeriodeController(familieIntegrasjoner, sakClient, stsValidator)
+            periodeController = PeriodeController(sakClient, stsValidator)
         }
 
         @AfterAll
