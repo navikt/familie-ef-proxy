@@ -5,6 +5,7 @@ import no.nav.familie.ef.proxy.security.StsValidator
 import no.nav.familie.kontrakter.felles.ef.PerioderOvergangsstønadRequest
 import no.nav.familie.kontrakter.felles.ef.PerioderOvergangsstønadResponse
 import no.nav.security.token.support.core.api.Protected
+import no.nav.security.token.support.core.api.Unprotected
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -24,6 +25,12 @@ class PeriodeController(private val sakClient: SakClient,
     fun hentPerioder(@RequestBody request: PerioderOvergangsstønadRequest): PerioderOvergangsstønadResponse {
         stsValidator.validateSts("srvArena")
         return sakClient.post(request, "api/ekstern/perioder")
+    }
+
+    @PostMapping("/test")
+    @Unprotected
+    fun hentPerioder(): PerioderOvergangsstønadResponse {
+        return sakClient.post(PerioderOvergangsstønadRequest("1"), "api/ekstern/perioder")
     }
 
 }
