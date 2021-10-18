@@ -1,3 +1,0 @@
-springProfile: dev
-ingress: https://familie-ef-proxy.dev.intern.nav.no
-tenant: trygdeetaten.no
