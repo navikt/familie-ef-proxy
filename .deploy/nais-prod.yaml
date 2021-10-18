@@ -34,11 +34,18 @@ spec:
     enabled: true
   ingresses:
     - https://familie-ef-proxy.intern.nav.no
+    - https://familie-ef-proxy.prod-fss-pub.nais.io
   vault:
     enabled: true
   azure:
     application:
       enabled: true
+  accessPolicy:
+    inbound:
+      rules:
+        - application: familie-ef-sak
+          namespace: teamfamilie
+          cluster: prod-gcp
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: prod
