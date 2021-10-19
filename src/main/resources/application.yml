@@ -50,5 +50,5 @@ INNTEKT_URL: https://app.adeo.no/inntektskomponenten-ws/rs/api
 STS_PREFIX: http://security-token-service.default
 STS_DISCOVERY_SUFFIX: /rest/v1/sts/.well-known/openid-configuration
 STS_URL: ${STS_PREFIX}/rest/v1/sts/token
-STS_DISCOVERY_URL: ${PREFIX}${STS_DISCOVERY_SUFFIX}
+STS_DISCOVERY_URL: ${STS_PREFIX}${STS_DISCOVERY_SUFFIX}
 GYLDIGE_SERVICE_BRUKERE: srvArena
