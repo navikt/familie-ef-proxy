@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 /**
  * Gjør det mulig å validere token utstedt fra både sts i Q och T(stsTest)
  */
-@Profile("dev")
+@Profile("dev", "local")
 @Component
 class StsValidatorDev(private val tokenValidationContextHolder: TokenValidationContextHolder) : StsValidator {
 
