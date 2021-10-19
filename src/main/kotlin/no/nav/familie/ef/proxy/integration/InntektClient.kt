@@ -21,7 +21,7 @@ class InntektClient(
     fun hentInntekt(personIdent: String,
                     fom: YearMonth,
                     tom: YearMonth): Map<String, Any> {
-        val uriBuilder = UriComponentsBuilder.fromUri(uri).pathSegment("v1/inntektshistorikk")
+        val uriBuilder = UriComponentsBuilder.fromUri(uri).pathSegment("v1/hentinntektliste")
                 .queryParam("maaned-fom", fom.toString())
                 .queryParam("maaned-tom", tom.toString())
                 .queryParam("filter", "StoenadEnsligMorEllerFarA-inntekt")
