@@ -26,10 +26,10 @@ spec:
   resources:
     limits:
       memory: 256Mi
-      cpu: 200m
+      cpu: 500m
     requests:
       memory: 256Mi
-      cpu: 200m
+      cpu: 500m
   secureLogs:
     enabled: true
   ingresses:
