@@ -8,7 +8,9 @@ import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.time.YearMonth
 
 @RestController
 @RequestMapping("/api/inntekt",
@@ -19,8 +21,12 @@ import org.springframework.web.bind.annotation.RestController
 class InntektController(private val inntektClient: InntektClient) {
 
     @PostMapping
-    fun hentInntekt(@RequestBody request: PersonIdent): Map<String, Any> {
-        return inntektClient.hentInntekt(request.ident)
+    fun hentInntekt(@RequestBody request: PersonIdent,
+                    @RequestParam("fom", required = false) fom: YearMonth?,
+                    @RequestParam("tom", required = false) tom: YearMonth?): Map<String, Any> {
+        return inntektClient.hentInntekt(personIdent = request.ident,
+                                         fom = fom ?: YearMonth.now().minusMonths(2),
+                                         tom = tom ?: YearMonth.now())
     }
 
 }

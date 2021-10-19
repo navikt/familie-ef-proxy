@@ -19,8 +19,8 @@ class InntektClient(
 ) : AbstractRestClient(restOperations, "inntekt") {
 
     fun hentInntekt(personIdent: String,
-                    fom: YearMonth = YearMonth.now().minusMonths(12),
-                    tom: YearMonth = YearMonth.now()): Map<String, Any> {
+                    fom: YearMonth,
+                    tom: YearMonth): Map<String, Any> {
         val uriBuilder = UriComponentsBuilder.fromUri(uri).pathSegment("v1/inntektshistorikk")
                 .queryParam("maaned-fom", fom.toString())
                 .queryParam("maaned-tom", tom.toString())
