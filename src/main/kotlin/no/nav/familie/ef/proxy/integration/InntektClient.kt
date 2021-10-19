@@ -18,16 +18,24 @@ class InntektClient(
         @Qualifier("sts") restOperations: RestOperations
 ) : AbstractRestClient(restOperations, "inntekt") {
 
+    private val inntektUri = UriComponentsBuilder.fromUri(uri).pathSegment("v1/hentinntektliste").build().toUri()
+
     fun hentInntekt(personIdent: String,
                     fom: YearMonth,
                     tom: YearMonth): Map<String, Any> {
-        val uriBuilder = UriComponentsBuilder.fromUri(uri).pathSegment("v1/hentinntektliste")
-                .queryParam("maaned-fom", fom.toString())
-                .queryParam("maaned-tom", tom.toString())
-                .queryParam("filter", "StoenadEnsligMorEllerFarA-inntekt")
 
-        return getForEntity(uriBuilder.build().toUri(), headers(personIdent))
+        return postForEntity(inntektUri, lagRequest(personIdent, fom, tom), headers(personIdent))
     }
+
+    private fun lagRequest(personIdent: String,
+                           fom: YearMonth,
+                           tom: YearMonth) =
+            mapOf("ainntektsfilter" to "StoenadEnsligMorEllerFarA-inntekt",
+                  "formaal" to "StoenadEnsligMorEllerFar",
+                  "ident" to mapOf("identifikator" to personIdent,
+                                   "aktoerType" to "NATURLIG_IDENT"),
+                  "maanedFom" to fom,
+                  "maanedTom" to tom)
 
     private fun headers(personIdent: String): HttpHeaders {
         return HttpHeaders().apply {
