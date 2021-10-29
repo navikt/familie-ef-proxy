@@ -1,6 +1,7 @@
 package no.nav.familie.ef.proxy.ereg
 
 import no.nav.familie.http.client.AbstractRestClient
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
@@ -16,8 +17,11 @@ class EregClient(
     @Qualifier("sts") restOperations: RestOperations
 ) : AbstractRestClient(restOperations, "ereg") {
 
+    private val logger = LoggerFactory.getLogger(this::class.java)
 
     fun hentOrganisasjoner(organisasjonsnumre: List<String>): List<Organisasjon> {
+        logger.info("Kaller: ${UriComponentsBuilder.fromUri(uri).pathSegment(organisasjonsnumre.first()).build()}")
+
         return organisasjonsnumre.map {
             Organisasjon(it, getForEntity(UriComponentsBuilder.fromUri(uri).pathSegment(it).build().toUri(), headers()))
         }.toList()
