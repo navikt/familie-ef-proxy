@@ -21,15 +21,8 @@ class EregClient(
         val organisasjoner = mutableListOf<Map<String, Any>>()
 
         organisasjonsnumre.forEach {
-            organisasjoner.add(getForEntity(UriComponentsBuilder.fromUri(uri).pathSegment(it).build().toUri(), headers()))
+            organisasjoner.add(getForEntity(UriComponentsBuilder.fromUri(uri).pathSegment(it).build().toUri()))
         }
         return organisasjoner
-    }
-
-    private fun headers(): HttpHeaders {
-        return HttpHeaders().apply {
-            contentType = MediaType.APPLICATION_JSON
-            accept = listOf(MediaType.APPLICATION_JSON)
-        }
     }
 }
