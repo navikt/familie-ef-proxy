@@ -17,14 +17,13 @@ class EregClient(
     @Qualifier("sts") restOperations: RestOperations
 ) : AbstractRestClient(restOperations, "ereg") {
 
-    private val logger = LoggerFactory.getLogger(this::class.java)
+    fun hentOrganisasjoner(organisasjonsnumre: List<String>): List<Map<String, Any>> {
+        val organisasjoner = mutableListOf<Map<String, Any>>()
 
-    fun hentOrganisasjoner(organisasjonsnumre: List<String>): List<Organisasjon> {
-        logger.info("Kaller: ${UriComponentsBuilder.fromUri(uri).pathSegment(organisasjonsnumre.first()).build()}")
-
-        return organisasjonsnumre.map {
-            Organisasjon(it, getForEntity(UriComponentsBuilder.fromUri(uri).pathSegment(it).build().toUri(), headers()))
-        }.toList()
+        organisasjonsnumre.forEach {
+            organisasjoner.add(getForEntity(UriComponentsBuilder.fromUri(uri).pathSegment(it).build().toUri(), headers()))
+        }
+        return organisasjoner
     }
 
     private fun headers(): HttpHeaders {
@@ -34,8 +33,3 @@ class EregClient(
         }
     }
 }
-
-data class Organisasjon(
-    val orgnr : String,
-    val response: Map<String, Any>
-)

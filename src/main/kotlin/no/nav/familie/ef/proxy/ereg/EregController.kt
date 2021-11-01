@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 class EregController(private val eregClient: EregClient) {
 
     @PostMapping
-    fun hentOrganisasjon(@RequestBody organisasjonsnumre: List<String>): List<Organisasjon> {
+    fun hentOrganisasjon(@RequestBody organisasjonsnumre: List<String>): List<Map<String, Any>> {
         return eregClient.hentOrganisasjoner(organisasjonsnumre)
     }
 
