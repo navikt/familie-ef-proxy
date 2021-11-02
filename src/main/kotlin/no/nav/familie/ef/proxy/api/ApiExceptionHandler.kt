@@ -80,7 +80,7 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
                 " status=$status"
 
         loggFeil(throwable, loggMelding)
-        return ResponseEntity.status(status).body(FeilDto("Håntert feil"))
+        return ResponseEntity.status(status).body(FeilDto("Håndtert feil"))
     }
 
     private fun loggFeil(throwable: Throwable, loggMelding: String) {
