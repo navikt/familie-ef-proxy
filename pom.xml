@@ -26,8 +26,8 @@
         <revision>1.0</revision>
         <sha1/>
         <changelist>-SNAPSHOT</changelist>
-        <jvmTarget>11</jvmTarget>
-        <kotlin.version>1.4.31</kotlin.version>
+        <jvmTarget>17</jvmTarget>
+        <kotlin.version>1.6.0</kotlin.version>
         <kotlin-coroutines.version>1.4.2</kotlin-coroutines.version>
         <springfox.version>3.0.0</springfox.version>
         <mockk.version>1.10.6</mockk.version>
