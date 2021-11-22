@@ -1,4 +1,4 @@
-FROM navikt/java:11
+FROM navikt/java:17
 
 ENV APP_NAME=familie-ef-proxy
 ENV JAVA_OPTS="-XX:MaxRAMPercentage=75"
