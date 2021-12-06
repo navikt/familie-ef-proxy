@@ -16,7 +16,7 @@ class ArbeidssøkerClient(@Value("\${ARBEIDSSØKER_URL}")
     : AbstractRestClient(restOperations, "pdl.personinfo.saksbehandler") {
 
     fun hentPerioder(personIdent: String, fraOgMed: LocalDate, tilOgMed: LocalDate?): Map<String, Any> {
-        val uriComponentsBuilder = UriComponentsBuilder.fromUri(uri).pathSegment("arbeidssoker")
+        val uriComponentsBuilder = UriComponentsBuilder.fromUri(uri).pathSegment("arbeidssoker/perioder")
                 .queryParam("fraOgMed", fraOgMed)
         tilOgMed?.let { uriComponentsBuilder.queryParam("tilOgMed", tilOgMed) }
 
