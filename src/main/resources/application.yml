@@ -6,9 +6,6 @@ server:
 
 no.nav.security.jwt:
   issuer:
-    sts:
-      discoveryurl: ${STS_DISCOVERY_URL}
-      accepted_audience: ${GYLDIGE_SERVICE_BRUKERE}
     azuread:
       discoveryurl: ${AZURE_APP_WELL_KNOWN_URL}
       accepted_audience: ${AZURE_APP_CLIENT_ID}

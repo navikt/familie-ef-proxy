@@ -1,6 +1,9 @@
 
 no.nav.security.jwt:
   issuer:
+    sts:
+      discoveryurl: ${STS_DISCOVERY_URL}
+      accepted_audience: ${GYLDIGE_SERVICE_BRUKERE}
     stsTest:
       discoveryurl: https://security-token-service-t4.nais.preprod.local${STS_DISCOVERY_SUFFIX}
       accepted_audience: ${GYLDIGE_SERVICE_BRUKERE}

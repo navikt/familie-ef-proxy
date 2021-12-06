@@ -55,8 +55,4 @@ class ApplicationConfig {
         return filterRegistration
     }
 
-    companion object {
-
-        private const val API_KEY_HEADER = "x-nav-apiKey"
-    }
 }
