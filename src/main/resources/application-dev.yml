@@ -1,11 +1,15 @@
 
 no.nav.security.jwt:
   issuer:
+    sts:
+      discoveryurl: ${STS_DISCOVERY_URL}
+      accepted_audience: ${GYLDIGE_SERVICE_BRUKERE}
     stsTest:
       discoveryurl: https://security-token-service-t4.nais.preprod.local${STS_DISCOVERY_SUFFIX}
       accepted_audience: ${GYLDIGE_SERVICE_BRUKERE}
 
-GCP_ENV: dev
+CLUSTER_ENV: dev
 EF_SAK_URL: https://familie-ef-sak.dev.intern.nav.no
 EREG_URL: https://modapp-q2.adeo.no/ereg/api/v1/organisasjon
 INNTEKT_URL: https://app-q2.adeo.no/inntektskomponenten-ws/rs/api
+ARBEIDSSØKER_URL: https://veilarbregistrering.dev.intern.nav.no/veilarbregistrering/api

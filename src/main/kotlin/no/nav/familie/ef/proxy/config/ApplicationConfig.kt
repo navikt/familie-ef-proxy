@@ -4,6 +4,7 @@ import com.fasterxml.jackson.module.kotlin.KotlinModule
 import no.nav.familie.http.config.RestTemplateAzure
 import no.nav.familie.http.config.RestTemplateSts
 import no.nav.familie.http.sts.StsRestClient
+import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.log.filter.LogFilter
 import no.nav.familie.log.filter.RequestTimeFilter
 import no.nav.security.token.support.client.spring.oauth2.EnableOAuth2Client
@@ -15,6 +16,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Import
+import org.springframework.context.annotation.Primary
 import org.springframework.scheduling.annotation.EnableScheduling
 
 @SpringBootConfiguration
@@ -30,6 +32,10 @@ class ApplicationConfig {
 
     @Bean
     fun kotlinModule(): KotlinModule = KotlinModule()
+
+    @Bean
+    @Primary
+    fun objectMapper() = objectMapper
 
     @Bean
     fun logFilter(): FilterRegistrationBean<LogFilter> {
@@ -49,8 +55,4 @@ class ApplicationConfig {
         return filterRegistration
     }
 
-    companion object {
-
-        private const val API_KEY_HEADER = "x-nav-apiKey"
-    }
 }

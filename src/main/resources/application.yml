@@ -6,9 +6,6 @@ server:
 
 no.nav.security.jwt:
   issuer:
-    sts:
-      discoveryurl: ${STS_DISCOVERY_URL}
-      accepted_audience: ${GYLDIGE_SERVICE_BRUKERE}
     azuread:
       discoveryurl: ${AZURE_APP_WELL_KNOWN_URL}
       accepted_audience: ${AZURE_APP_CLIENT_ID}
@@ -20,7 +17,16 @@ no.nav.security.jwt:
         resource-url: ${EF_SAK_URL}
         token-endpoint-url: ${AZURE_OPENID_CONFIG_TOKEN_ENDPOINT}
         grant-type: client_credentials
-        scope: api://${GCP_ENV}-gcp.teamfamilie.familie-ef-sak/.default
+        scope: api://${CLUSTER_ENV}-gcp.teamfamilie.familie-ef-sak/.default
+        authentication:
+          client-id: ${AZURE_APP_CLIENT_ID}
+          client-secret: ${AZURE_APP_CLIENT_SECRET}
+          client-auth-method: client_secret_basic
+      arbeidssoker:
+        resource-url: ${ARBEIDSSØKER_URL}
+        token-endpoint-url: ${AZURE_OPENID_CONFIG_TOKEN_ENDPOINT}
+        grant-type: client_credentials
+        scope: api://${CLUSTER_ENV}-fss.paw.veilarbregistrering/.default
         authentication:
           client-id: ${AZURE_APP_CLIENT_ID}
           client-secret: ${AZURE_APP_CLIENT_SECRET}
@@ -42,10 +48,12 @@ management:
   metrics.export.prometheus.enabled: true
   metrics.web.server.request.autotime.enabled: true
 
-GCP_ENV: prod
+CLUSTER_ENV: prod
 EF_SAK_URL: https://familie-ef-sak.intern.nav.no
 EREG_URL: https://modapp.adeo.no/ereg/api/v1/organisasjon
 INNTEKT_URL: https://app.adeo.no/inntektskomponenten-ws/rs/api
+ARBEIDSSØKER_URL: https://veilarbregistrering.intern.nav.no/veilarbregistrering/api
+ABC: https://veilarbregistrering.dev.intern.nav.no/veilarbregistrering/api/arbeidssoker/
 
 STS_PREFIX: http://security-token-service.default
 STS_DISCOVERY_SUFFIX: /rest/v1/sts/.well-known/openid-configuration
