@@ -26,7 +26,7 @@ no.nav.security.jwt:
         resource-url: ${ARBEIDSSØKER_URL}
         token-endpoint-url: ${AZURE_OPENID_CONFIG_TOKEN_ENDPOINT}
         grant-type: client_credentials
-        scope: api://${DEPLOY_ENV}-fss.paw.veilarbregistrering/.default
+        scope: api://${CLUSTER_ENV}-fss.paw.veilarbregistrering/.default
         authentication:
           client-id: ${AZURE_APP_CLIENT_ID}
           client-secret: ${AZURE_APP_CLIENT_SECRET}
