@@ -15,7 +15,7 @@ class ArbeidOgInntektClient(
 ) : AbstractRestClient(restOperations, "ereg") {
 
     private val redirectUri = UriComponentsBuilder.fromUri(uri)
-            .pathSegment("/api/v2/redirect/sok/a-inntekt").build().toUri()
+            .pathSegment("api/v2/redirect/sok/a-inntekt").build().toUri()
 
     fun hentUrlTilArbeidOgInntekt(personIdent: String): URI {
         return getForEntity(redirectUri, HttpHeaders().apply {
