@@ -22,7 +22,7 @@ class ArbeidOgInntektController(private val client: ArbeidOgInntektClient) {
      */
     @PostMapping("generer-url")
     @Unprotected // Denne er ikke beskyttet i a-inntekt
-    fun hentUrlTilArbeidOgInntekt(@RequestBody request: PersonIdent): URI {
+    fun hentUrlTilArbeidOgInntekt(@RequestBody request: PersonIdent): String {
         return client.hentUrlTilArbeidOgInntekt(request.ident)
     }
 

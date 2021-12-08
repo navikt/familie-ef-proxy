@@ -18,7 +18,7 @@ class ArbeidOgInntektClient(
     private val redirectUri = UriComponentsBuilder.fromUri(uri)
             .pathSegment("api/v2/redirect/sok/a-inntekt").build().toUri()
 
-    fun hentUrlTilArbeidOgInntekt(personIdent: String): URI {
+    fun hentUrlTilArbeidOgInntekt(personIdent: String): String {
         return getForEntity(redirectUri, HttpHeaders().apply {
             accept = listOf(MediaType.TEXT_HTML)
             set("Nav-Personident", personIdent)
