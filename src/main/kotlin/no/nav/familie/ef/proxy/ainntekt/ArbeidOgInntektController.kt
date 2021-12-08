@@ -20,7 +20,7 @@ class ArbeidOgInntektController(private val client: ArbeidOgInntektClient) {
      * Brukes for å generere en url til arbeid-og-inntekt
      * for å kunne sende saksbehandleren til identen sin side på arbeid og inntekt
      */
-    @PostMapping("link")
+    @PostMapping("generer-url")
     @Unprotected // Denne er ikke beskyttet i a-inntekt
     fun hentUrlTilArbeidOgInntekt(@RequestBody request: PersonIdent): URI {
         return client.hentUrlTilArbeidOgInntekt(request.ident)

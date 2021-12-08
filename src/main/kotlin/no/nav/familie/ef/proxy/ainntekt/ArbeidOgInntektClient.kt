@@ -3,6 +3,7 @@ package no.nav.familie.ef.proxy.ainntekt
 import no.nav.familie.http.client.AbstractRestClient
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestOperations
 import org.springframework.web.util.UriComponentsBuilder
@@ -19,6 +20,7 @@ class ArbeidOgInntektClient(
 
     fun hentUrlTilArbeidOgInntekt(personIdent: String): URI {
         return getForEntity(redirectUri, HttpHeaders().apply {
+            accept = listOf(MediaType.TEXT_HTML)
             set("Nav-Personident", personIdent)
         })
     }
