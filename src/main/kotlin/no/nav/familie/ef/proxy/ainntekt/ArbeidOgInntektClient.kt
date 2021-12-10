@@ -20,7 +20,7 @@ class ArbeidOgInntektClient(
 
     fun hentUrlTilArbeidOgInntekt(personIdent: String): String {
         return getForEntity(redirectUri, HttpHeaders().apply {
-            accept = listOf(MediaType.TEXT_HTML)
+            accept = listOf(MediaType.TEXT_PLAIN)
             set("Nav-Personident", personIdent)
         })
     }
