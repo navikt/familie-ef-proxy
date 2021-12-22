@@ -90,4 +90,17 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
         }
     }
 
+    fun finnMetodeSomFeiler(e: Throwable): String {
+        val firstElement = e.stackTrace.firstOrNull {
+            it.className.startsWith("no.nav.familie.ef.sak") &&
+            !it.className.contains("$") &&
+            !it.className.contains("InsertUpdateRepositoryImpl")
+        }
+        if (firstElement != null) {
+            val className = firstElement.className.split(".").lastOrNull()
+            return "$className::${firstElement.methodName}(${firstElement.lineNumber})"
+        }
+        return e.cause?.let { finnMetodeSomFeiler(it) } ?: "(Ukjent metode som feiler)"
+    }
+
 }
