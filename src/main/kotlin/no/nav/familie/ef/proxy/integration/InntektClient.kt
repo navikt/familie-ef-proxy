@@ -31,7 +31,8 @@ class InntektClient(
                               fom: YearMonth,
                               tom: YearMonth): Map<String, Any> {
         val inntektshistorikkUri = UriComponentsBuilder.fromUri(uri).pathSegment("v1/inntektshistorikk")
-            .queryParam("maaned-fom", fom).queryParam("maaned-tom", tom) .build().toUri()
+            .queryParam("maaned-fom", fom).queryParam("maaned-tom", tom)
+            .queryParam("filter", "StoenadEnsligMorEllerFarA-inntekt").build().toUri()
         return getForEntity(inntektshistorikkUri, headers(personIdent))
     }
 
@@ -45,11 +46,6 @@ class InntektClient(
                   "maanedFom" to fom,
                   "maanedTom" to tom)
 
-    private fun lagHistorikkRequest(fom: YearMonth,
-                                    tom: YearMonth) =
-        mapOf("filter" to "StoenadEnsligMorEllerFarA-inntekt",
-            "maaned-fom" to fom,
-            "maaned-tom" to tom)
 
     private fun headers(personIdent: String): HttpHeaders {
         return HttpHeaders().apply {
