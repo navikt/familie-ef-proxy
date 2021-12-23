@@ -20,8 +20,6 @@ class InntektClient(
 
     private val inntektUri = UriComponentsBuilder.fromUri(uri).pathSegment("v1/hentinntektliste").build().toUri()
 
-    private val inntektHistorikkUri = UriComponentsBuilder.fromUri(uri).pathSegment("v1/inntektshistorikk").build().toUri()
-
     fun hentInntekt(personIdent: String,
                     fom: YearMonth,
                     tom: YearMonth): Map<String, Any> {
@@ -32,7 +30,9 @@ class InntektClient(
     fun hentInntektshistorikk(personIdent: String,
                               fom: YearMonth,
                               tom: YearMonth): Map<String, Any> {
-        return postForEntity(inntektHistorikkUri, lagHistorikkRequest(fom, tom), headers(personIdent))
+        val inntektshistorikkUri = UriComponentsBuilder.fromUri(uri).pathSegment("v1/inntektshistorikk")
+            .queryParam("maaned-fom", fom).queryParam("maaned-tom", tom) .build().toUri()
+        return getForEntity(inntektshistorikkUri, headers(personIdent))
     }
 
     private fun lagRequest(personIdent: String,
