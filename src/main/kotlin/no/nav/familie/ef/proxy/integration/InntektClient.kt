@@ -20,11 +20,19 @@ class InntektClient(
 
     private val inntektUri = UriComponentsBuilder.fromUri(uri).pathSegment("v1/hentinntektliste").build().toUri()
 
+    private val inntektHistorikkUri = UriComponentsBuilder.fromUri(uri).pathSegment("v1/inntektshistorikk").build().toUri()
+
     fun hentInntekt(personIdent: String,
                     fom: YearMonth,
                     tom: YearMonth): Map<String, Any> {
 
         return postForEntity(inntektUri, lagRequest(personIdent, fom, tom), headers(personIdent))
+    }
+
+    fun hentInntektshistorikk(personIdent: String,
+                              fom: YearMonth,
+                              tom: YearMonth): Map<String, Any> {
+        return postForEntity(inntektHistorikkUri, lagHistorikkRequest(fom, tom), headers(personIdent))
     }
 
     private fun lagRequest(personIdent: String,
@@ -36,6 +44,12 @@ class InntektClient(
                                    "aktoerType" to "NATURLIG_IDENT"),
                   "maanedFom" to fom,
                   "maanedTom" to tom)
+
+    private fun lagHistorikkRequest(fom: YearMonth,
+                                    tom: YearMonth) =
+        mapOf("filter" to "StoenadEnsligMorEllerFarA-inntekt",
+            "maaned-fom" to fom,
+            "maaned-tom" to tom)
 
     private fun headers(personIdent: String): HttpHeaders {
         return HttpHeaders().apply {
