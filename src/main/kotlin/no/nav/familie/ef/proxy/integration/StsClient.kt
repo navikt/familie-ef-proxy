@@ -37,6 +37,7 @@ class StsClient(
             .toUriString()
         val headers = HttpHeaders()
         headers.accept = listOf(MediaType.APPLICATION_JSON)
+        headers.setBasicAuth(usernamePersonhendelse, passwordPersonhendelse)
         val entity = HttpEntity<String>(headers)
 
         val response = RestTemplate().exchange(stsUri, HttpMethod.POST, entity, String::class.java)
