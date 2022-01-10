@@ -33,7 +33,7 @@ class StsClient(
 
         val stsUri = UriComponentsBuilder.fromUri(stsUri)
             .queryParam("grant_type", "client_credentials")
-            .queryParam("scope", "opendid")
+            .queryParam("scope", "openid")
             .toUriString()
         val headers = HttpHeaders()
         headers.accept = listOf(MediaType.APPLICATION_JSON)
