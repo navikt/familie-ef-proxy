@@ -42,7 +42,7 @@ class StsClient(
         headers.add(HttpHeaders.AUTHORIZATION, "Basic ${credentialsPersonhendelse()}")
         val entity: HttpEntity<*> = HttpEntity<Any>(headers)
 
-        val response = RestTemplate().exchange(stsUri, HttpMethod.GET, entity, Token::class.java)
+        val response = RestTemplate().exchange(stsUri, HttpMethod.POST, entity, Token::class.java)
         if (response.body != null) {
             return response.body!!
         } else {
