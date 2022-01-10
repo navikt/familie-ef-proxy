@@ -2,7 +2,6 @@ package no.nav.familie.ef.proxy.integration
 
 import no.nav.familie.http.client.AbstractRestClient
 import no.nav.familie.log.NavHttpHeaders
-import no.nav.security.token.support.spring.SpringTokenValidationContextHolder
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
@@ -25,27 +24,16 @@ class InntektClient(
     fun hentInntekt(personIdent: String,
                     fom: YearMonth,
                     tom: YearMonth): Map<String, Any> {
-        val azp = SpringTokenValidationContextHolder().tokenValidationContext.getClaims("azp")
-        secureLogger.info("AZP fra token: $azp")
-        val stsToken = stsClient.hentStsToken().token
-        return postForEntity(inntektUri, lagRequest(personIdent, fom, tom), headers(personIdent, stsToken))
+        return postForEntity(inntektUri, lagRequest(personIdent, fom, tom), headers(personIdent, stsClient.hentStsToken().token))
     }
 
     fun hentInntektshistorikk(personIdent: String,
                               fom: YearMonth,
                               tom: YearMonth): Map<String, Any> {
-        val allClaims = SpringTokenValidationContextHolder().tokenValidationContext.getClaims("azuread").allClaims
-        secureLogger.info("Antall claims: " + SpringTokenValidationContextHolder().tokenValidationContext.getClaims("azuread").allClaims.size)
-        val clientId = allClaims["azp"] as String?
-        secureLogger.info("ClientId from token: $clientId")
-        for (mutableEntry in allClaims) {
-            secureLogger.info("Claim from token: ${mutableEntry.key} , ${mutableEntry.value}")
-        }
-        val stsToken = stsClient.hentStsToken().token
         val inntektshistorikkUri = UriComponentsBuilder.fromUri(uri).pathSegment("v1/inntektshistorikk")
             .queryParam("maaned-fom", fom).queryParam("maaned-tom", tom)
             .queryParam("filter", "StoenadEnsligMorEllerFarA-inntekt").build().toUri()
-        return getForEntity(inntektshistorikkUri, headers(personIdent, stsToken))
+        return getForEntity(inntektshistorikkUri, headers(personIdent, stsClient.hentStsToken().token))
     }
 
     private fun lagRequest(personIdent: String,

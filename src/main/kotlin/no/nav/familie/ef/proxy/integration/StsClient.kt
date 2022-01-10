@@ -2,6 +2,7 @@ package no.nav.familie.ef.proxy.integration
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import no.nav.familie.kontrakter.felles.objectMapper
+import no.nav.security.token.support.spring.SpringTokenValidationContextHolder
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
@@ -26,7 +27,11 @@ class StsClient(
     @Value("\${SRVUSERNAME_EF_PERSONHENDELSE}")
     private val usernamePersonhendelse: String,
     @Value("\${SRVPASSWORD_EF_PERSONHENDELSE}")
-    private val passwordPersonhendelse: String
+    private val passwordPersonhendelse: String,
+    @Value("\${EF_PERSONHENDELSE_CLIENT_ID}")
+    private val personhendelseClientId: String,
+    @Value("\${EF_SAK_CLIENT_ID}")
+    private val efSakClientId: String
 ) {
 
     fun hentStsToken(): Token {
@@ -37,7 +42,8 @@ class StsClient(
             .toUriString()
         val headers = HttpHeaders()
         headers.accept = listOf(MediaType.APPLICATION_JSON)
-        headers.setBasicAuth(usernamePersonhendelse, passwordPersonhendelse)
+        val clientId = SpringTokenValidationContextHolder().tokenValidationContext.getClaims("azuread")["azp"] as String
+        headers.setBasicAuth(credentialForClientId(clientId))
         val entity = HttpEntity<String>(headers)
 
         val response = RestTemplate().exchange(stsUri, HttpMethod.POST, entity, String::class.java)
@@ -46,6 +52,10 @@ class StsClient(
         } else {
             throw Exception("Feil i kall mot STS: Returnerte ingen token")
         }
+    }
+
+    fun credentialForClientId(clientId: String): String {
+        return mapOf(personhendelseClientId to credentialsPersonhendelse(), efSakClientId to credentialsEfSak()).getOrElse(clientId) {credentialsEfSak()}
     }
 
     private fun credentialsPersonhendelse() = Base64.getEncoder().encodeToString("$usernamePersonhendelse:$passwordPersonhendelse".toByteArray(Charsets.UTF_8))
