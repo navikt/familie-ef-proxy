@@ -1,6 +1,7 @@
 package no.nav.familie.ef.proxy.integration
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import no.nav.familie.kontrakter.felles.objectMapper
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
@@ -42,9 +43,9 @@ class StsClient(
         headers.add(HttpHeaders.AUTHORIZATION, "Basic ${credentialsPersonhendelse()}")
         val entity: HttpEntity<*> = HttpEntity<Any>(headers)
 
-        val response = RestTemplate().exchange(stsUri, HttpMethod.POST, entity, Token::class.java)
+        val response = RestTemplate().exchange(stsUri, HttpMethod.POST, entity, String::class.java)
         if (response.body != null) {
-            return response.body!!
+            return objectMapper.readValue(response.body, Token::class.java)
         } else {
             throw Exception("Feil i kall mot STS: Returnerte ingen token")
         }
