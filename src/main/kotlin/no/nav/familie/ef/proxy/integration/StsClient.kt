@@ -8,8 +8,6 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
-import org.springframework.util.LinkedMultiValueMap
-import org.springframework.util.MultiValueMap
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
@@ -37,11 +35,9 @@ class StsClient(
             .queryParam("grant_type", "client_credentials")
             .queryParam("scope", "opendid")
             .toUriString()
-        val headers: MultiValueMap<String, String> = LinkedMultiValueMap()
-        headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.type)
-        headers.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON.type)
-        headers.add(HttpHeaders.AUTHORIZATION, "Basic ${credentialsPersonhendelse()}")
-        val entity: HttpEntity<*> = HttpEntity<Any>(headers)
+        val headers = HttpHeaders()
+        headers.accept = listOf(MediaType.APPLICATION_JSON)
+        val entity = HttpEntity<String>(headers)
 
         val response = RestTemplate().exchange(stsUri, HttpMethod.POST, entity, String::class.java)
         if (response.body != null) {
