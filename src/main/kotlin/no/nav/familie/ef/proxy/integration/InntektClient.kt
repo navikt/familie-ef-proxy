@@ -34,10 +34,8 @@ class InntektClient(
     fun hentInntektshistorikk(personIdent: String,
                               fom: YearMonth,
                               tom: YearMonth): Map<String, Any> {
-        val azp = SpringTokenValidationContextHolder().tokenValidationContext.getClaims("azp")
-        secureLogger.info("AZP fra token: $azp")
-        val test = SpringTokenValidationContextHolder().tokenValidationContext.anyValidClaims.get().allClaims
-        for (mutableEntry in test) {
+        val allClaims = SpringTokenValidationContextHolder().tokenValidationContext.getClaims("azuread").allClaims
+        for (mutableEntry in allClaims) {
             secureLogger.debug("Claim from token: ${mutableEntry.key} , ${mutableEntry.value}")
         }
         val stsToken = stsClient.hentStsToken().token
