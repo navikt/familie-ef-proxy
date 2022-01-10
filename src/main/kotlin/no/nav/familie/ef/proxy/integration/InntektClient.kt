@@ -36,6 +36,10 @@ class InntektClient(
                               tom: YearMonth): Map<String, Any> {
         val azp = SpringTokenValidationContextHolder().tokenValidationContext.getClaims("azp")
         secureLogger.info("AZP fra token: $azp")
+        val test = SpringTokenValidationContextHolder().tokenValidationContext.anyValidClaims.get().allClaims
+        for (mutableEntry in test) {
+            secureLogger.debug("Claim from token: ${mutableEntry.key} , ${mutableEntry.value}")
+        }
         val stsToken = stsClient.hentStsToken().token
         val inntektshistorikkUri = UriComponentsBuilder.fromUri(uri).pathSegment("v1/inntektshistorikk")
             .queryParam("maaned-fom", fom).queryParam("maaned-tom", tom)
