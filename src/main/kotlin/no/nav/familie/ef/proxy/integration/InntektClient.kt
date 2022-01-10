@@ -35,8 +35,11 @@ class InntektClient(
                               fom: YearMonth,
                               tom: YearMonth): Map<String, Any> {
         val allClaims = SpringTokenValidationContextHolder().tokenValidationContext.getClaims("azuread").allClaims
+        secureLogger.info("Antall claims: " + SpringTokenValidationContextHolder().tokenValidationContext.getClaims("azuread").allClaims.size)
+        val clientId = allClaims["azp"] as String?
+        secureLogger.info("ClientId from token: $clientId")
         for (mutableEntry in allClaims) {
-            secureLogger.debug("Claim from token: ${mutableEntry.key} , ${mutableEntry.value}")
+            secureLogger.info("Claim from token: ${mutableEntry.key} , ${mutableEntry.value}")
         }
         val stsToken = stsClient.hentStsToken().token
         val inntektshistorikkUri = UriComponentsBuilder.fromUri(uri).pathSegment("v1/inntektshistorikk")
