@@ -39,9 +39,9 @@ spec:
     enabled: true
     paths:
       - kvPath: /serviceuser/data/prod/srvfamilie-ef-sak
-        mountPath: /var/run/secrets/serviceuser
-      - kvPath: /kv/prod/fss/familie-ef-proxy/teamfamilie
-        mountPath: /var/run/secrets/nais.io/vault
+        mountPath: /var/run/secrets/serviceuser/efsak
+      - kvPath: /serviceuser/data/prod/srvfamilie-ef-person
+        mountPath: /var/run/secrets/serviceuser/personhendelse
   azure:
     application:
       enabled: true

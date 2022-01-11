@@ -20,9 +20,9 @@ import java.util.*
 class StsClient(
     @Value("\${STS_URL}")
     private val stsUri: URI,
-    @Value("\${SRVUSERNAME_EF_SAK}")
+    @Value("\${CREDENTIAL_USERNAME}")
     private val usernameEfSak: String,
-    @Value("\${SRVPASSWORD_EF_SAK}")
+    @Value("\${CREDENTIAL_PASSWORD}")
     private val passwordEfSak: String,
     @Value("\${SRVUSERNAME_EF_PERSONHENDELSE}")
     private val usernamePersonhendelse: String,
@@ -42,7 +42,7 @@ class StsClient(
             .toUriString()
         val headers = HttpHeaders()
         headers.accept = listOf(MediaType.APPLICATION_JSON)
-        val clientId = SpringTokenValidationContextHolder().tokenValidationContext.getClaims("azuread")["azp"] as String
+        val clientId = SpringTokenValidationContextHolder().tokenValidationContext.getClaims("azuread")["azp_name"] as String
         headers.setBasicAuth(credentialForClientId(clientId))
         val entity = HttpEntity<String>(headers)
 
