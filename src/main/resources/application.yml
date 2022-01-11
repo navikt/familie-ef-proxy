@@ -61,3 +61,6 @@ STS_DISCOVERY_SUFFIX: /rest/v1/sts/.well-known/openid-configuration
 STS_URL: ${STS_PREFIX}/rest/v1/sts/token
 STS_DISCOVERY_URL: ${STS_PREFIX}${STS_DISCOVERY_SUFFIX}
 GYLDIGE_SERVICE_BRUKERE: srvArena
+
+EF_PERSONHENDELSE_CLIENT_ID: prod-gcp:teamfamilie:familie-ef-personhendelse
+EF_SAK_CLIENT_ID: prod-gcp:teamfamilie:familie-ef-sak

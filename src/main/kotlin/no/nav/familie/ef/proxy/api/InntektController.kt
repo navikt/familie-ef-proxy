@@ -29,4 +29,13 @@ class InntektController(private val inntektClient: InntektClient) {
                                          tom = tom ?: YearMonth.now())
     }
 
+    @PostMapping("/historikk")
+    fun hentInntektshistorikk(@RequestBody request: PersonIdent,
+                              @RequestParam("fom", required = false) fom: YearMonth?,
+                              @RequestParam("tom", required = false) tom: YearMonth?
+    ): Map<String, Any> {
+        return inntektClient.hentInntektshistorikk(personIdent = request.ident,
+            fom = fom ?: YearMonth.now().minusMonths(12),
+            tom = tom ?: YearMonth.now())
+    }
 }
