@@ -3,6 +3,7 @@ package no.nav.familie.ef.proxy.integration
 import com.fasterxml.jackson.annotation.JsonProperty
 import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.security.token.support.spring.SpringTokenValidationContextHolder
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
@@ -34,6 +35,8 @@ class StsClient(
     private val efSakClientId: String
 ) {
 
+    private val secureLogger = LoggerFactory.getLogger("secureLogger")
+
     fun hentStsToken(): Token {
 
         val stsUri = UriComponentsBuilder.fromUri(stsUri)
@@ -55,7 +58,10 @@ class StsClient(
     }
 
     fun credentialForClientId(clientId: String): String {
-        return mapOf(personhendelseClientId to credentialsPersonhendelse(), efSakClientId to credentialsEfSak()).getOrElse(clientId) {credentialsEfSak()}
+        return mapOf(personhendelseClientId to credentialsPersonhendelse(), efSakClientId to credentialsEfSak()).getOrElse(clientId) {
+            secureLogger.warn("Fant ikke clientId: ${clientId} i map. Bruker ef-sak token.")
+            credentialsEfSak()
+        }
     }
 
     private fun credentialsPersonhendelse() = Base64.getEncoder().encodeToString("$usernamePersonhendelse:$passwordPersonhendelse".toByteArray(Charsets.UTF_8))
