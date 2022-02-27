@@ -31,7 +31,7 @@
         <kotlin-coroutines.version>1.5.2</kotlin-coroutines.version>
         <springfox.version>3.0.0</springfox.version>
         <mockk.version>1.12.1</mockk.version>
-        <felles.version>1.20211008153542_d279663</felles.version>
+        <felles.version>1.20220221162703_957e034</felles.version>
         <start-class>no.nav.familie.ef.proxy.ApplicationKt</start-class>
 
         <nav.security.version>1.3.9</nav.security.version> <!-- Denne burde være samme versjon som i felles -->
