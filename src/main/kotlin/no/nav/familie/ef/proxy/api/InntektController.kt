@@ -13,29 +13,38 @@ import org.springframework.web.bind.annotation.RestController
 import java.time.YearMonth
 
 @RestController
-@RequestMapping("/api/inntekt",
-                consumes = [MediaType.APPLICATION_JSON_VALUE],
-                produces = [MediaType.APPLICATION_JSON_VALUE])
+@RequestMapping(
+    "/api/inntekt",
+    consumes = [MediaType.APPLICATION_JSON_VALUE],
+    produces = [MediaType.APPLICATION_JSON_VALUE]
+)
 @ProtectedWithClaims(issuer = "azuread")
 @Validated
 class InntektController(private val inntektClient: InntektClient) {
 
     @PostMapping
-    fun hentInntekt(@RequestBody request: PersonIdent,
-                    @RequestParam("fom", required = false) fom: YearMonth?,
-                    @RequestParam("tom", required = false) tom: YearMonth?): Map<String, Any> {
-        return inntektClient.hentInntekt(personIdent = request.ident,
-                                         fom = fom ?: YearMonth.now().minusMonths(2),
-                                         tom = tom ?: YearMonth.now())
+    fun hentInntekt(
+        @RequestBody request: PersonIdent,
+        @RequestParam("fom", required = false) fom: YearMonth?,
+        @RequestParam("tom", required = false) tom: YearMonth?
+    ): Map<String, Any> {
+        return inntektClient.hentInntekt(
+            personIdent = request.ident,
+            fom = fom ?: YearMonth.now().minusMonths(2),
+            tom = tom ?: YearMonth.now()
+        )
     }
 
     @PostMapping("/historikk")
-    fun hentInntektshistorikk(@RequestBody request: PersonIdent,
-                              @RequestParam("fom", required = false) fom: YearMonth?,
-                              @RequestParam("tom", required = false) tom: YearMonth?
+    fun hentInntektshistorikk(
+        @RequestBody request: PersonIdent,
+        @RequestParam("fom", required = false) fom: YearMonth?,
+        @RequestParam("tom", required = false) tom: YearMonth?
     ): Map<String, Any> {
-        return inntektClient.hentInntektshistorikk(personIdent = request.ident,
+        return inntektClient.hentInntektshistorikk(
+            personIdent = request.ident,
             fom = fom ?: YearMonth.now().minusMonths(12),
-            tom = tom ?: YearMonth.now())
+            tom = tom ?: YearMonth.now()
+        )
     }
 }

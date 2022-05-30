@@ -14,38 +14,47 @@ import java.time.YearMonth
 
 @Component
 class InntektClient(
-        @Value("\${INNTEKT_URL}") private val uri: URI,
-        private val stsClient: StsClient,
-        @Qualifier("noToken") restOperations: RestOperations
+    @Value("\${INNTEKT_URL}") private val uri: URI,
+    private val stsClient: StsClient,
+    @Qualifier("noToken") restOperations: RestOperations
 ) : AbstractRestClient(restOperations, "inntekt") {
 
     private val inntektUri = UriComponentsBuilder.fromUri(uri).pathSegment("v1/hentinntektliste").build().toUri()
 
-    fun hentInntekt(personIdent: String,
-                    fom: YearMonth,
-                    tom: YearMonth): Map<String, Any> {
+    fun hentInntekt(
+        personIdent: String,
+        fom: YearMonth,
+        tom: YearMonth
+    ): Map<String, Any> {
         return postForEntity(inntektUri, lagRequest(personIdent, fom, tom), headers(personIdent, stsClient.hentStsToken().token))
     }
 
-    fun hentInntektshistorikk(personIdent: String,
-                              fom: YearMonth,
-                              tom: YearMonth): Map<String, Any> {
+    fun hentInntektshistorikk(
+        personIdent: String,
+        fom: YearMonth,
+        tom: YearMonth
+    ): Map<String, Any> {
         val inntektshistorikkUri = UriComponentsBuilder.fromUri(uri).pathSegment("v1/inntektshistorikk")
             .queryParam("maaned-fom", fom).queryParam("maaned-tom", tom)
             .queryParam("filter", "StoenadEnsligMorEllerFarA-inntekt").build().toUri()
         return getForEntity(inntektshistorikkUri, headers(personIdent, stsClient.hentStsToken().token))
     }
 
-    private fun lagRequest(personIdent: String,
-                           fom: YearMonth,
-                           tom: YearMonth) =
-            mapOf("ainntektsfilter" to "StoenadEnsligMorEllerFarA-inntekt",
-                  "formaal" to "StoenadEnsligMorEllerFar",
-                  "ident" to mapOf("identifikator" to personIdent,
-                                   "aktoerType" to "NATURLIG_IDENT"),
-                  "maanedFom" to fom,
-                  "maanedTom" to tom)
-
+    private fun lagRequest(
+        personIdent: String,
+        fom: YearMonth,
+        tom: YearMonth
+    ) =
+        mapOf(
+            "ainntektsfilter" to "StoenadEnsligMorEllerFarA-inntekt",
+            "formaal" to "StoenadEnsligMorEllerFar",
+            "ident" to mapOf(
+                "identifikator" to personIdent,
+                "aktoerType" to "NATURLIG_IDENT"
+            ),
+            "maanedFom" to fom,
+            "maanedTom" to tom
+        )
 
     private fun headers(personIdent: String, token: String): HttpHeaders {
         return HttpHeaders().apply {
@@ -55,5 +64,4 @@ class InntektClient(
             add(NavHttpHeaders.NAV_PERSONIDENT.asString(), personIdent)
         }
     }
-
 }

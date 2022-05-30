@@ -9,17 +9,19 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.web.client.RestOperations
 
-
 @Suppress("SpringFacetCodeInspection")
 @Configuration
 @Import(RestTemplateBuilderBean::class, ConsumerIdClientInterceptor::class)
 class RestTemplateSts {
 
     @Bean("noToken")
-    fun restTemplateNoToken(restTemplateBuilder: RestTemplateBuilder,
-                        consumerIdClientInterceptor: ConsumerIdClientInterceptor): RestOperations {
-        return restTemplateBuilder.additionalInterceptors(consumerIdClientInterceptor,
-            MdcValuesPropagatingClientInterceptor()).build()
+    fun restTemplateNoToken(
+        restTemplateBuilder: RestTemplateBuilder,
+        consumerIdClientInterceptor: ConsumerIdClientInterceptor
+    ): RestOperations {
+        return restTemplateBuilder.additionalInterceptors(
+            consumerIdClientInterceptor,
+            MdcValuesPropagatingClientInterceptor()
+        ).build()
     }
-
 }

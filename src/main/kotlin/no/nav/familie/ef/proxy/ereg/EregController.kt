@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/ereg",
-    produces = [MediaType.APPLICATION_JSON_VALUE])
+@RequestMapping(
+    "/api/ereg",
+    produces = [MediaType.APPLICATION_JSON_VALUE]
+)
 @ProtectedWithClaims(issuer = "azuread")
 @Validated
 class EregController(private val eregClient: EregClient) {
@@ -19,5 +21,4 @@ class EregController(private val eregClient: EregClient) {
     fun hentOrganisasjon(@RequestParam organisasjonsnumre: List<String>): List<Map<String, Any>> {
         return eregClient.hentOrganisasjoner(organisasjonsnumre)
     }
-
 }

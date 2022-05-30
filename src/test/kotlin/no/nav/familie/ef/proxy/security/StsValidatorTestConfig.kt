@@ -14,7 +14,6 @@ class StsValidatorTestConfig {
     fun stsValidator(): StsValidator {
         return object : StsValidator {
             override fun validateSts(subject: String) {
-
             }
         }
     }

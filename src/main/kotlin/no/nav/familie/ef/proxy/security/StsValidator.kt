@@ -6,7 +6,6 @@ import no.nav.security.token.support.core.exceptions.JwtTokenInvalidClaimExcepti
 interface StsValidator {
 
     fun validateSts(subject: String)
-
 }
 
 fun TokenValidationContext.validateIssuerWithSubject(issuerName: String, subject: String): Boolean {
