@@ -14,18 +14,21 @@ import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDate
 
 @RestController
-@RequestMapping("/api/arbeidssoker",
-                consumes = [MediaType.APPLICATION_JSON_VALUE],
-                produces = [MediaType.APPLICATION_JSON_VALUE])
+@RequestMapping(
+    "/api/arbeidssoker",
+    consumes = [MediaType.APPLICATION_JSON_VALUE],
+    produces = [MediaType.APPLICATION_JSON_VALUE]
+)
 @ProtectedWithClaims(issuer = "azuread")
 @Validated
 class ArbeidssøkerController(private val client: ArbeidssøkerClient) {
 
     @PostMapping("perioder")
-    fun hentPerioder(@RequestBody request: PersonIdent,
-                     @RequestParam @DateTimeFormat(iso = DATE)  fraOgMed: LocalDate,
-                     @RequestParam @DateTimeFormat(iso = DATE) tilOgMed: LocalDate? = null): Map<String, Any> {
+    fun hentPerioder(
+        @RequestBody request: PersonIdent,
+        @RequestParam @DateTimeFormat(iso = DATE) fraOgMed: LocalDate,
+        @RequestParam @DateTimeFormat(iso = DATE) tilOgMed: LocalDate? = null
+    ): Map<String, Any> {
         return client.hentPerioder(request.ident, fraOgMed, tilOgMed)
     }
-
 }

@@ -16,7 +16,6 @@ import java.net.URI
 import java.time.LocalDateTime
 import java.util.*
 
-
 @Component
 class StsClient(
     @Value("\${STS_URL}")
@@ -59,7 +58,7 @@ class StsClient(
 
     fun credentialForClientId(clientId: String): String {
         return mapOf(personhendelseClientId to credentialsPersonhendelse(), efSakClientId to credentialsEfSak()).getOrElse(clientId) {
-            secureLogger.warn("Fant ikke clientId: ${clientId} i map. Bruker ef-sak token.")
+            secureLogger.warn("Fant ikke clientId: $clientId i map. Bruker ef-sak token.")
             credentialsEfSak()
         }
     }

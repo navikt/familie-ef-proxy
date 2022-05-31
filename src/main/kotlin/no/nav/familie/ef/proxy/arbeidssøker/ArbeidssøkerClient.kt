@@ -10,17 +10,18 @@ import java.net.URI
 import java.time.LocalDate
 
 @Service
-class ArbeidssøkerClient(@Value("\${ARBEIDSSØKER_URL}")
-                         private val uri: URI,
-                         @Qualifier("azure") restOperations: RestOperations)
-    : AbstractRestClient(restOperations, "pdl.personinfo.saksbehandler") {
+class ArbeidssøkerClient(
+    @Value("\${ARBEIDSSØKER_URL}")
+    private val uri: URI,
+    @Qualifier("azure") restOperations: RestOperations
+) :
+    AbstractRestClient(restOperations, "pdl.personinfo.saksbehandler") {
 
     fun hentPerioder(personIdent: String, fraOgMed: LocalDate, tilOgMed: LocalDate?): Map<String, Any> {
         val uriComponentsBuilder = UriComponentsBuilder.fromUri(uri).pathSegment("arbeidssoker/perioder")
-                .queryParam("fraOgMed", fraOgMed)
+            .queryParam("fraOgMed", fraOgMed)
         tilOgMed?.let { uriComponentsBuilder.queryParam("tilOgMed", tilOgMed) }
 
         return postForEntity(uriComponentsBuilder.build().toUri(), mapOf("fnr" to personIdent))
     }
-
 }

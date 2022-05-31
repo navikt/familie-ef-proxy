@@ -3,10 +3,7 @@ package no.nav.familie.ef.proxy.ainntekt
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
-import io.mockk.mockk
-import no.nav.familie.ef.proxy.security.StsValidator
 import no.nav.familie.kontrakter.felles.PersonIdent
-import no.nav.familie.kontrakter.felles.ef.PerioderOvergangsstønadRequest
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.AfterEach
@@ -37,8 +34,10 @@ internal class ArbeidOgInntektControllerTest {
             wiremockServerItem.start()
             val uri = URI.create("http://localhost:${wiremockServerItem.port()}")
 
-            wiremockServerItem.stubFor(WireMock.get(WireMock.urlEqualTo("/api/v2/redirect/sok/a-inntekt"))
-                                               .willReturn(WireMock.okForContentType("text/html", "http://testurl")))
+            wiremockServerItem.stubFor(
+                WireMock.get(WireMock.urlEqualTo("/api/v2/redirect/sok/a-inntekt"))
+                    .willReturn(WireMock.okForContentType("text/html", "http://testurl"))
+            )
 
             controller = ArbeidOgInntektController(ArbeidOgInntektClient(uri, restOperations))
         }

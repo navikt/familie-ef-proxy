@@ -61,11 +61,14 @@ class ApplicationConfig {
     }
 
     @Bean
-    fun restOperations(restTemplateBuilder: RestTemplateBuilder,
-                       consumerIdClientInterceptor: ConsumerIdClientInterceptor,
-                       internLoggerInterceptor: InternLoggerInterceptor): RestOperations {
-        return restTemplateBuilder.additionalInterceptors(consumerIdClientInterceptor,
-                                                          MdcValuesPropagatingClientInterceptor()).build()
+    fun restOperations(
+        restTemplateBuilder: RestTemplateBuilder,
+        consumerIdClientInterceptor: ConsumerIdClientInterceptor,
+        internLoggerInterceptor: InternLoggerInterceptor
+    ): RestOperations {
+        return restTemplateBuilder.additionalInterceptors(
+            consumerIdClientInterceptor,
+            MdcValuesPropagatingClientInterceptor()
+        ).build()
     }
-
 }
