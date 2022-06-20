@@ -8,7 +8,7 @@ env:
 
 jobs:
   build:
-    name: Build, push and deploy to dev-fss and prod-fss
+    name: Build, push and deploy to dev-fss
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
