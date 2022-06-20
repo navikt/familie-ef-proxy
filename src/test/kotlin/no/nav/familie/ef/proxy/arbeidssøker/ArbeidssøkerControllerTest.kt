@@ -24,9 +24,11 @@ internal class ArbeidssøkerControllerTest : IntegrationSpringRunnerTest() {
     @Test
     internal fun `skal kalle på perioder uten tilOgMedDato`() {
         val url = localhost("/api/arbeidssoker/perioder?fraOgMed=2021-01-01")
-        val response = restTemplate.exchange<Map<String, String>>(url,
-                                                                  HttpMethod.POST,
-                                                                  HttpEntity(mapOf("ident" to "123"), headers))
+        val response = restTemplate.exchange<Map<String, String>>(
+            url,
+            HttpMethod.POST,
+            HttpEntity(mapOf("ident" to "123"), headers)
+        )
         assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
         assertThat(response.body!!).isEqualTo(emptyMap<String, Any>())
 
@@ -36,9 +38,11 @@ internal class ArbeidssøkerControllerTest : IntegrationSpringRunnerTest() {
     @Test
     internal fun `skal kalle på perioder med tilOgMedDato`() {
         val url = localhost("/api/arbeidssoker/perioder?fraOgMed=2021-01-01&tilOgMed=2021-02-01")
-        val response = restTemplate.exchange<Map<String, String>>(url,
-                                                                  HttpMethod.POST,
-                                                                  HttpEntity(mapOf("ident" to "123"), headers))
+        val response = restTemplate.exchange<Map<String, String>>(
+            url,
+            HttpMethod.POST,
+            HttpEntity(mapOf("ident" to "123"), headers)
+        )
         assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
         assertThat(response.body!!).isEqualTo(emptyMap<String, Any>())
 

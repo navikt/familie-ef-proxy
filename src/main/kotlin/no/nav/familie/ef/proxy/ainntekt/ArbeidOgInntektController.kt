@@ -22,5 +22,4 @@ class ArbeidOgInntektController(private val client: ArbeidOgInntektClient) {
     fun hentUrlTilArbeidOgInntekt(@RequestBody request: PersonIdent): String {
         return client.hentUrlTilArbeidOgInntekt(request.ident)
     }
-
 }

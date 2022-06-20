@@ -11,17 +11,20 @@ import java.net.URI
 
 @Component
 class ArbeidOgInntektClient(
-        @Value("\${ARBEID_INNTEKT_URL}") private val uri: URI,
-        restOperations: RestOperations
+    @Value("\${ARBEID_INNTEKT_URL}") private val uri: URI,
+    restOperations: RestOperations
 ) : AbstractRestClient(restOperations, "ereg") {
 
     private val redirectUri = UriComponentsBuilder.fromUri(uri)
-            .pathSegment("api/v2/redirect/sok/a-inntekt").build().toUri()
+        .pathSegment("api/v2/redirect/sok/a-inntekt").build().toUri()
 
     fun hentUrlTilArbeidOgInntekt(personIdent: String): String {
-        return getForEntity(redirectUri, HttpHeaders().apply {
-            accept = listOf(MediaType.TEXT_PLAIN)
-            set("Nav-Personident", personIdent)
-        })
+        return getForEntity(
+            redirectUri,
+            HttpHeaders().apply {
+                accept = listOf(MediaType.TEXT_PLAIN)
+                set("Nav-Personident", personIdent)
+            }
+        )
     }
 }

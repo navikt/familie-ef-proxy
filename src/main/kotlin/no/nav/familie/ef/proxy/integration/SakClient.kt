@@ -12,9 +12,11 @@ import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 
 @Component
-class SakClient(@Qualifier("azure") restOperations: RestOperations,
-                @Value("\${EF_SAK_URL}") private val uri: URI)
-    : AbstractPingableRestClient(restOperations, "familie.sak") {
+class SakClient(
+    @Qualifier("azure") restOperations: RestOperations,
+    @Value("\${EF_SAK_URL}") private val uri: URI
+) :
+    AbstractPingableRestClient(restOperations, "familie.sak") {
 
     fun post(data: Any, path: String): PerioderOvergangsstønadResponse {
         val uri = UriComponentsBuilder.fromUri(uri).pathSegment(path).build().toUri()
@@ -23,5 +25,4 @@ class SakClient(@Qualifier("azure") restOperations: RestOperations,
     }
 
     override val pingUri: URI = UriComponentsBuilder.fromUri(uri).pathSegment("api/ping").build().toUri()
-
 }
