@@ -39,14 +39,22 @@ spec:
     enabled: true
     paths:
       - kvPath: /serviceuser/data/prod/srvfamilie-ef-sak
-        mountPath: /var/run/secrets/serviceuser
+        mountPath: /var/run/secrets/serviceuser/efsak
+      - kvPath: /serviceuser/data/prod/srvfamilie-ef-person
+        mountPath: /var/run/secrets/serviceuser/personhendelse
   azure:
     application:
       enabled: true
+      claims:
+        extra:
+          - azp_name
   accessPolicy:
     inbound:
       rules:
         - application: familie-ef-sak
+          namespace: teamfamilie
+          cluster: prod-gcp
+        - application: familie-ef-personhendelse
           namespace: teamfamilie
           cluster: prod-gcp
   env:

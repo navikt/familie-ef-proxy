@@ -16,7 +16,6 @@ import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 import java.util.concurrent.TimeoutException
 
-
 @Suppress("unused")
 @ControllerAdvice
 class ApiExceptionHandler : ResponseEntityExceptionHandler() {
@@ -30,14 +29,17 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
 
     data class FeilDto(val message: String)
 
-    override fun handleExceptionInternal(ex: Exception,
-                                         body: Any?,
-                                         headers: HttpHeaders,
-                                         status: HttpStatus,
-                                         request: WebRequest): ResponseEntity<Any> {
-        if (ex is HttpRequestMethodNotSupportedException
-                || ex is HttpMediaTypeNotSupportedException
-                || ex is HttpMediaTypeNotAcceptableException) {
+    override fun handleExceptionInternal(
+        ex: Exception,
+        body: Any?,
+        headers: HttpHeaders,
+        status: HttpStatus,
+        request: WebRequest
+    ): ResponseEntity<Any> {
+        if (ex is HttpRequestMethodNotSupportedException ||
+            ex is HttpMediaTypeNotSupportedException ||
+            ex is HttpMediaTypeNotAcceptableException
+        ) {
             secureLogger.warn("En feil har oppstått", ex)
             logger.warn("En feil har oppstått - throwable=${rootCause(ex)} status=${status.value()}")
         } else {
@@ -66,18 +68,20 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
             logger.error("En feil har oppstått - throwable=${rootCause.javaClass.simpleName} ")
         }
         return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(FeilDto("Uventet feil"))
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(FeilDto("Uventet feil"))
     }
 
     // Denne håndterer eks JwtTokenUnauthorizedException
-    private fun håndtertResponseStatusFeil(throwable: Throwable,
-                                           responseStatus: ResponseStatus): ResponseEntity<FeilDto> {
+    private fun håndtertResponseStatusFeil(
+        throwable: Throwable,
+        responseStatus: ResponseStatus
+    ): ResponseEntity<FeilDto> {
         val status = if (responseStatus.value != HttpStatus.INTERNAL_SERVER_ERROR) responseStatus.value else responseStatus.code
         val loggMelding = "En håndtert feil har oppstått" +
-                " throwable=${rootCause(throwable)}" +
-                " reason=${responseStatus.reason}" +
-                " status=$status"
+            " throwable=${rootCause(throwable)}" +
+            " reason=${responseStatus.reason}" +
+            " status=$status"
 
         loggFeil(throwable, loggMelding)
         return ResponseEntity.status(status).body(FeilDto("Håndtert feil"))
@@ -93,8 +97,8 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
     fun finnMetodeSomFeiler(e: Throwable): String {
         val firstElement = e.stackTrace.firstOrNull {
             it.className.startsWith("no.nav.familie.ef.sak") &&
-            !it.className.contains("$") &&
-            !it.className.contains("InsertUpdateRepositoryImpl")
+                !it.className.contains("$") &&
+                !it.className.contains("InsertUpdateRepositoryImpl")
         }
         if (firstElement != null) {
             val className = firstElement.className.split(".").lastOrNull()
@@ -102,5 +106,4 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
         }
         return e.cause?.let { finnMetodeSomFeiler(it) } ?: "(Ukjent metode som feiler)"
     }
-
 }
