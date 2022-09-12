@@ -37,7 +37,6 @@ class StsClient(
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
     fun hentStsToken(): Token {
-
         val stsUri = UriComponentsBuilder.fromUri(stsUri)
             .queryParam("grant_type", "client_credentials")
             .queryParam("scope", "openid")

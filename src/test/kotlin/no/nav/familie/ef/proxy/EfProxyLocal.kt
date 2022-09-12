@@ -9,7 +9,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder
 class ApplicationLocal
 
 fun main(args: Array<String>) {
-
     SpringApplicationBuilder(ApplicationConfig::class.java)
         .profiles("local")
         .run(*args)

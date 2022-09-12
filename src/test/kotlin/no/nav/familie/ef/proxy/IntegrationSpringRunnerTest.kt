@@ -28,6 +28,7 @@ abstract class IntegrationSpringRunnerTest {
     protected val headers = HttpHeaders()
 
     @Autowired private lateinit var applicationContext: ApplicationContext
+
     @Autowired private lateinit var mockOAuth2Server: MockOAuth2Server
 
     @LocalServerPort

@@ -26,8 +26,12 @@ class ArbeidssøkerController(private val client: ArbeidssøkerClient) {
     @PostMapping("perioder")
     fun hentPerioder(
         @RequestBody request: PersonIdent,
-        @RequestParam @DateTimeFormat(iso = DATE) fraOgMed: LocalDate,
-        @RequestParam @DateTimeFormat(iso = DATE) tilOgMed: LocalDate? = null
+        @RequestParam
+        @DateTimeFormat(iso = DATE)
+        fraOgMed: LocalDate,
+        @RequestParam
+        @DateTimeFormat(iso = DATE)
+        tilOgMed: LocalDate? = null
     ): Map<String, Any> {
         return client.hentPerioder(request.ident, fraOgMed, tilOgMed)
     }
