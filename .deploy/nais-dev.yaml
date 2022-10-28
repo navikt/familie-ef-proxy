@@ -54,6 +54,9 @@ spec:
         - application: familie-ef-sak
           namespace: teamfamilie
           cluster: dev-gcp
+        - application: familie-klage
+          namespace: teamfamilie
+          cluster: dev-gcp
         - application: familie-ef-personhendelse
           namespace: teamfamilie
           cluster: dev-gcp
