@@ -12,6 +12,7 @@ CLUSTER_ENV: dev
 EF_SAK_URL: https://familie-ef-sak.dev.intern.nav.no
 EREG_URL: https://modapp-q2.adeo.no/ereg/api/v1/organisasjon
 INNTEKT_URL: https://app-q2.adeo.no/inntektskomponenten-ws/rs/api
+SIGRUN_URL: https://sigrun.nais.preprod.local/api/
 ARBEID_INNTEKT_URL: https://arbeid-og-inntekt.dev.adeo.no
 ARBEIDSSØKER_URL: https://veilarbregistrering.dev.intern.nav.no/veilarbregistrering/api
 STS_URL: https://security-token-service.nais.preprod.local/rest/v1/sts/token
