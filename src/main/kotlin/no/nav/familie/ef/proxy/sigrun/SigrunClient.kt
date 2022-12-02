@@ -21,7 +21,7 @@ class SigrunClient(
 
         val headers = HttpHeaders()
         headers.set("x-filter", "BeregnetSkattPensjonsgivendeInntekt")
-        headers.set("x-aktoerid", personIdent)
+        headers.set("x-naturligident", personIdent)
         headers.set("x-inntektsaar", inntektsår.toString())
         return postForEntity(uriComponentsBuilder.build().toUri(), mapOf("fnr" to personIdent), headers)
     }
@@ -32,7 +32,7 @@ class SigrunClient(
             .queryParam("inntektsfilter", "SummertSkattegrunnlagEnsligForsorger")
 
         val headers = HttpHeaders()
-        headers.set("Nav-Personident", personIdent)
+        headers.set("naturligident", personIdent)
 
         return postForEntity(uriComponentsBuilder.build().toUri(), mapOf("fnr" to personIdent), headers)
     }
