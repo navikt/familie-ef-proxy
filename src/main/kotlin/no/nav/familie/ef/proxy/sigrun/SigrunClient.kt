@@ -1,6 +1,7 @@
 package no.nav.familie.ef.proxy.sigrun
 
 import no.nav.familie.http.client.AbstractRestClient
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestOperations
@@ -10,7 +11,7 @@ import java.net.URI
 @Component
 class SigrunClient(
     @Value("\${SIGRUN_URL}") private val uri: URI,
-    restOperations: RestOperations
+    @Qualifier("azure") restOperations: RestOperations
 ) : AbstractRestClient(restOperations, "sigrun") {
 
     fun hentBeregnetSkatt(personIdent: String, inntektsår: Int): Map<String, Any> {
