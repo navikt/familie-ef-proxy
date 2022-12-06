@@ -20,6 +20,7 @@ EF_SAK_URL: http://localhost:8385
 EREG_URL: http://localhost:8385
 INNTEKT_URL: http://localhost:8385
 ARBEIDSSØKER_URL: http://localhost:8385
+SIGRUN_URL: http://localhost:8385
 
 CREDENTIAL_USERNAME: not-a-real-srvuser
 CREDENTIAL_PASSWORD: not-a-real-pw
