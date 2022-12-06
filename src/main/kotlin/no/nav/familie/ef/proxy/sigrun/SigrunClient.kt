@@ -32,7 +32,7 @@ class SigrunClient(
             .queryParam("inntektsfilter", "SummertSkattegrunnlagEnsligForsorger")
 
         val headers = HttpHeaders()
-        headers.set("naturligident", personIdent)
+        headers.set("x-naturligident", personIdent)
 
         return postForEntity(uriComponentsBuilder.build().toUri(), mapOf("fnr" to personIdent), headers)
     }
