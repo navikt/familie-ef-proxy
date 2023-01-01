@@ -27,7 +27,7 @@
         <sha1/>
         <changelist>-SNAPSHOT</changelist>
         <jvmTarget>17</jvmTarget>
-        <kotlin.version>1.7.22</kotlin.version>
+        <kotlin.version>1.8.0</kotlin.version>
         <springdoc.version>1.6.13</springdoc.version>
         <mockk.version>1.13.3</mockk.version>
         <felles.version>1.20221202080911_bcf8f33</felles.version>
