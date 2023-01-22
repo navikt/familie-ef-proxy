@@ -36,7 +36,7 @@
         <nav.security.version>2.1.8</nav.security.version> <!-- Denne burde være samme versjon som i felles -->
         <okhttp3.version>4.10.0</okhttp3.version> <!-- overskrever spring sin versjon, blir brukt av mock-oauth2-server -->
 
-        <kontrakter.version>2.0_20221202084337_d05f555</kontrakter.version>
+        <kontrakter.version>2.0_20230118143254_b2fe23e</kontrakter.version>
     </properties>
 
     <dependencies>
