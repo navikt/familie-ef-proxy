@@ -11,7 +11,7 @@ import java.net.URI
 @Component
 class EregClient(
     @Value("\${EREG_URL}") private val uri: URI,
-    @Qualifier("sts") restOperations: RestOperations
+    @Qualifier("sts") restOperations: RestOperations,
 ) : AbstractRestClient(restOperations, "ereg") {
 
     fun hentOrganisasjoner(organisasjonsnumre: List<String>): List<Map<String, Any>> {

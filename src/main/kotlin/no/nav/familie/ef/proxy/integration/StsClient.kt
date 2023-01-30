@@ -31,7 +31,7 @@ class StsClient(
     @Value("\${EF_PERSONHENDELSE_CLIENT_ID}")
     private val personhendelseClientId: String,
     @Value("\${EF_SAK_CLIENT_ID}")
-    private val efSakClientId: String
+    private val efSakClientId: String,
 ) {
 
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
@@ -73,7 +73,7 @@ class StsClient(
         @JsonProperty(value = "token_type", required = true)
         val type: String,
         @JsonProperty(value = "expires_in", required = true)
-        val expiresIn: Int
+        val expiresIn: Int,
     ) {
 
         private val expirationTime: LocalDateTime = LocalDateTime.now().plusSeconds(expiresIn - 20L)

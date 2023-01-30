@@ -64,11 +64,11 @@ class ApplicationConfig {
     fun restOperations(
         restTemplateBuilder: RestTemplateBuilder,
         consumerIdClientInterceptor: ConsumerIdClientInterceptor,
-        internLoggerInterceptor: InternLoggerInterceptor
+        internLoggerInterceptor: InternLoggerInterceptor,
     ): RestOperations {
         return restTemplateBuilder.additionalInterceptors(
             consumerIdClientInterceptor,
-            MdcValuesPropagatingClientInterceptor()
+            MdcValuesPropagatingClientInterceptor(),
         ).build()
     }
 }

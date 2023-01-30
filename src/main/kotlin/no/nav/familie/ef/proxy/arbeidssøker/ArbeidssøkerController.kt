@@ -17,7 +17,7 @@ import java.time.LocalDate
 @RequestMapping(
     "/api/arbeidssoker",
     consumes = [MediaType.APPLICATION_JSON_VALUE],
-    produces = [MediaType.APPLICATION_JSON_VALUE]
+    produces = [MediaType.APPLICATION_JSON_VALUE],
 )
 @ProtectedWithClaims(issuer = "azuread")
 @Validated
@@ -31,7 +31,7 @@ class ArbeidssøkerController(private val client: ArbeidssøkerClient) {
         fraOgMed: LocalDate,
         @RequestParam
         @DateTimeFormat(iso = DATE)
-        tilOgMed: LocalDate? = null
+        tilOgMed: LocalDate? = null,
     ): Map<String, Any> {
         return client.hentPerioder(request.ident, fraOgMed, tilOgMed)
     }

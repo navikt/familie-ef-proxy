@@ -27,7 +27,7 @@ internal class SigrunControllerTest : IntegrationSpringRunnerTest() {
         val response = restTemplate.exchange<Map<String, String>>(
             url,
             HttpMethod.POST,
-            HttpEntity(mapOf("ident" to "123"), headers)
+            HttpEntity(mapOf("ident" to "123"), headers),
         )
         Assertions.assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
         Assertions.assertThat(response.body!!).isEqualTo(emptyMap<String, Any>())
@@ -41,7 +41,7 @@ internal class SigrunControllerTest : IntegrationSpringRunnerTest() {
         val response = restTemplate.exchange<Map<String, String>>(
             url,
             HttpMethod.POST,
-            HttpEntity(mapOf("ident" to "1234"), headers)
+            HttpEntity(mapOf("ident" to "1234"), headers),
         )
         Assertions.assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
         Assertions.assertThat(response.body!!).isEqualTo(emptyMap<String, Any>())
@@ -55,7 +55,7 @@ internal class SigrunControllerTest : IntegrationSpringRunnerTest() {
         val response = restTemplate.exchange<Map<String, String>>(
             url,
             HttpMethod.POST,
-            HttpEntity(mapOf("ident" to "12345"), headers)
+            HttpEntity(mapOf("ident" to "12345"), headers),
         )
         Assertions.assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
         Assertions.assertThat(response.body!!).isEqualTo(emptyMap<String, Any>())

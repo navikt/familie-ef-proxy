@@ -71,7 +71,7 @@ internal class StsValidatorDevTest {
         val claims: JwtToken = createJwtToken(
             "aclaim",
             "value",
-            subject
+            subject,
         )
         val context = createOidcValidationContext(issuerName, claims)
         contextHolder.tokenValidationContext = context
@@ -82,7 +82,7 @@ internal class StsValidatorDevTest {
             JWTClaimsSet.Builder()
                 .subject(subject)
                 .issuer("http//issuer1")
-                .claim(claimName, claimValue).build()
+                .claim(claimName, claimValue).build(),
         )
         return JwtToken(jwt.serialize())
     }

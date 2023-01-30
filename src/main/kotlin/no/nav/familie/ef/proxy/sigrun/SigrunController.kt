@@ -15,7 +15,7 @@ import java.time.YearMonth
 @RequestMapping(
     "/api/sigrun",
     consumes = [MediaType.APPLICATION_JSON_VALUE],
-    produces = [MediaType.APPLICATION_JSON_VALUE]
+    produces = [MediaType.APPLICATION_JSON_VALUE],
 )
 @ProtectedWithClaims(issuer = "azuread")
 @Validated
@@ -24,22 +24,22 @@ class SigrunController(private val sigrunClient: SigrunClient) {
     @PostMapping("/beregnetskatt")
     fun hentBeregnetSkatt(
         @RequestBody personIdent: PersonIdent,
-        @RequestParam("inntektsaar", required = false) inntektsår: Int?
+        @RequestParam("inntektsaar", required = false) inntektsår: Int?,
     ): Map<String, Any> {
         return sigrunClient.hentBeregnetSkatt(
             personIdent = personIdent.ident,
-            inntektsår = inntektsår ?: (YearMonth.now().year - 1)
+            inntektsår = inntektsår ?: (YearMonth.now().year - 1),
         )
     }
 
     @PostMapping("/summertskattegrunnlag")
     fun hentSummertSkattegrunnlag(
         @RequestBody personIdent: PersonIdent,
-        @RequestParam("inntektsaar", required = false) inntektsår: Int?
+        @RequestParam("inntektsaar", required = false) inntektsår: Int?,
     ): Map<String, Any> {
         return sigrunClient.hentSummertSkattegrunnlag(
             personIdent = personIdent.ident,
-            inntektsår = inntektsår ?: (YearMonth.now().year - 1)
+            inntektsår = inntektsår ?: (YearMonth.now().year - 1),
         )
     }
 }

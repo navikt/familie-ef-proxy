@@ -13,7 +13,7 @@ import java.time.LocalDate
 class ArbeidssøkerClient(
     @Value("\${ARBEIDSSØKER_URL}")
     private val uri: URI,
-    @Qualifier("azure") restOperations: RestOperations
+    @Qualifier("azure") restOperations: RestOperations,
 ) :
     AbstractRestClient(restOperations, "pdl.personinfo.saksbehandler") {
 
