@@ -12,7 +12,7 @@ import java.net.URI
 @Component
 class SigrunClient(
     @Value("\${SIGRUN_URL}") private val uri: URI,
-    @Qualifier("azure") restOperations: RestOperations
+    @Qualifier("azure") restOperations: RestOperations,
 ) : AbstractRestClient(restOperations, "sigrun") {
 
     fun hentBeregnetSkatt(personIdent: String, inntektsår: Int): Map<String, Any> {

@@ -16,7 +16,7 @@ import java.time.YearMonth
 class InntektClient(
     @Value("\${INNTEKT_URL}") private val uri: URI,
     private val stsClient: StsClient,
-    @Qualifier("noToken") restOperations: RestOperations
+    @Qualifier("noToken") restOperations: RestOperations,
 ) : AbstractRestClient(restOperations, "inntekt") {
 
     private val inntektUri = UriComponentsBuilder.fromUri(uri).pathSegment("v1/hentinntektliste").build().toUri()
@@ -24,7 +24,7 @@ class InntektClient(
     fun hentInntekt(
         personIdent: String,
         fom: YearMonth,
-        tom: YearMonth
+        tom: YearMonth,
     ): Map<String, Any> {
         return postForEntity(inntektUri, lagRequest(personIdent, fom, tom), headers(personIdent, stsClient.hentStsToken().token))
     }
@@ -32,7 +32,7 @@ class InntektClient(
     fun hentInntektshistorikk(
         personIdent: String,
         fom: YearMonth,
-        tom: YearMonth
+        tom: YearMonth,
     ): Map<String, Any> {
         val inntektshistorikkUri = UriComponentsBuilder.fromUri(uri).pathSegment("v1/inntektshistorikk")
             .queryParam("maaned-fom", fom).queryParam("maaned-tom", tom)
@@ -43,17 +43,17 @@ class InntektClient(
     private fun lagRequest(
         personIdent: String,
         fom: YearMonth,
-        tom: YearMonth
+        tom: YearMonth,
     ) =
         mapOf(
             "ainntektsfilter" to "StoenadEnsligMorEllerFarA-inntekt",
             "formaal" to "StoenadEnsligMorEllerFar",
             "ident" to mapOf(
                 "identifikator" to personIdent,
-                "aktoerType" to "NATURLIG_IDENT"
+                "aktoerType" to "NATURLIG_IDENT",
             ),
             "maanedFom" to fom,
-            "maanedTom" to tom
+            "maanedTom" to tom,
         )
 
     private fun headers(personIdent: String, token: String): HttpHeaders {

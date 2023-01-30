@@ -34,7 +34,7 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
         body: Any?,
         headers: HttpHeaders,
         status: HttpStatus,
-        request: WebRequest
+        request: WebRequest,
     ): ResponseEntity<Any> {
         if (ex is HttpRequestMethodNotSupportedException ||
             ex is HttpMediaTypeNotSupportedException ||
@@ -75,7 +75,7 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
     // Denne håndterer eks JwtTokenUnauthorizedException
     private fun håndtertResponseStatusFeil(
         throwable: Throwable,
-        responseStatus: ResponseStatus
+        responseStatus: ResponseStatus,
     ): ResponseEntity<FeilDto> {
         val status = if (responseStatus.value != HttpStatus.INTERNAL_SERVER_ERROR) responseStatus.value else responseStatus.code
         val loggMelding = "En håndtert feil har oppstått" +

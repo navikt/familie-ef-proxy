@@ -14,7 +14,7 @@ import java.net.URI
 @Component
 class SakClient(
     @Qualifier("azure") restOperations: RestOperations,
-    @Value("\${EF_SAK_URL}") private val uri: URI
+    @Value("\${EF_SAK_URL}") private val uri: URI,
 ) :
     AbstractPingableRestClient(restOperations, "familie.sak") {
 

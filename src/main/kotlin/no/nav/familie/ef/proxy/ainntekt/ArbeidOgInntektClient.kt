@@ -12,7 +12,7 @@ import java.net.URI
 @Component
 class ArbeidOgInntektClient(
     @Value("\${ARBEID_INNTEKT_URL}") private val uri: URI,
-    restOperations: RestOperations
+    restOperations: RestOperations,
 ) : AbstractRestClient(restOperations, "ereg") {
 
     private val redirectUri = UriComponentsBuilder.fromUri(uri)
@@ -24,7 +24,7 @@ class ArbeidOgInntektClient(
             HttpHeaders().apply {
                 accept = listOf(MediaType.TEXT_PLAIN)
                 set("Nav-Personident", personIdent)
-            }
+            },
         )
     }
 }

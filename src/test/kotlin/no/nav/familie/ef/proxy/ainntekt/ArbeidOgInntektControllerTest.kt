@@ -36,7 +36,7 @@ internal class ArbeidOgInntektControllerTest {
 
             wiremockServerItem.stubFor(
                 WireMock.get(WireMock.urlEqualTo("/api/v2/redirect/sok/a-inntekt"))
-                    .willReturn(WireMock.okForContentType("text/html", "http://testurl"))
+                    .willReturn(WireMock.okForContentType("text/html", "http://testurl")),
             )
 
             controller = ArbeidOgInntektController(ArbeidOgInntektClient(uri, restOperations))

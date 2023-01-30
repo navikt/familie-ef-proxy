@@ -27,7 +27,7 @@ internal class ArbeidssøkerControllerTest : IntegrationSpringRunnerTest() {
         val response = restTemplate.exchange<Map<String, String>>(
             url,
             HttpMethod.POST,
-            HttpEntity(mapOf("ident" to "123"), headers)
+            HttpEntity(mapOf("ident" to "123"), headers),
         )
         assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
         assertThat(response.body!!).isEqualTo(emptyMap<String, Any>())
@@ -41,7 +41,7 @@ internal class ArbeidssøkerControllerTest : IntegrationSpringRunnerTest() {
         val response = restTemplate.exchange<Map<String, String>>(
             url,
             HttpMethod.POST,
-            HttpEntity(mapOf("ident" to "123"), headers)
+            HttpEntity(mapOf("ident" to "123"), headers),
         )
         assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
         assertThat(response.body!!).isEqualTo(emptyMap<String, Any>())

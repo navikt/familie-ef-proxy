@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping(
     path = ["/api/ekstern"],
     consumes = [MediaType.APPLICATION_JSON_VALUE],
-    produces = [MediaType.APPLICATION_JSON_VALUE]
+    produces = [MediaType.APPLICATION_JSON_VALUE],
 )
 class PeriodeController(
     private val sakClient: SakClient,
-    private val stsValidator: StsValidator
+    private val stsValidator: StsValidator,
 ) {
 
     // PerioderOvergangsstønadRequest er egentlige perioder av alle typer perioder fra EF
