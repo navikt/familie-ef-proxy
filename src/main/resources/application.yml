@@ -35,7 +35,7 @@ no.nav.security.jwt:
         resource-url: ${SIGRUN_URL}
         token-endpoint-url: ${AZURE_OPENID_CONFIG_TOKEN_ENDPOINT}
         grant-type: client_credentials
-        scope: api://${CLUSTER_ENV}-fss.team-inntekt.sigrun/.default
+        scope: ${SIGRUN_SCOPE}
         authentication:
           client-id: ${AZURE_APP_CLIENT_ID}
           client-secret: ${AZURE_APP_CLIENT_SECRET}
@@ -71,7 +71,7 @@ SIGRUN_URL: https://sigrun.nais.adeo.no/api/
 ARBEID_INNTEKT_URL: https://arbeid-og-inntekt.nais.adeo.no
 ARBEIDSSØKER_URL: https://veilarbregistrering.intern.nav.no/veilarbregistrering/api
 ABC: https://veilarbregistrering.dev.intern.nav.no/veilarbregistrering/api/arbeidssoker/
-
+SIGRUN_SCOPE: api://${CLUSTER_ENV}-fss.team-inntekt.sigrun/.default
 STS_PREFIX: http://security-token-service.default
 STS_DISCOVERY_SUFFIX: /rest/v1/sts/.well-known/openid-configuration
 STS_URL: ${STS_PREFIX}/rest/v1/sts/token
