@@ -7,7 +7,18 @@ no.nav.security.jwt:
     stsTest:
       discoveryurl: https://security-token-service-t4.nais.preprod.local${STS_DISCOVERY_SUFFIX}
       accepted_audience: ${GYLDIGE_SERVICE_BRUKERE}
-
+  client:
+    registration:
+      sigrun:
+        resource-url: ${SIGRUN_URL}
+        token-endpoint-url: ${AZURE_OPENID_CONFIG_TOKEN_ENDPOINT}
+        grant-type: client_credentials
+        scope: api://${CLUSTER_ENV}-fss.team-inntekt.sigrun-q2/.default
+        authentication:
+          client-id: ${AZURE_APP_CLIENT_ID}
+          client-secret: ${AZURE_APP_CLIENT_SECRET}
+          client-auth-method: client_secret_basic
+          
 CLUSTER_ENV: dev
 EF_SAK_URL: https://familie-ef-sak.dev.intern.nav.no
 EREG_URL: https://modapp-q2.adeo.no/ereg/api/v1/organisasjon
