@@ -23,7 +23,7 @@ class SigrunClient(
         headers.set("x-filter", "BeregnetSkattPensjonsgivendeInntekt")
         headers.set("x-naturligident", personIdent)
         headers.set("x-inntektsaar", inntektsår.toString())
-        return postForEntity(uriComponentsBuilder.build().toUri(), mapOf("fnr" to personIdent), headers)
+        return getForEntity(uriComponentsBuilder.build().toUri(), headers)
     }
 
     fun hentSummertSkattegrunnlag(personIdent: String, inntektsår: Int): Map<String, Any> {
@@ -34,6 +34,6 @@ class SigrunClient(
         val headers = HttpHeaders()
         headers.set("x-naturligident", personIdent)
 
-        return postForEntity(uriComponentsBuilder.build().toUri(), mapOf("fnr" to personIdent), headers)
+        return getForEntity(uriComponentsBuilder.build().toUri(), headers)
     }
 }
