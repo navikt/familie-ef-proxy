@@ -25,7 +25,7 @@ class SigrunController(private val sigrunClient: SigrunClient) {
     fun hentBeregnetSkatt(
         @RequestBody personIdent: PersonIdent,
         @RequestParam("inntektsaar", required = false) inntektsår: Int?,
-    ): Map<String, Any> {
+    ): List<Map<String, Any>> {
         return sigrunClient.hentBeregnetSkatt(
             personIdent = personIdent.ident,
             inntektsår = inntektsår ?: (YearMonth.now().year - 1),
@@ -36,7 +36,7 @@ class SigrunController(private val sigrunClient: SigrunClient) {
     fun hentSummertSkattegrunnlag(
         @RequestBody personIdent: PersonIdent,
         @RequestParam("inntektsaar", required = false) inntektsår: Int?,
-    ): Map<String, Any> {
+    ): List<Map<String, Any>> {
         return sigrunClient.hentSummertSkattegrunnlag(
             personIdent = personIdent.ident,
             inntektsår = inntektsår ?: (YearMonth.now().year - 1),
