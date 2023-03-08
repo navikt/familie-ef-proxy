@@ -27,7 +27,7 @@ class SigrunClient(
     }
 
     fun hentSummertSkattegrunnlag(personIdent: String, inntektsår: Int): List<Map<String, Any>> {
-        val uriComponentsBuilder = UriComponentsBuilder.fromUri(uri).pathSegment("summertskattegrunnlag")
+        val uriComponentsBuilder = UriComponentsBuilder.fromUri(uri).pathSegment("v1/summertskattegrunnlag")
             .queryParam("inntektsaar", inntektsår)
             .queryParam("inntektsfilter", "SummertSkattegrunnlagEnsligForsorger")
 
