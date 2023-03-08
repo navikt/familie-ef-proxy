@@ -15,7 +15,7 @@ class SigrunClient(
     @Qualifier("azure") restOperations: RestOperations,
 ) : AbstractRestClient(restOperations, "sigrun") {
 
-    fun hentBeregnetSkatt(personIdent: String, inntektsår: Int): Map<String, Any> {
+    fun hentBeregnetSkatt(personIdent: String, inntektsår: Int): List<Map<String, Any>> {
         val uriComponentsBuilder = UriComponentsBuilder.fromUri(uri).pathSegment("beregnetskatt")
             .queryParam("inntektsaar", inntektsår)
 
@@ -26,8 +26,8 @@ class SigrunClient(
         return getForEntity(uriComponentsBuilder.build().toUri(), headers)
     }
 
-    fun hentSummertSkattegrunnlag(personIdent: String, inntektsår: Int): Map<String, Any> {
-        val uriComponentsBuilder = UriComponentsBuilder.fromUri(uri).pathSegment("summertskattegrunnlag")
+    fun hentSummertSkattegrunnlag(personIdent: String, inntektsår: Int): List<Map<String, Any>> {
+        val uriComponentsBuilder = UriComponentsBuilder.fromUri(uri).pathSegment("v1/summertskattegrunnlag")
             .queryParam("inntektsaar", inntektsår)
             .queryParam("inntektsfilter", "SummertSkattegrunnlagEnsligForsorger")
 
