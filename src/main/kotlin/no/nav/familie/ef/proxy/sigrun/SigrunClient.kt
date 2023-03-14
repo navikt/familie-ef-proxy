@@ -28,6 +28,7 @@ class SigrunClient(
         return try {
             getForEntity(uriComponentsBuilder.build().toUri(), headers)
         } catch (e: HttpClientErrorException.NotFound) {
+            secureLogger.warn(e.message)
             emptyList()
         }
     }
@@ -43,6 +44,7 @@ class SigrunClient(
         return try {
             getForEntity(uriComponentsBuilder.build().toUri(), headers)
         } catch (e: HttpClientErrorException.NotFound) {
+            secureLogger.warn(e.message)
             emptyList()
         }
     }
