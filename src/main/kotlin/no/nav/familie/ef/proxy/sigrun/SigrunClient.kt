@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Component
+import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.client.RestOperations
 import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
@@ -23,7 +24,13 @@ class SigrunClient(
         headers.set("x-filter", "BeregnetSkattPensjonsgivendeInntekt")
         headers.set("x-naturligident", personIdent)
         headers.set("x-inntektsaar", inntektsår.toString())
-        return getForEntity(uriComponentsBuilder.build().toUri(), headers)
+
+        return try {
+            getForEntity(uriComponentsBuilder.build().toUri(), headers)
+        } catch (e: HttpClientErrorException.NotFound) {
+            secureLogger.warn(e.message)
+            emptyList()
+        }
     }
 
     fun hentSummertSkattegrunnlag(personIdent: String, inntektsår: Int): List<Map<String, Any>> {
@@ -34,6 +41,11 @@ class SigrunClient(
         val headers = HttpHeaders()
         headers.set("x-naturligident", personIdent)
 
-        return getForEntity(uriComponentsBuilder.build().toUri(), headers)
+        return try {
+            getForEntity(uriComponentsBuilder.build().toUri(), headers)
+        } catch (e: HttpClientErrorException.NotFound) {
+            secureLogger.warn(e.message)
+            emptyList()
+        }
     }
 }
