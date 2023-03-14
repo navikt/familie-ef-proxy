@@ -33,7 +33,7 @@ spec:
   secureLogs:
     enabled: true
   ingresses:
-    - https://familie-ef-proxy.intern.dev.nav.no
+    - https://familie-ef-proxy.dev.intern.nav.no
     - https://familie-ef-proxy.dev-fss-pub.nais.io
   vault:
     enabled: true
