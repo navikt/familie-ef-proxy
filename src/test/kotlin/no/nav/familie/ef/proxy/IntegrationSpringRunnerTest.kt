@@ -10,7 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.boot.web.server.LocalServerPort
+import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.context.ApplicationContext
 import org.springframework.http.HttpHeaders
 import org.springframework.test.context.ActiveProfiles
@@ -29,6 +29,7 @@ abstract class IntegrationSpringRunnerTest {
 
     @Autowired private lateinit var applicationContext: ApplicationContext
 
+    @Suppress("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired private lateinit var mockOAuth2Server: MockOAuth2Server
 
     @LocalServerPort

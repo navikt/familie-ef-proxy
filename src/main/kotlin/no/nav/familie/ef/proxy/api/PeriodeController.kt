@@ -2,8 +2,8 @@ package no.nav.familie.ef.proxy.api
 
 import no.nav.familie.ef.proxy.integration.SakClient
 import no.nav.familie.ef.proxy.security.StsValidator
-import no.nav.familie.kontrakter.felles.ef.PerioderOvergangsstønadRequest
-import no.nav.familie.kontrakter.felles.ef.PerioderOvergangsstønadResponse
+import no.nav.familie.kontrakter.felles.ef.EksternePerioderRequest
+import no.nav.familie.kontrakter.felles.ef.EksternePerioderResponse
 import no.nav.security.token.support.core.api.Protected
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.PostMapping
@@ -25,7 +25,7 @@ class PeriodeController(
     // PerioderOvergangsstønadRequest er egentlige perioder av alle typer perioder fra EF
     @PostMapping("/periode/overgangsstonad", "/perioder")
     @Protected
-    fun hentPerioder(@RequestBody request: PerioderOvergangsstønadRequest): PerioderOvergangsstønadResponse {
+    fun hentPerioder(@RequestBody request: EksternePerioderRequest): EksternePerioderResponse {
         stsValidator.validateSts("srvArena")
         return sakClient.post(request, "api/ekstern/perioder")
     }
