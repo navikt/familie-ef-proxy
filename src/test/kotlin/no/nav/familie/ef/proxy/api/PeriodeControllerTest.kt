@@ -8,7 +8,7 @@ import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
 import io.mockk.mockk
 import no.nav.familie.ef.proxy.integration.SakClient
 import no.nav.familie.ef.proxy.security.StsValidator
-import no.nav.familie.kontrakter.felles.ef.PerioderOvergangsstønadRequest
+import no.nav.familie.kontrakter.felles.ef.EksternePerioderRequest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.AfterEach
@@ -22,7 +22,7 @@ internal class PeriodeControllerTest {
 
     @Test
     internal fun `skal hente perioder`() {
-        val response = periodeController.hentPerioder(PerioderOvergangsstønadRequest(""))
+        val response = periodeController.hentPerioder(EksternePerioderRequest(""))
         assertThat(response.perioder).isEmpty()
     }
 

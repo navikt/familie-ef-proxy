@@ -45,8 +45,7 @@ management:
     base-path: "/internal"
     path-mapping:
       info: "status/isAlive"
-  metrics.export.prometheus.enabled: true
-  metrics.web.server.request.autotime.enabled: true
+  prometheus.metrics.export.enabled: true
 
 springdoc:
   packagesToScan: no.nav.familie.ef.søknad
