@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.5</version>
+        <version>3.1.2</version>
     </parent>
 
     <repositories>
@@ -27,7 +27,7 @@
         <sha1/>
         <changelist>-SNAPSHOT</changelist>
         <jvmTarget>17</jvmTarget>
-        <kotlin.version>1.8.10</kotlin.version>
+        <kotlin.version>1.9.0</kotlin.version>
         <springdoc.version>2.1.0</springdoc.version>
         <mockk.version>1.13.5</mockk.version>
         <felles.version>2.20230210162649_a258d57-SPRING_BOOT_3</felles.version>
@@ -36,7 +36,7 @@
         <nav.security.version>3.0.10</nav.security.version> <!-- Denne burde være samme versjon som i felles -->
         <okhttp3.version>4.10.0</okhttp3.version> <!-- overskrever spring sin versjon, blir brukt av mock-oauth2-server -->
 
-        <kontrakter.version>3.0_20230404163639_edb8619-JAKARTA</kontrakter.version>
+        <kontrakter.version>3.0_20230731084015_3570802</kontrakter.version>
     </properties>
 
     <dependencies>
@@ -176,7 +176,7 @@
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.8.8</version>
+                    <version>0.8.10</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -234,7 +234,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.4.2</version>
+                <version>3.6.0</version>
                 <executions>
                     <execution>
                         <id>make-assembly</id>
@@ -259,7 +259,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.2</version>
+                <version>3.1.2</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -313,7 +313,7 @@
                     <dependency>
                         <groupId>com.pinterest</groupId>
                         <artifactId>ktlint</artifactId>
-                        <version>0.48.2</version>
+                        <version>0.50.0</version>
                     </dependency>
                     <!-- additional 3rd party ruleset(s) can be specified here -->
                 </dependencies>
