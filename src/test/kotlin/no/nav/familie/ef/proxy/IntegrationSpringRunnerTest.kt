@@ -30,7 +30,8 @@ abstract class IntegrationSpringRunnerTest {
     @Autowired private lateinit var applicationContext: ApplicationContext
 
     @Suppress("SpringJavaInjectionPointsAutowiringInspection")
-    @Autowired private lateinit var mockOAuth2Server: MockOAuth2Server
+    @Autowired
+    private lateinit var mockOAuth2Server: MockOAuth2Server
 
     @LocalServerPort
     private var port: Int? = 0
