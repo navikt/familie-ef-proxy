@@ -21,6 +21,17 @@ import java.time.YearMonth
 @Validated
 class SigrunController(private val sigrunClient: SigrunClient) {
 
+    @PostMapping("/pensjonsgivendeinntekt")
+    fun hentPensjonsgivendeInntekt(
+        @RequestBody personIdent: PersonIdent,
+        @RequestParam("inntektsaar", required = false) inntektsår: Int?,
+    ): List<Map<String, Any>> {
+        return sigrunClient.hentPensjonsgivendeInntekt(
+            personIdent.ident,
+            inntektsår ?: (YearMonth.now().year - 1)
+        )
+    }
+
     @PostMapping("/beregnetskatt")
     fun hentBeregnetSkatt(
         @RequestBody personIdent: PersonIdent,

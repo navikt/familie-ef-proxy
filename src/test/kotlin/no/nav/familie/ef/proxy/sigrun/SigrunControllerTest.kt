@@ -22,6 +22,20 @@ internal class SigrunControllerTest : IntegrationSpringRunnerTest() {
     }
 
     @Test
+    internal fun `kall pensjonsgivendeinntekt med inntektsaar`() {
+        val url = localhost("/api/sigrun/pensjonsgivendeinntekt?inntektsaar=2022")
+        val response = restTemplate.exchange<List<Map<String, String>>>(
+            url,
+            HttpMethod.POST,
+            HttpEntity(mapOf("ident" to "123"), headers),
+        )
+        Assertions.assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
+        Assertions.assertThat(response.body!!).isEqualTo(emptyList<Map<String, Any>>())
+
+        verify(exactly = 1) { sigrunClient.hentPensjonsgivendeInntekt("123", 2022) }
+    }
+
+    @Test
     internal fun `kall beregnetskatt med inntektsaar`() {
         val url = localhost("/api/sigrun/beregnetskatt?inntektsaar=2020")
         val response = restTemplate.exchange<List<Map<String, String>>>(
