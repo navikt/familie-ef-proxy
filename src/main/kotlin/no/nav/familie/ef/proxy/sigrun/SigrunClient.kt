@@ -16,7 +16,6 @@ class SigrunClient(
     @Qualifier("azure") restOperations: RestOperations,
 ) : AbstractRestClient(restOperations, "sigrun") {
 
-
     fun hentPensjonsgivendeInntekt(personIdent: String, inntektsår: Int): List<Map<String, Any>> {
         val uriComponentsBuilder = UriComponentsBuilder.fromUri(uri).pathSegment("v1/pensjonsgivendeinntekt")
 

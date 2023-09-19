@@ -28,7 +28,7 @@ class SigrunController(private val sigrunClient: SigrunClient) {
     ): List<Map<String, Any>> {
         return sigrunClient.hentPensjonsgivendeInntekt(
             personIdent.ident,
-            inntektsår ?: (YearMonth.now().year - 1)
+            inntektsår ?: (YearMonth.now().year - 1),
         )
     }
 
