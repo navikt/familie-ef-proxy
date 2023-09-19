@@ -30,7 +30,7 @@
         <kotlin.version>1.9.10</kotlin.version>
         <springdoc.version>2.2.0</springdoc.version>
         <mockk.version>1.13.7</mockk.version>
-        <felles.version>2.20230825095715_3bcaf53</felles.version>
+        <felles.version>2.20230905101454_06fa3d7</felles.version>
         <start-class>no.nav.familie.ef.proxy.ApplicationKt</start-class>
 
         <nav.security.version>3.0.10</nav.security.version> <!-- Denne burde være samme versjon som i felles -->
@@ -155,7 +155,7 @@
         <dependency>
             <groupId>com.github.tomakehurst</groupId>
             <artifactId>wiremock-jre8-standalone</artifactId>
-            <version>2.35.0</version>
+            <version>2.35.1</version>
             <scope>test</scope>
         </dependency>
 
@@ -171,7 +171,7 @@
                 <plugin>
                     <groupId>org.sonarsource.scanner.maven</groupId>
                     <artifactId>sonar-maven-plugin</artifactId>
-                    <version>3.9.1.2184</version>
+                    <version>3.10.0.2594</version>
                 </plugin>
                 <plugin>
                     <groupId>org.jacoco</groupId>
