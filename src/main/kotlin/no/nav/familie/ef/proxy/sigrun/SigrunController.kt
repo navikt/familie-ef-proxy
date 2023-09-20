@@ -25,7 +25,7 @@ class SigrunController(private val sigrunClient: SigrunClient) {
     fun hentPensjonsgivendeInntekt(
         @RequestBody personIdent: PersonIdent,
         @RequestParam("inntektsaar", required = false) inntektsår: Int?,
-    ): List<Map<String, Any>> {
+    ): Map<String, Any> {
         return sigrunClient.hentPensjonsgivendeInntekt(
             personIdent.ident,
             inntektsår ?: (YearMonth.now().year - 1),
