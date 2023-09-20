@@ -17,7 +17,7 @@ class SigrunClient(
 ) : AbstractRestClient(restOperations, "sigrun") {
 
     fun hentPensjonsgivendeInntekt(personIdent: String, inntektsår: Int): List<Map<String, Any>> {
-        val uriComponentsBuilder = UriComponentsBuilder.fromUri(uri).pathSegment("v1/pensjonsgivendeinntekt")
+        val uriComponentsBuilder = UriComponentsBuilder.fromUri(uri).pathSegment("v1/pensjonsgivendeinntektforfolketrygden")
 
         val headers = HttpHeaders()
         headers.set("Nav-Personident", personIdent)
