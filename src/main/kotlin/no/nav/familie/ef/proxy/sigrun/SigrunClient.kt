@@ -16,7 +16,7 @@ class SigrunClient(
     @Qualifier("azure") restOperations: RestOperations,
 ) : AbstractRestClient(restOperations, "sigrun") {
 
-    fun hentPensjonsgivendeInntekt(personIdent: String, inntektsår: Int): List<Map<String, Any>> {
+    fun hentPensjonsgivendeInntekt(personIdent: String, inntektsår: Int): Map<String, Any> {
         val uriComponentsBuilder = UriComponentsBuilder.fromUri(uri).pathSegment("v1/pensjonsgivendeinntektforfolketrygden")
 
         val headers = HttpHeaders()
@@ -27,7 +27,7 @@ class SigrunClient(
             getForEntity(uriComponentsBuilder.build().toUri(), headers)
         } catch (e: HttpClientErrorException.NotFound) {
             secureLogger.warn(e.message)
-            emptyList()
+            emptyMap()
         }
     }
 
