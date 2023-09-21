@@ -27,7 +27,7 @@ class SigrunClient(
             getForEntity(uriComponentsBuilder.build().toUri(), headers)
         } catch (e: HttpClientErrorException.NotFound) {
             secureLogger.warn(e.message)
-            emptyMap()
+            throw e
         }
     }
 
