@@ -61,6 +61,11 @@ spec:
         - application: familie-ef-sak-lokal
           namespace: teamfamilie
           cluster: dev-gcp
+    outbound:
+      rules:
+        - application: sigrun
+          namespace: team-inntekt
+          cluster: dev-fss
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: dev

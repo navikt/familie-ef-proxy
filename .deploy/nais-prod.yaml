@@ -58,6 +58,11 @@ spec:
         - application: familie-ef-personhendelse
           namespace: teamfamilie
           cluster: prod-gcp
+    outbound:
+      rules:
+        - application: sigrun
+          namespace: team-inntekt
+          cluster: prod-fss
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: prod
