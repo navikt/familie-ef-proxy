@@ -12,6 +12,8 @@ jobs:
   build:
     name: Build, push and deploy to dev-fss and prod-fss
     runs-on: ubuntu-latest
+    permissions:
+      packages: "write"
     steps:
       - uses: actions/checkout@v4
         with:

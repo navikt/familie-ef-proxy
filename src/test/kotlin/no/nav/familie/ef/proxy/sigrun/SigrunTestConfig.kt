@@ -15,6 +15,7 @@ class SigrunTestConfig {
     @Primary
     fun sigrunClient(): SigrunClient {
         val client = mockk<SigrunClient>()
+        every { client.hentPensjonsgivendeInntekt(any(), any()) } returns emptyMap()
         every { client.hentBeregnetSkatt(any(), any()) } returns emptyList()
         every { client.hentSummertSkattegrunnlag(any(), any()) } returns emptyList()
         return client
