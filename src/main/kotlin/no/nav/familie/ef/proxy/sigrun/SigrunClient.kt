@@ -21,7 +21,7 @@ class SigrunClient(
 
         val headers = HttpHeaders()
         headers.set("Nav-Personident", personIdent)
-        headers.set("norskident", personIdent)
+        headers.set("norskident", personIdent) // Kan fjernes når pensjonsgivende inntekt er tilgjengelig i Dolly
         headers.set("inntektsaar", inntektsår.toString())
 
         return try {
