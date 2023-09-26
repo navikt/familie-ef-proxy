@@ -21,6 +21,7 @@ class SigrunClient(
 
         val headers = HttpHeaders()
         headers.set("Nav-Personident", personIdent)
+        headers.set("norskident", personIdent)
         headers.set("inntektsaar", inntektsår.toString())
 
         return try {
