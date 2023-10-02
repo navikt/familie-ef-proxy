@@ -22,4 +22,9 @@ class ArbeidOgInntektController(private val client: ArbeidOgInntektClient) {
     fun hentUrlTilArbeidOgInntekt(@RequestBody request: PersonIdent): String {
         return client.hentUrlTilArbeidOgInntekt(request.ident)
     }
+
+    @PostMapping("generer-url-arbeidsforhold")
+    fun hentUrlTilArbeidOgInntektArbeidsforhold(@RequestBody personIdent: PersonIdent): String {
+        return client.hentUrlTilArbeidsforhold(personIdent.ident)
+    }
 }
