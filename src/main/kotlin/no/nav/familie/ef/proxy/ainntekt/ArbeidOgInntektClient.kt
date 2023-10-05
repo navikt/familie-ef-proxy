@@ -18,6 +18,9 @@ class ArbeidOgInntektClient(
     private val redirectUri = UriComponentsBuilder.fromUri(uri)
         .pathSegment("api/v2/redirect/sok/a-inntekt").build().toUri()
 
+    private val redirectUriArbeidsforhold = UriComponentsBuilder.fromUri(uri)
+        .pathSegment("api/v2/redirect/sok/arbeidstaker").build().toUri()
+
     fun hentUrlTilArbeidOgInntekt(personIdent: String): String {
         return getForEntity(
             redirectUri,
@@ -25,6 +28,16 @@ class ArbeidOgInntektClient(
                 accept = listOf(MediaType.TEXT_PLAIN)
                 set("Nav-Personident", personIdent)
             },
+        )
+    }
+
+    fun hentUrlTilArbeidsforhold(personIdent: String): String {
+        return getForEntity(
+            redirectUriArbeidsforhold,
+            HttpHeaders().apply {
+                accept = listOf(MediaType.TEXT_PLAIN)
+                set("Nav-Personident", personIdent)
+            }
         )
     }
 }
