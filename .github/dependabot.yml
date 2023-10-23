@@ -14,6 +14,10 @@ updates:
       interval: weekly
       day: "sunday"
       time: "04:00"
+    groups:
+      all-dependencies:
+        patterns:
+          - "*"
   - package-ecosystem: maven
     directory: "/"
     schedule:
