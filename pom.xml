@@ -26,7 +26,7 @@
         <revision>1.0</revision>
         <sha1/>
         <changelist>-SNAPSHOT</changelist>
-        <jvmTarget>17</jvmTarget>
+        <jvmTarget>21</jvmTarget>
         <kotlin.version>1.9.20</kotlin.version>
         <springdoc.version>2.2.0</springdoc.version>
         <mockk.version>1.13.8</mockk.version>

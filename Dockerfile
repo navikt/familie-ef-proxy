@@ -1,4 +1,4 @@
-FROM ghcr.io/navikt/baseimages/temurin:17
+FROM ghcr.io/navikt/baseimages/temurin:21
 
 ENV APP_NAME=familie-ef-proxy
 ENV JAVA_OPTS="-XX:MaxRAMPercentage=75"
