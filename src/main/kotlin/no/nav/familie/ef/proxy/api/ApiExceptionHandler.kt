@@ -52,6 +52,7 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(Throwable::class)
     fun handleThrowable(throwable: Throwable): ResponseEntity<FeilDto> {
+        secureLogger.warn("Noe galt skjedde", throwable)
         val responseStatus = throwable::class.annotations.find { it is ResponseStatus }?.let { it as ResponseStatus }
         if (responseStatus != null) {
             return håndtertResponseStatusFeil(throwable, responseStatus)
