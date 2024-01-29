@@ -30,7 +30,7 @@
         <kotlin.version>1.9.22</kotlin.version>
         <springdoc.version>2.3.0</springdoc.version>
         <mockk.version>1.13.9</mockk.version>
-        <felles.version>2.20240117140616_50f71cd</felles.version>
+        <felles.version>2.20240123084817_35f03aa</felles.version>
         <start-class>no.nav.familie.ef.proxy.ApplicationKt</start-class>
 
         <nav.security.version>3.2.0</nav.security.version> <!-- Denne burde være samme versjon som i felles -->
