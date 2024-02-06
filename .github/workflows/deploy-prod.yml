@@ -53,12 +53,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Deploy til dev-fss
-        uses: nais/deploy/actions/deploy@v1
+        uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: dev-fss
           RESOURCE: .deploy/nais-dev.yaml
       - name: Deploy til prod-fss
-        uses: nais/deploy/actions/deploy@v1
+        uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: prod-fss
           RESOURCE: .deploy/nais-prod.yaml
