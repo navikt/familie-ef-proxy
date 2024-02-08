@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.5</version>
+        <version>3.2.2</version>
     </parent>
 
     <repositories>
@@ -27,16 +27,16 @@
         <sha1/>
         <changelist>-SNAPSHOT</changelist>
         <jvmTarget>21</jvmTarget>
-        <kotlin.version>1.9.20</kotlin.version>
-        <springdoc.version>2.2.0</springdoc.version>
-        <mockk.version>1.13.8</mockk.version>
-        <felles.version>2.20231023162434_fa320ce</felles.version>
+        <kotlin.version>1.9.22</kotlin.version>
+        <springdoc.version>2.3.0</springdoc.version>
+        <mockk.version>1.13.9</mockk.version>
+        <felles.version>2.20240117140616_50f71cd</felles.version>
         <start-class>no.nav.familie.ef.proxy.ApplicationKt</start-class>
 
-        <nav.security.version>3.0.10</nav.security.version> <!-- Denne burde være samme versjon som i felles -->
+        <nav.security.version>3.2.0</nav.security.version> <!-- Denne burde være samme versjon som i felles -->
         <okhttp3.version>4.10.0</okhttp3.version> <!-- overskrever spring sin versjon, blir brukt av mock-oauth2-server -->
 
-        <kontrakter.version>3.0_20231114145122_eb1ce78</kontrakter.version>
+        <kontrakter.version>3.0_20240116082529_ee44807</kontrakter.version>
     </properties>
 
     <dependencies>
@@ -122,7 +122,16 @@
             <artifactId>felles</artifactId>
             <version>${kontrakter.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>no.nav.security</groupId>
+            <artifactId>token-client-core</artifactId>
+            <version>${nav.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>no.nav.security</groupId>
+            <artifactId>token-client-spring</artifactId>
+            <version>${nav.security.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-test-junit5</artifactId>
@@ -263,7 +272,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.2.2</version>
+                <version>3.2.5</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
