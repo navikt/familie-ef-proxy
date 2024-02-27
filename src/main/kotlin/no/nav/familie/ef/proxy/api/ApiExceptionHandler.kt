@@ -1,5 +1,6 @@
 package no.nav.familie.ef.proxy.api
 
+import java.nio.channels.ClosedChannelException
 import no.nav.security.token.support.spring.validation.interceptor.JwtTokenUnauthorizedException
 import org.slf4j.LoggerFactory
 import org.springframework.core.NestedExceptionUtils
@@ -61,7 +62,7 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
 
     private fun uventetFeil(throwable: Throwable): ResponseEntity<FeilDto> {
         val rootCause = NestedExceptionUtils.getMostSpecificCause(throwable)
-        if (rootCause is TimeoutException) {
+        if (rootCause is TimeoutException || rootCause is ClosedChannelException) {
             secureLogger.warn("En feil har oppstått", throwable)
             logger.warn("En feil har oppstått - throwable=${rootCause.javaClass.simpleName} ")
         } else {
