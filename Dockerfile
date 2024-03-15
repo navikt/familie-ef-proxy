@@ -5,5 +5,6 @@ ENV APP_NAME=familie-ef-proxy
 
 COPY init.sh /init-scripts/init.sh
 COPY ./target/familie-ef-proxy-jar-with-dependencies.jar  /app.jar
-CMD ["-XX:MaxRAMPercentage=75.0", "-jar", "/app.jar"]
+ENV JAVA_OPTS="-XX:MaxRAMPercentage=75"
+CMD ["-jar", "/app.jar"]
 
