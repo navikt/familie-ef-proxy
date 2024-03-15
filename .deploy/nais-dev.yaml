@@ -27,7 +27,7 @@ spec:
       memory: 256Mi
     requests:
       memory: 256Mi
-      cpu: 500m
+      cpu: 2m
   secureLogs:
     enabled: true
   ingresses:
