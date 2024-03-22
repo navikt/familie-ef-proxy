@@ -43,7 +43,7 @@ class StsClient(
             .toUriString()
         val headers = HttpHeaders()
         headers.accept = listOf(MediaType.APPLICATION_JSON)
-        val clientId = SpringTokenValidationContextHolder().tokenValidationContext.getClaims("azuread")["azp_name"] as String
+        val clientId = SpringTokenValidationContextHolder().getTokenValidationContext().getClaims("azuread").get("azp_name") as String
         headers.setBasicAuth(credentialForClientId(clientId))
         val entity = HttpEntity<String>(headers)
 

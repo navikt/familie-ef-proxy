@@ -16,13 +16,12 @@ import java.util.concurrent.ConcurrentHashMap
 
 internal class StsValidatorDevTest {
 
-    private lateinit var contextHolder: TokenValidationContextHolder
+    private lateinit var contextHolder: TokenValidationContextHolderImpl
     private lateinit var stsValidator: StsValidatorDev
 
     @BeforeEach
     internal fun setUp() {
-        contextHolder = createContextHolder()
-        contextHolder.tokenValidationContext = TokenValidationContext(emptyMap())
+        contextHolder = createContextHolder(TokenValidationContext(emptyMap()))
         stsValidator = StsValidatorDev(contextHolder)
     }
 
@@ -35,7 +34,7 @@ internal class StsValidatorDevTest {
 
     @Test
     internal fun `har token med feil issuer`() {
-        setupValidOidcContext("azuread", "annetSubject")
+        setupStsValidatorWithTokenValidationContext("azuread", "annetSubject")
         assertThat(catchThrowable { stsValidator.validateSts("subject") })
             .isInstanceOf(JwtTokenMissingException::class.java)
             .hasMessage("Savner gyldig issuer")
@@ -43,7 +42,7 @@ internal class StsValidatorDevTest {
 
     @Test
     internal fun `har token med feil subject`() {
-        setupValidOidcContext("sts", "annetSubject")
+        setupStsValidatorWithTokenValidationContext("sts", "annetSubject")
         assertThat(catchThrowable { stsValidator.validateSts("subject") })
             .isInstanceOf(JwtTokenInvalidClaimException::class.java)
             .hasMessage("Subject validerer ikke")
@@ -51,13 +50,13 @@ internal class StsValidatorDevTest {
 
     @Test
     internal fun `validerer sts med riktig subject`() {
-        setupValidOidcContext("sts", "subject")
+        setupStsValidatorWithTokenValidationContext("sts", "subject")
         stsValidator.validateSts("subject")
     }
 
     @Test
     internal fun `validerer stsTest med riktig subject`() {
-        setupValidOidcContext("stsTest", "subject")
+        setupStsValidatorWithTokenValidationContext("stsTest", "subject")
         stsValidator.validateSts("subject")
     }
 
@@ -67,14 +66,15 @@ internal class StsValidatorDevTest {
         return TokenValidationContext(map)
     }
 
-    private fun setupValidOidcContext(issuerName: String, subject: String) {
+    private fun setupStsValidatorWithTokenValidationContext(issuerName: String, subject: String) {
         val claims: JwtToken = createJwtToken(
             "aclaim",
             "value",
             subject,
         )
         val context = createOidcValidationContext(issuerName, claims)
-        contextHolder.tokenValidationContext = context
+        contextHolder = createContextHolder(context)
+        stsValidator = StsValidatorDev(contextHolder)
     }
 
     private fun createJwtToken(claimName: String, claimValue: String, subject: String): JwtToken {
@@ -87,16 +87,18 @@ internal class StsValidatorDevTest {
         return JwtToken(jwt.serialize())
     }
 
-    private fun createContextHolder(): TokenValidationContextHolder {
-        return object : TokenValidationContextHolder {
-            var validationContext: TokenValidationContext? = null
-            override fun getTokenValidationContext(): TokenValidationContext {
-                return validationContext!!
-            }
+    private fun createContextHolder(tokenValidationContext: TokenValidationContext): TokenValidationContextHolderImpl {
+        return TokenValidationContextHolderImpl(tokenValidationContext)
+    }
+}
 
-            override fun setTokenValidationContext(tokenValidationContext: TokenValidationContext) {
-                validationContext = tokenValidationContext
-            }
-        }
+data class TokenValidationContextHolderImpl(var validationContext: TokenValidationContext?) : TokenValidationContextHolder {
+
+    override fun getTokenValidationContext(): TokenValidationContext {
+        return validationContext!!
+    }
+
+    override fun setTokenValidationContext(tokenValidationContext: TokenValidationContext?) {
+        validationContext = tokenValidationContext
     }
 }
