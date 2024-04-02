@@ -1,6 +1,5 @@
 package no.nav.familie.ef.proxy.api
 
-import java.nio.channels.ClosedChannelException
 import no.nav.security.token.support.spring.validation.interceptor.JwtTokenUnauthorizedException
 import org.slf4j.LoggerFactory
 import org.springframework.core.NestedExceptionUtils
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
+import java.nio.channels.ClosedChannelException
 import java.util.concurrent.TimeoutException
 
 @Suppress("unused")
