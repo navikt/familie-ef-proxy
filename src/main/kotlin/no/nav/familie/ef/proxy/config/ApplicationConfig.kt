@@ -10,6 +10,7 @@ import no.nav.familie.http.sts.StsRestClient
 import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.log.filter.LogFilter
 import no.nav.familie.log.filter.RequestTimeFilter
+import no.nav.security.token.support.client.spring.oauth2.DefaultOAuth2HttpClient
 import no.nav.security.token.support.client.spring.oauth2.EnableOAuth2Client
 import no.nav.security.token.support.spring.api.EnableJwtTokenValidation
 import org.slf4j.LoggerFactory
@@ -21,7 +22,9 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Primary
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory
 import org.springframework.scheduling.annotation.EnableScheduling
+import org.springframework.web.client.RestClient
 import org.springframework.web.client.RestOperations
 
 @SpringBootConfiguration
@@ -70,5 +73,15 @@ class ApplicationConfig {
             consumerIdClientInterceptor,
             MdcValuesPropagatingClientInterceptor(),
         ).build()
+    }
+
+    @Bean
+    @Primary
+    fun oAuth2HttpClient(): DefaultOAuth2HttpClient {
+        val requestFactory = HttpComponentsClientHttpRequestFactory()
+        val restClient = RestClient.builder()
+            .requestFactory(requestFactory)
+            .build()
+        return DefaultOAuth2HttpClient(restClient)
     }
 }
