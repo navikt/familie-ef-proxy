@@ -2,6 +2,7 @@ package no.nav.familie.ef.proxy.config
 
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import no.nav.familie.http.client.RetryOAuth2HttpClient
+import no.nav.familie.http.config.NaisProxyCustomizer
 import no.nav.familie.http.config.RestTemplateAzure
 import no.nav.familie.http.config.RestTemplateSts
 import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor
@@ -15,6 +16,7 @@ import no.nav.security.token.support.client.core.http.OAuth2HttpClient
 import no.nav.security.token.support.client.spring.oauth2.DefaultOAuth2HttpClient
 import no.nav.security.token.support.client.spring.oauth2.EnableOAuth2Client
 import no.nav.security.token.support.spring.api.EnableJwtTokenValidation
+import org.apache.hc.client5.http.classic.HttpClient
 import org.slf4j.LoggerFactory
 import org.springframework.boot.SpringBootConfiguration
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
@@ -77,5 +79,18 @@ class ApplicationConfig {
             consumerIdClientInterceptor,
             MdcValuesPropagatingClientInterceptor(),
         ).build()
+    }
+
+    @Primary
+    @Bean
+    fun oAuth2HttpClient(): OAuth2HttpClient {
+        return RetryOAuth2HttpClient(
+            RestClient.create(
+                RestTemplateBuilder()
+                    .additionalCustomizers(NaisProxyCustomizer(2_000, 2_000, 4_000))
+                    .setConnectTimeout(Duration.of(2, ChronoUnit.SECONDS))
+                    .setReadTimeout(Duration.of(4, ChronoUnit.SECONDS)).build(),
+            ),
+        )
     }
 }
