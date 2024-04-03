@@ -1,6 +1,7 @@
 package no.nav.familie.ef.proxy.config
 
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import no.nav.familie.http.client.RetryOAuth2HttpClient
 import no.nav.familie.http.config.RestTemplateAzure
 import no.nav.familie.http.config.RestTemplateSts
 import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor
@@ -10,6 +11,7 @@ import no.nav.familie.http.sts.StsRestClient
 import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.log.filter.LogFilter
 import no.nav.familie.log.filter.RequestTimeFilter
+import no.nav.security.token.support.client.core.http.OAuth2HttpClient
 import no.nav.security.token.support.client.spring.oauth2.DefaultOAuth2HttpClient
 import no.nav.security.token.support.client.spring.oauth2.EnableOAuth2Client
 import no.nav.security.token.support.spring.api.EnableJwtTokenValidation
@@ -26,6 +28,8 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory
 import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.RestOperations
+import java.time.Duration
+import java.time.temporal.ChronoUnit
 
 @SpringBootConfiguration
 @ConfigurationPropertiesScan
@@ -73,15 +77,5 @@ class ApplicationConfig {
             consumerIdClientInterceptor,
             MdcValuesPropagatingClientInterceptor(),
         ).build()
-    }
-
-    @Bean
-    @Primary
-    fun oAuth2HttpClient(): DefaultOAuth2HttpClient {
-        val requestFactory = HttpComponentsClientHttpRequestFactory()
-        val restClient = RestClient.builder()
-            .requestFactory(requestFactory)
-            .build()
-        return DefaultOAuth2HttpClient(restClient)
     }
 }

@@ -8,6 +8,7 @@ metadata:
 
 spec:
   image: {{ image }}
+  webproxy: true
   liveness:
     path: /internal/status/isAlive
     initialDelay: 30
