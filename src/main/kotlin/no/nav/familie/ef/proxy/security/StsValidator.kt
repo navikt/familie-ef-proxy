@@ -9,13 +9,15 @@ interface StsValidator {
 }
 
 fun TokenValidationContext.validateIssuerWithSubject(issuerName: String, subject: String): Boolean {
-    val sts = this.getClaims(issuerName)
-    if (sts != null) {
-        if (sts.subject == subject) {
-            return true
-        } else {
-            throw JwtTokenInvalidClaimException("Subject validerer ikke")
-        }
+    val sts = try {
+        this.getClaims(issuerName)
+    } catch (e: IllegalArgumentException) {
+        return false
     }
-    return false
+
+    if (sts.subject == subject) {
+        return true
+    } else {
+        throw JwtTokenInvalidClaimException("Subject validerer ikke")
+    }
 }

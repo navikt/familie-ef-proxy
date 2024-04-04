@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component
 class StsValidatorDev(private val tokenValidationContextHolder: TokenValidationContextHolder) : StsValidator {
 
     override fun validateSts(subject: String) {
-        val context = tokenValidationContextHolder.tokenValidationContext
+        val context = tokenValidationContextHolder.getTokenValidationContext()
             ?: error("tokenValidationContext cannot be null, check your configuration")
         if (context.validateIssuerWithSubject("sts", subject) || context.validateIssuerWithSubject("stsTest", subject)) {
             return
