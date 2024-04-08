@@ -23,6 +23,7 @@ class SigrunClient(
         headers.set("Nav-Personident", personIdent)
         headers.set("norskident", personIdent) // Kan fjernes når pensjonsgivende inntekt er tilgjengelig i Dolly og dermed ikke trenger å gå mot stub-endepunktet
         headers.set("inntektsaar", inntektsår.toString())
+        headers.set("rettighetspakke", "navEnsligForsoerger")
 
         return try {
             getForEntity(uriComponentsBuilder.build().toUri(), headers)
