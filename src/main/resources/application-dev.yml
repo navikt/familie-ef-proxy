@@ -12,7 +12,7 @@ CLUSTER_ENV: dev
 EF_SAK_URL: https://familie-ef-sak.intern.dev.nav.no
 EREG_URL: https://modapp-q2.adeo.no/ereg/api/v1/organisasjon
 INNTEKT_URL: https://app-q2.adeo.no/inntektskomponenten-ws/rs/api
-SIGRUN_URL: https://sigrun-skd-stub.dev.adeo.no/api
+SIGRUN_URL: https://sigrun-q2.dev.adeo.no/api
 ARBEID_INNTEKT_URL: https://arbeid-og-inntekt.dev.adeo.no
 STS_URL: https://security-token-service.nais.preprod.local/rest/v1/sts/token
 EF_PERSONHENDELSE_CLIENT_ID: dev-gcp:teamfamilie:familie-ef-personhendelse
