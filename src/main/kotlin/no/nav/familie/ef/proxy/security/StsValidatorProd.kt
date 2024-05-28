@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component
 @Profile("prod")
 @Component
 class StsValidatorProd(private val tokenValidationContextHolder: TokenValidationContextHolder) : StsValidator {
-
     override fun validateSts(subject: String) {
-        val context = tokenValidationContextHolder.getTokenValidationContext()
-            ?: error("tokenValidationContext cannot be null, check your configuration")
+        val context =
+            tokenValidationContextHolder.getTokenValidationContext()
+                ?: error("tokenValidationContext cannot be null, check your configuration")
         if (context.validateIssuerWithSubject("sts", subject)) {
             return
         }

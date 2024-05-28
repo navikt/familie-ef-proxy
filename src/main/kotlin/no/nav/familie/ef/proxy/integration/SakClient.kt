@@ -17,8 +17,10 @@ class SakClient(
     @Value("\${EF_SAK_URL}") private val uri: URI,
 ) :
     AbstractPingableRestClient(restOperations, "familie.sak") {
-
-    fun post(data: Any, path: String): EksternePerioderResponse {
+    fun post(
+        data: Any,
+        path: String,
+    ): EksternePerioderResponse {
         val uri = UriComponentsBuilder.fromUri(uri).pathSegment(path).build().toUri()
         val postForEntity = postForEntity<Ressurs<EksternePerioderResponse>>(uri, data)
         return postForEntity.getDataOrThrow()

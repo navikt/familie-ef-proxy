@@ -21,7 +21,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @ActiveProfiles("integrasjonstest")
 @EnableMockOAuth2Server
 abstract class IntegrationSpringRunnerTest {
-
     protected val listAppender = initLoggingEventListAppender()
     protected var loggingEvents: MutableList<ILoggingEvent> = listAppender.list
     protected val restTemplate = TestRestTemplate()
@@ -55,7 +54,10 @@ abstract class IntegrationSpringRunnerTest {
         return LOCALHOST + getPort() + uri
     }
 
-    protected fun url(baseUrl: String, uri: String): String {
+    protected fun url(
+        baseUrl: String,
+        uri: String,
+    ): String {
         return baseUrl + uri
     }
 
@@ -64,13 +66,16 @@ abstract class IntegrationSpringRunnerTest {
             return clientToken()
         }
 
-    protected fun clientToken(clientId: String = "1", accessAsApplication: Boolean = true): String {
+    protected fun clientToken(
+        clientId: String = "1",
+        accessAsApplication: Boolean = true,
+    ): String {
         return TokenUtil.clientToken(mockOAuth2Server, clientId, accessAsApplication)
     }
 
     companion object {
-
         private const val LOCALHOST = "http://localhost:"
+
         protected fun initLoggingEventListAppender(): ListAppender<ILoggingEvent> {
             val listAppender = ListAppender<ILoggingEvent>()
             listAppender.start()

@@ -20,7 +20,6 @@ import java.time.YearMonth
 @ProtectedWithClaims(issuer = "azuread")
 @Validated
 class SigrunController(private val sigrunClient: SigrunClient) {
-
     @PostMapping("/pensjonsgivendeinntekt")
     fun hentPensjonsgivendeInntekt(
         @RequestBody personIdent: PersonIdent,

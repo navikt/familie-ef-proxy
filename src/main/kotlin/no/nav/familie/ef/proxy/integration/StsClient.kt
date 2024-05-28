@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 import java.time.LocalDateTime
-import java.util.*
+import java.util.Base64
 
 @Component
 class StsClient(
@@ -33,14 +33,14 @@ class StsClient(
     @Value("\${EF_SAK_CLIENT_ID}")
     private val efSakClientId: String,
 ) {
-
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
     fun hentStsToken(): Token {
-        val stsUri = UriComponentsBuilder.fromUri(stsUri)
-            .queryParam("grant_type", "client_credentials")
-            .queryParam("scope", "openid")
-            .toUriString()
+        val stsUri =
+            UriComponentsBuilder.fromUri(stsUri)
+                .queryParam("grant_type", "client_credentials")
+                .queryParam("scope", "openid")
+                .toUriString()
         val headers = HttpHeaders()
         headers.accept = listOf(MediaType.APPLICATION_JSON)
         val clientId = SpringTokenValidationContextHolder().getTokenValidationContext().getClaims("azuread").get("azp_name") as String
@@ -62,7 +62,9 @@ class StsClient(
         }
     }
 
-    private fun credentialsPersonhendelse() = Base64.getEncoder().encodeToString("$usernamePersonhendelse:$passwordPersonhendelse".toByteArray(Charsets.UTF_8))
+    private fun credentialsPersonhendelse() =
+        Base64.getEncoder().encodeToString("$usernamePersonhendelse:$passwordPersonhendelse".toByteArray(Charsets.UTF_8))
+
     private fun credentialsEfSak() = Base64.getEncoder().encodeToString("$usernameEfSak:$passwordEfSak".toByteArray(Charsets.UTF_8))
 
     private fun Token?.shouldBeRenewed(): Boolean = this?.hasExpired() ?: true
@@ -75,7 +77,6 @@ class StsClient(
         @JsonProperty(value = "expires_in", required = true)
         val expiresIn: Int,
     ) {
-
         private val expirationTime: LocalDateTime = LocalDateTime.now().plusSeconds(expiresIn - 20L)
 
         fun hasExpired(): Boolean = expirationTime.isBefore(LocalDateTime.now())

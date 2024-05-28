@@ -13,18 +13,21 @@ import org.springframework.web.bind.annotation.RestController
 @ProtectedWithClaims(issuer = "azuread")
 @Validated
 class ArbeidOgInntektController(private val client: ArbeidOgInntektClient) {
-
     /**
      * Brukes for å generere en url til arbeid-og-inntekt
      * for å kunne sende saksbehandleren til identen sin side på arbeid og inntekt
      */
     @PostMapping("generer-url")
-    fun hentUrlTilArbeidOgInntekt(@RequestBody request: PersonIdent): String {
+    fun hentUrlTilArbeidOgInntekt(
+        @RequestBody request: PersonIdent,
+    ): String {
         return client.hentUrlTilArbeidOgInntekt(request.ident)
     }
 
     @PostMapping("generer-url-arbeidsforhold")
-    fun hentUrlTilArbeidOgInntektArbeidsforhold(@RequestBody personIdent: PersonIdent): String {
+    fun hentUrlTilArbeidOgInntektArbeidsforhold(
+        @RequestBody personIdent: PersonIdent,
+    ): String {
         return client.hentUrlTilArbeidsforhold(personIdent.ident)
     }
 }

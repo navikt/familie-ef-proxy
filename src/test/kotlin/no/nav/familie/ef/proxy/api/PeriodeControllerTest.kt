@@ -19,7 +19,6 @@ import org.springframework.web.client.RestOperations
 import java.net.URI
 
 internal class PeriodeControllerTest {
-
     @Test
     internal fun `skal hente perioder`() {
         val response = periodeController.hentPerioder(EksternePerioderRequest(""))
@@ -27,7 +26,6 @@ internal class PeriodeControllerTest {
     }
 
     companion object {
-
         private val restOperations: RestOperations = RestTemplateBuilder().build()
         lateinit var wiremockServerItem: WireMockServer
         lateinit var periodeController: PeriodeController

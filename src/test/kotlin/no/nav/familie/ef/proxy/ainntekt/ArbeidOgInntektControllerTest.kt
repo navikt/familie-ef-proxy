@@ -14,7 +14,6 @@ import org.springframework.web.client.RestOperations
 import java.net.URI
 
 internal class ArbeidOgInntektControllerTest {
-
     @Test
     internal fun `skal hente url fra arbeid og inntekt`() {
         val response = controller.hentUrlTilArbeidOgInntekt(PersonIdent("1"))
@@ -22,7 +21,6 @@ internal class ArbeidOgInntektControllerTest {
     }
 
     companion object {
-
         private val restOperations: RestOperations = RestTemplateBuilder().build()
         lateinit var wiremockServerItem: WireMockServer
         lateinit var controller: ArbeidOgInntektController

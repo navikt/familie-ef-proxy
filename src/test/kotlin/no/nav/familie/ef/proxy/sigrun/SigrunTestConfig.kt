@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Profile
 @Configuration
 @Profile("integrasjonstest")
 class SigrunTestConfig {
-
     @Bean
     @Primary
     fun sigrunClient(): SigrunClient {

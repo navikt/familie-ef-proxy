@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test
 import java.util.concurrent.ConcurrentHashMap
 
 internal class StsValidatorDevTest {
-
     private lateinit var contextHolder: TokenValidationContextHolderImpl
     private lateinit var stsValidator: StsValidatorDev
 
@@ -60,30 +59,42 @@ internal class StsValidatorDevTest {
         stsValidator.validateSts("subject")
     }
 
-    private fun createOidcValidationContext(issuerShortName: String, jwtToken: JwtToken): TokenValidationContext {
+    private fun createOidcValidationContext(
+        issuerShortName: String,
+        jwtToken: JwtToken,
+    ): TokenValidationContext {
         val map: MutableMap<String, JwtToken> = ConcurrentHashMap()
         map[issuerShortName] = jwtToken
         return TokenValidationContext(map)
     }
 
-    private fun setupStsValidatorWithTokenValidationContext(issuerName: String, subject: String) {
-        val claims: JwtToken = createJwtToken(
-            "aclaim",
-            "value",
-            subject,
-        )
+    private fun setupStsValidatorWithTokenValidationContext(
+        issuerName: String,
+        subject: String,
+    ) {
+        val claims: JwtToken =
+            createJwtToken(
+                "aclaim",
+                "value",
+                subject,
+            )
         val context = createOidcValidationContext(issuerName, claims)
         contextHolder = createContextHolder(context)
         stsValidator = StsValidatorDev(contextHolder)
     }
 
-    private fun createJwtToken(claimName: String, claimValue: String, subject: String): JwtToken {
-        val jwt: JWT = PlainJWT(
-            JWTClaimsSet.Builder()
-                .subject(subject)
-                .issuer("http//issuer1")
-                .claim(claimName, claimValue).build(),
-        )
+    private fun createJwtToken(
+        claimName: String,
+        claimValue: String,
+        subject: String,
+    ): JwtToken {
+        val jwt: JWT =
+            PlainJWT(
+                JWTClaimsSet.Builder()
+                    .subject(subject)
+                    .issuer("http//issuer1")
+                    .claim(claimName, claimValue).build(),
+            )
         return JwtToken(jwt.serialize())
     }
 
@@ -93,7 +104,6 @@ internal class StsValidatorDevTest {
 }
 
 data class TokenValidationContextHolderImpl(var validationContext: TokenValidationContext?) : TokenValidationContextHolder {
-
     override fun getTokenValidationContext(): TokenValidationContext {
         return validationContext!!
     }

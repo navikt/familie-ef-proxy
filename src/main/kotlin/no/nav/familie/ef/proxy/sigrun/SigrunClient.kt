@@ -15,13 +15,16 @@ class SigrunClient(
     @Value("\${SIGRUN_URL}") private val uri: URI,
     @Qualifier("azure") restOperations: RestOperations,
 ) : AbstractRestClient(restOperations, "sigrun") {
-
-    fun hentPensjonsgivendeInntekt(personIdent: String, inntektsår: Int): Map<String, Any> {
+    fun hentPensjonsgivendeInntekt(
+        personIdent: String,
+        inntektsår: Int,
+    ): Map<String, Any> {
         val uriComponentsBuilder = UriComponentsBuilder.fromUri(uri).pathSegment("v1/pensjonsgivendeinntektforfolketrygden")
 
         val headers = HttpHeaders()
         headers.set("Nav-Personident", personIdent)
-        headers.set("norskident", personIdent) // Kan fjernes når pensjonsgivende inntekt er tilgjengelig i Dolly og dermed ikke trenger å gå mot stub-endepunktet
+        // Kan fjerne norskident når pensjonsgivende inntekt er tilgjengelig i Dolly og dermed ikke trenger å gå mot stub-endepunktet
+        headers.set("norskident", personIdent)
         headers.set("inntektsaar", inntektsår.toString())
         headers.set("rettighetspakke", "navEnsligForsoerger")
 
@@ -33,9 +36,13 @@ class SigrunClient(
         }
     }
 
-    fun hentBeregnetSkatt(personIdent: String, inntektsår: Int): List<Map<String, Any>> {
-        val uriComponentsBuilder = UriComponentsBuilder.fromUri(uri).pathSegment("beregnetskatt")
-            .queryParam("inntektsaar", inntektsår)
+    fun hentBeregnetSkatt(
+        personIdent: String,
+        inntektsår: Int,
+    ): List<Map<String, Any>> {
+        val uriComponentsBuilder =
+            UriComponentsBuilder.fromUri(uri).pathSegment("beregnetskatt")
+                .queryParam("inntektsaar", inntektsår)
 
         val headers = HttpHeaders()
         headers.set("x-filter", "BeregnetSkattPensjonsgivendeInntekt")
@@ -50,10 +57,14 @@ class SigrunClient(
         }
     }
 
-    fun hentSummertSkattegrunnlag(personIdent: String, inntektsår: Int): List<Map<String, Any>> {
-        val uriComponentsBuilder = UriComponentsBuilder.fromUri(uri).pathSegment("v1/summertskattegrunnlag")
-            .queryParam("inntektsaar", inntektsår)
-            .queryParam("inntektsfilter", "SummertSkattegrunnlagEnsligForsorger")
+    fun hentSummertSkattegrunnlag(
+        personIdent: String,
+        inntektsår: Int,
+    ): List<Map<String, Any>> {
+        val uriComponentsBuilder =
+            UriComponentsBuilder.fromUri(uri).pathSegment("v1/summertskattegrunnlag")
+                .queryParam("inntektsaar", inntektsår)
+                .queryParam("inntektsfilter", "SummertSkattegrunnlagEnsligForsorger")
 
         val headers = HttpHeaders()
         headers.set("x-naturligident", personIdent)

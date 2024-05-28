@@ -14,12 +14,13 @@ class ArbeidOgInntektClient(
     @Value("\${ARBEID_INNTEKT_URL}") private val uri: URI,
     restOperations: RestOperations,
 ) : AbstractRestClient(restOperations, "ereg") {
+    private val redirectUri =
+        UriComponentsBuilder.fromUri(uri)
+            .pathSegment("api/v2/redirect/sok/a-inntekt").build().toUri()
 
-    private val redirectUri = UriComponentsBuilder.fromUri(uri)
-        .pathSegment("api/v2/redirect/sok/a-inntekt").build().toUri()
-
-    private val redirectUriArbeidsforhold = UriComponentsBuilder.fromUri(uri)
-        .pathSegment("api/v2/redirect/sok/arbeidstaker").build().toUri()
+    private val redirectUriArbeidsforhold =
+        UriComponentsBuilder.fromUri(uri)
+            .pathSegment("api/v2/redirect/sok/arbeidstaker").build().toUri()
 
     fun hentUrlTilArbeidOgInntekt(personIdent: String): String {
         return getForEntity(

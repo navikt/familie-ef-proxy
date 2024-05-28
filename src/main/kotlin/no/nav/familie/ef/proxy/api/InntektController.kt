@@ -21,7 +21,6 @@ import java.time.YearMonth
 @ProtectedWithClaims(issuer = "azuread")
 @Validated
 class InntektController(private val inntektClient: InntektClient) {
-
     @PostMapping
     fun hentInntekt(
         @RequestBody request: PersonIdent,

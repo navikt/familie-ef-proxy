@@ -13,7 +13,6 @@ class EregClient(
     @Value("\${EREG_URL}") private val uri: URI,
     @Qualifier("sts") restOperations: RestOperations,
 ) : AbstractRestClient(restOperations, "ereg") {
-
     fun hentOrganisasjoner(organisasjonsnumre: List<String>): List<Map<String, Any>> {
         val organisasjoner = mutableListOf<Map<String, Any>>()
 

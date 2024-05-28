@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus
 import java.time.YearMonth
 
 internal class SigrunControllerTest : IntegrationSpringRunnerTest() {
-
     @Autowired lateinit var sigrunClient: SigrunClient
 
     @BeforeEach
@@ -24,11 +23,12 @@ internal class SigrunControllerTest : IntegrationSpringRunnerTest() {
     @Test
     internal fun `kall pensjonsgivendeinntekt med inntektsaar`() {
         val url = localhost("/api/sigrun/pensjonsgivendeinntekt?inntektsaar=2022")
-        val response = restTemplate.exchange<Map<String, String>>(
-            url,
-            HttpMethod.POST,
-            HttpEntity(mapOf("ident" to "123"), headers),
-        )
+        val response =
+            restTemplate.exchange<Map<String, String>>(
+                url,
+                HttpMethod.POST,
+                HttpEntity(mapOf("ident" to "123"), headers),
+            )
         Assertions.assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
         Assertions.assertThat(response.body!!).isEqualTo(emptyMap<String, Any>())
 
@@ -38,11 +38,12 @@ internal class SigrunControllerTest : IntegrationSpringRunnerTest() {
     @Test
     internal fun `kall beregnetskatt med inntektsaar`() {
         val url = localhost("/api/sigrun/beregnetskatt?inntektsaar=2020")
-        val response = restTemplate.exchange<List<Map<String, String>>>(
-            url,
-            HttpMethod.POST,
-            HttpEntity(mapOf("ident" to "123"), headers),
-        )
+        val response =
+            restTemplate.exchange<List<Map<String, String>>>(
+                url,
+                HttpMethod.POST,
+                HttpEntity(mapOf("ident" to "123"), headers),
+            )
         Assertions.assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
         Assertions.assertThat(response.body!!).isEqualTo(emptyList<Map<String, Any>>())
 
@@ -52,11 +53,12 @@ internal class SigrunControllerTest : IntegrationSpringRunnerTest() {
     @Test
     internal fun `kall beregnetskatt uten inntektsaar`() {
         val url = localhost("/api/sigrun/beregnetskatt")
-        val response = restTemplate.exchange<List<Map<String, String>>>(
-            url,
-            HttpMethod.POST,
-            HttpEntity(mapOf("ident" to "1234"), headers),
-        )
+        val response =
+            restTemplate.exchange<List<Map<String, String>>>(
+                url,
+                HttpMethod.POST,
+                HttpEntity(mapOf("ident" to "1234"), headers),
+            )
         Assertions.assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
         Assertions.assertThat(response.body!!).isEqualTo(emptyList<Map<String, Any>>())
 
@@ -66,11 +68,12 @@ internal class SigrunControllerTest : IntegrationSpringRunnerTest() {
     @Test
     internal fun `kall summertskattegrunnlag`() {
         val url = localhost("/api/sigrun/summertskattegrunnlag")
-        val response = restTemplate.exchange<List<Map<String, String>>>(
-            url,
-            HttpMethod.POST,
-            HttpEntity(mapOf("ident" to "12345"), headers),
-        )
+        val response =
+            restTemplate.exchange<List<Map<String, String>>>(
+                url,
+                HttpMethod.POST,
+                HttpEntity(mapOf("ident" to "12345"), headers),
+            )
         Assertions.assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
         Assertions.assertThat(response.body!!).isEqualTo(emptyList<Map<String, Any>>())
 
