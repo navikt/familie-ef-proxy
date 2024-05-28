@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.RestController
 @ProtectedWithClaims(issuer = "azuread")
 @Validated
 class EregController(private val eregClient: EregClient) {
-
     @GetMapping
-    fun hentOrganisasjon(@RequestParam organisasjonsnumre: List<String>): List<Map<String, Any>> {
+    fun hentOrganisasjon(
+        @RequestParam organisasjonsnumre: List<String>,
+    ): List<Map<String, Any>> {
         return eregClient.hentOrganisasjoner(organisasjonsnumre)
     }
 }

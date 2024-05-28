@@ -21,11 +21,12 @@ class PeriodeController(
     private val sakClient: SakClient,
     private val stsValidator: StsValidator,
 ) {
-
     // PerioderOvergangsstønadRequest er egentlige perioder av alle typer perioder fra EF
     @PostMapping("/periode/overgangsstonad", "/perioder")
     @Protected
-    fun hentPerioder(@RequestBody request: EksternePerioderRequest): EksternePerioderResponse {
+    fun hentPerioder(
+        @RequestBody request: EksternePerioderRequest,
+    ): EksternePerioderResponse {
         stsValidator.validateSts("srvArena")
         return sakClient.post(request, "api/ekstern/perioder")
     }

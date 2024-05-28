@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Profile
 @Configuration
 @Profile("integrasjonstest")
 class StsValidatorTestConfig {
-
     @Bean
     @Primary
     fun stsValidator(): StsValidator {

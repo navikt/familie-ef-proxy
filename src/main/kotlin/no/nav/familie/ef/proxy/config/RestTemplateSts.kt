@@ -13,7 +13,6 @@ import org.springframework.web.client.RestOperations
 @Configuration
 @Import(RestTemplateBuilderBean::class, ConsumerIdClientInterceptor::class)
 class RestTemplateSts {
-
     @Bean("noToken")
     fun restTemplateNoToken(
         restTemplateBuilder: RestTemplateBuilder,

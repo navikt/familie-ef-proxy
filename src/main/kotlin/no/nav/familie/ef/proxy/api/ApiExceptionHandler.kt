@@ -21,7 +21,6 @@ import java.util.concurrent.TimeoutException
 @Suppress("unused")
 @ControllerAdvice
 class ApiExceptionHandler : ResponseEntityExceptionHandler() {
-
     private val logger = LoggerFactory.getLogger(ApiExceptionHandler::class.java)
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
@@ -80,16 +79,20 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
         responseStatus: ResponseStatus,
     ): ResponseEntity<FeilDto> {
         val status = if (responseStatus.value != HttpStatus.INTERNAL_SERVER_ERROR) responseStatus.value else responseStatus.code
-        val loggMelding = "En håndtert feil har oppstått" +
-            " throwable=${rootCause(throwable)}" +
-            " reason=${responseStatus.reason}" +
-            " status=$status"
+        val loggMelding =
+            "En håndtert feil har oppstått" +
+                " throwable=${rootCause(throwable)}" +
+                " reason=${responseStatus.reason}" +
+                " status=$status"
 
         loggFeil(throwable, loggMelding)
         return ResponseEntity.status(status).body(FeilDto("Håndtert feil"))
     }
 
-    private fun loggFeil(throwable: Throwable, loggMelding: String) {
+    private fun loggFeil(
+        throwable: Throwable,
+        loggMelding: String,
+    ) {
         when (throwable) {
             is JwtTokenUnauthorizedException -> logger.debug(loggMelding)
             else -> logger.error(loggMelding)
@@ -97,11 +100,12 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
     }
 
     fun finnMetodeSomFeiler(e: Throwable): String {
-        val firstElement = e.stackTrace.firstOrNull {
-            it.className.startsWith("no.nav.familie.ef.sak") &&
-                !it.className.contains("$") &&
-                !it.className.contains("InsertUpdateRepositoryImpl")
-        }
+        val firstElement =
+            e.stackTrace.firstOrNull {
+                it.className.startsWith("no.nav.familie.ef.sak") &&
+                    !it.className.contains("$") &&
+                    !it.className.contains("InsertUpdateRepositoryImpl")
+            }
         if (firstElement != null) {
             val className = firstElement.className.split(".").lastOrNull()
             return "$className::${firstElement.methodName}(${firstElement.lineNumber})"
