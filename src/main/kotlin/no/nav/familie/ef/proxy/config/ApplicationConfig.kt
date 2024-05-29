@@ -1,6 +1,7 @@
 package no.nav.familie.ef.proxy.config
 
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.kotlinModule
 import no.nav.familie.http.client.RetryOAuth2HttpClient
 import no.nav.familie.http.config.NaisProxyCustomizer
 import no.nav.familie.http.config.RestTemplateAzure
@@ -41,7 +42,7 @@ class ApplicationConfig {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     @Bean
-    fun kotlinModule(): KotlinModule = KotlinModule()
+    fun kotlinModuleBean(): KotlinModule = kotlinModule()
 
     @Bean
     @Primary
