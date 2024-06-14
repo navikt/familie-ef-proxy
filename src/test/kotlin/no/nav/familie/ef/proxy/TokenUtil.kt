@@ -24,12 +24,13 @@ object TokenUtil {
                 "roles" to if (accessAsApplication) listOf("access_as_application") else emptyList(),
             )
 
-        return mockOAuth2Server.issueToken(
-            issuerId = "azuread",
-            subject = thisId,
-            audience = "aud-localhost",
-            claims = claims,
-        ).serialize()
+        return mockOAuth2Server
+            .issueToken(
+                issuerId = "azuread",
+                subject = thisId,
+                audience = "aud-localhost",
+                claims = claims,
+            ).serialize()
     }
 
     /**
@@ -54,11 +55,12 @@ object TokenUtil {
                 "groups" to listOf(role),
             )
 
-        return mockOAuth2Server.issueToken(
-            issuerId = "azuread",
-            subject = UUID.randomUUID().toString(),
-            audience = "aud-localhost",
-            claims = claims,
-        ).serialize()
+        return mockOAuth2Server
+            .issueToken(
+                issuerId = "azuread",
+                subject = UUID.randomUUID().toString(),
+                audience = "aud-localhost",
+                claims = claims,
+            ).serialize()
     }
 }

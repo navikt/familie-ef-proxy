@@ -90,23 +90,24 @@ internal class StsValidatorDevTest {
     ): JwtToken {
         val jwt: JWT =
             PlainJWT(
-                JWTClaimsSet.Builder()
+                JWTClaimsSet
+                    .Builder()
                     .subject(subject)
                     .issuer("http//issuer1")
-                    .claim(claimName, claimValue).build(),
+                    .claim(claimName, claimValue)
+                    .build(),
             )
         return JwtToken(jwt.serialize())
     }
 
-    private fun createContextHolder(tokenValidationContext: TokenValidationContext): TokenValidationContextHolderImpl {
-        return TokenValidationContextHolderImpl(tokenValidationContext)
-    }
+    private fun createContextHolder(tokenValidationContext: TokenValidationContext): TokenValidationContextHolderImpl =
+        TokenValidationContextHolderImpl(tokenValidationContext)
 }
 
-data class TokenValidationContextHolderImpl(var validationContext: TokenValidationContext?) : TokenValidationContextHolder {
-    override fun getTokenValidationContext(): TokenValidationContext {
-        return validationContext!!
-    }
+data class TokenValidationContextHolderImpl(
+    var validationContext: TokenValidationContext?,
+) : TokenValidationContextHolder {
+    override fun getTokenValidationContext(): TokenValidationContext = validationContext!!
 
     override fun setTokenValidationContext(tokenValidationContext: TokenValidationContext?) {
         validationContext = tokenValidationContext

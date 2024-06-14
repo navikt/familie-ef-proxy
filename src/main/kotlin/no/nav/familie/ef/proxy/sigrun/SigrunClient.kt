@@ -41,7 +41,9 @@ class SigrunClient(
         inntektsår: Int,
     ): List<Map<String, Any>> {
         val uriComponentsBuilder =
-            UriComponentsBuilder.fromUri(uri).pathSegment("beregnetskatt")
+            UriComponentsBuilder
+                .fromUri(uri)
+                .pathSegment("beregnetskatt")
                 .queryParam("inntektsaar", inntektsår)
 
         val headers = HttpHeaders()
@@ -62,7 +64,9 @@ class SigrunClient(
         inntektsår: Int,
     ): List<Map<String, Any>> {
         val uriComponentsBuilder =
-            UriComponentsBuilder.fromUri(uri).pathSegment("v1/summertskattegrunnlag")
+            UriComponentsBuilder
+                .fromUri(uri)
+                .pathSegment("v1/summertskattegrunnlag")
                 .queryParam("inntektsaar", inntektsår)
                 .queryParam("inntektsfilter", "SummertSkattegrunnlagEnsligForsorger")
 

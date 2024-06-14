@@ -20,30 +20,30 @@ import java.time.YearMonth
 )
 @ProtectedWithClaims(issuer = "azuread")
 @Validated
-class InntektController(private val inntektClient: InntektClient) {
+class InntektController(
+    private val inntektClient: InntektClient,
+) {
     @PostMapping
     fun hentInntekt(
         @RequestBody request: PersonIdent,
         @RequestParam("fom", required = false) fom: YearMonth?,
         @RequestParam("tom", required = false) tom: YearMonth?,
-    ): Map<String, Any> {
-        return inntektClient.hentInntekt(
+    ): Map<String, Any> =
+        inntektClient.hentInntekt(
             personIdent = request.ident,
             fom = fom ?: YearMonth.now().minusMonths(2),
             tom = tom ?: YearMonth.now(),
         )
-    }
 
     @PostMapping("/historikk")
     fun hentInntektshistorikk(
         @RequestBody request: PersonIdent,
         @RequestParam("fom", required = false) fom: YearMonth?,
         @RequestParam("tom", required = false) tom: YearMonth?,
-    ): Map<String, Any> {
-        return inntektClient.hentInntektshistorikk(
+    ): Map<String, Any> =
+        inntektClient.hentInntektshistorikk(
             personIdent = request.ident,
             fom = fom ?: YearMonth.now().minusMonths(12),
             tom = tom ?: YearMonth.now(),
         )
-    }
 }

@@ -17,7 +17,15 @@ class EregClient(
         val organisasjoner = mutableListOf<Map<String, Any>>()
 
         organisasjonsnumre.forEach {
-            organisasjoner.add(getForEntity(UriComponentsBuilder.fromUri(uri).pathSegment(it).build().toUri()))
+            organisasjoner.add(
+                getForEntity(
+                    UriComponentsBuilder
+                        .fromUri(uri)
+                        .pathSegment(it)
+                        .build()
+                        .toUri(),
+                ),
+            )
         }
         return organisasjoner
     }

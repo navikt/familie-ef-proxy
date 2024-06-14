@@ -33,7 +33,8 @@ internal class ArbeidOgInntektControllerTest {
             val uri = URI.create("http://localhost:${wiremockServerItem.port()}")
 
             wiremockServerItem.stubFor(
-                WireMock.get(WireMock.urlEqualTo("/api/v2/redirect/sok/a-inntekt"))
+                WireMock
+                    .get(WireMock.urlEqualTo("/api/v2/redirect/sok/a-inntekt"))
                     .willReturn(WireMock.okForContentType("text/html", "http://testurl")),
             )
 

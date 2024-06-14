@@ -24,11 +24,11 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
     private val logger = LoggerFactory.getLogger(ApiExceptionHandler::class.java)
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
-    private fun rootCause(throwable: Throwable): String {
-        return NestedExceptionUtils.getMostSpecificCause(throwable).javaClass.simpleName
-    }
+    private fun rootCause(throwable: Throwable): String = NestedExceptionUtils.getMostSpecificCause(throwable).javaClass.simpleName
 
-    data class FeilDto(val message: String)
+    data class FeilDto(
+        val message: String,
+    )
 
     override fun handleExceptionInternal(
         ex: Exception,
