@@ -10,10 +10,9 @@ import org.springframework.context.annotation.Profile
 class StsValidatorTestConfig {
     @Bean
     @Primary
-    fun stsValidator(): StsValidator {
-        return object : StsValidator {
+    fun stsValidator(): StsValidator =
+        object : StsValidator {
             override fun validateSts(subject: String) {
             }
         }
-    }
 }

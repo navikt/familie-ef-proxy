@@ -18,15 +18,18 @@ class InntektClient(
     private val stsClient: StsClient,
     @Qualifier("noToken") restOperations: RestOperations,
 ) : AbstractRestClient(restOperations, "inntekt") {
-    private val inntektUri = UriComponentsBuilder.fromUri(uri).pathSegment("v1/hentinntektliste").build().toUri()
+    private val inntektUri =
+        UriComponentsBuilder
+            .fromUri(uri)
+            .pathSegment("v1/hentinntektliste")
+            .build()
+            .toUri()
 
     fun hentInntekt(
         personIdent: String,
         fom: YearMonth,
         tom: YearMonth,
-    ): Map<String, Any> {
-        return postForEntity(inntektUri, lagRequest(personIdent, fom, tom), headers(personIdent, stsClient.hentStsToken().token))
-    }
+    ): Map<String, Any> = postForEntity(inntektUri, lagRequest(personIdent, fom, tom), headers(personIdent, stsClient.hentStsToken().token))
 
     fun hentInntektshistorikk(
         personIdent: String,
@@ -34,9 +37,14 @@ class InntektClient(
         tom: YearMonth,
     ): Map<String, Any> {
         val inntektshistorikkUri =
-            UriComponentsBuilder.fromUri(uri).pathSegment("v1/inntektshistorikk")
-                .queryParam("maaned-fom", fom).queryParam("maaned-tom", tom)
-                .queryParam("filter", "StoenadEnsligMorEllerFarA-inntekt").build().toUri()
+            UriComponentsBuilder
+                .fromUri(uri)
+                .pathSegment("v1/inntektshistorikk")
+                .queryParam("maaned-fom", fom)
+                .queryParam("maaned-tom", tom)
+                .queryParam("filter", "StoenadEnsligMorEllerFarA-inntekt")
+                .build()
+                .toUri()
         return getForEntity(inntektshistorikkUri, headers(personIdent, stsClient.hentStsToken().token))
     }
 
@@ -59,12 +67,11 @@ class InntektClient(
     private fun headers(
         personIdent: String,
         token: String,
-    ): HttpHeaders {
-        return HttpHeaders().apply {
+    ): HttpHeaders =
+        HttpHeaders().apply {
             setBearerAuth(token)
             contentType = MediaType.APPLICATION_JSON
             accept = listOf(MediaType.APPLICATION_JSON)
             add(NavHttpHeaders.NAV_PERSONIDENT.asString(), personIdent)
         }
-    }
 }

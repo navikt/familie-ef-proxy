@@ -46,20 +46,14 @@ abstract class IntegrationSpringRunnerTest {
         applicationContext.getBeansOfType(WireMockServer::class.java).values.forEach(WireMockServer::resetRequests)
     }
 
-    protected fun getPort(): String {
-        return port.toString()
-    }
+    protected fun getPort(): String = port.toString()
 
-    protected fun localhost(uri: String): String {
-        return LOCALHOST + getPort() + uri
-    }
+    protected fun localhost(uri: String): String = LOCALHOST + getPort() + uri
 
     protected fun url(
         baseUrl: String,
         uri: String,
-    ): String {
-        return baseUrl + uri
-    }
+    ): String = baseUrl + uri
 
     protected val lokalTestToken: String
         get() {
@@ -69,9 +63,7 @@ abstract class IntegrationSpringRunnerTest {
     protected fun clientToken(
         clientId: String = "1",
         accessAsApplication: Boolean = true,
-    ): String {
-        return TokenUtil.clientToken(mockOAuth2Server, clientId, accessAsApplication)
-    }
+    ): String = TokenUtil.clientToken(mockOAuth2Server, clientId, accessAsApplication)
 
     companion object {
         private const val LOCALHOST = "http://localhost:"

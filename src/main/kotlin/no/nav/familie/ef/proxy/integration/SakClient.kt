@@ -15,16 +15,25 @@ import java.net.URI
 class SakClient(
     @Qualifier("azure") restOperations: RestOperations,
     @Value("\${EF_SAK_URL}") private val uri: URI,
-) :
-    AbstractPingableRestClient(restOperations, "familie.sak") {
+) : AbstractPingableRestClient(restOperations, "familie.sak") {
     fun post(
         data: Any,
         path: String,
     ): EksternePerioderResponse {
-        val uri = UriComponentsBuilder.fromUri(uri).pathSegment(path).build().toUri()
+        val uri =
+            UriComponentsBuilder
+                .fromUri(uri)
+                .pathSegment(path)
+                .build()
+                .toUri()
         val postForEntity = postForEntity<Ressurs<EksternePerioderResponse>>(uri, data)
         return postForEntity.getDataOrThrow()
     }
 
-    override val pingUri: URI = UriComponentsBuilder.fromUri(uri).pathSegment("api/ping").build().toUri()
+    override val pingUri: URI =
+        UriComponentsBuilder
+            .fromUri(uri)
+            .pathSegment("api/ping")
+            .build()
+            .toUri()
 }
