@@ -10,7 +10,9 @@ import org.springframework.stereotype.Component
  */
 @Profile("dev", "local")
 @Component
-class StsValidatorDev(private val tokenValidationContextHolder: TokenValidationContextHolder) : StsValidator {
+class StsValidatorDev(
+    private val tokenValidationContextHolder: TokenValidationContextHolder,
+) : StsValidator {
     override fun validateSts(subject: String) {
         val context =
             tokenValidationContextHolder.getTokenValidationContext()

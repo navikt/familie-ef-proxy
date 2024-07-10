@@ -37,7 +37,8 @@ class StsClient(
 
     fun hentStsToken(): Token {
         val stsUri =
-            UriComponentsBuilder.fromUri(stsUri)
+            UriComponentsBuilder
+                .fromUri(stsUri)
                 .queryParam("grant_type", "client_credentials")
                 .queryParam("scope", "openid")
                 .toUriString()
@@ -55,12 +56,11 @@ class StsClient(
         }
     }
 
-    fun credentialForClientId(clientId: String): String {
-        return mapOf(personhendelseClientId to credentialsPersonhendelse(), efSakClientId to credentialsEfSak()).getOrElse(clientId) {
+    fun credentialForClientId(clientId: String): String =
+        mapOf(personhendelseClientId to credentialsPersonhendelse(), efSakClientId to credentialsEfSak()).getOrElse(clientId) {
             secureLogger.warn("Fant ikke clientId: $clientId i map. Bruker ef-sak token.")
             credentialsEfSak()
         }
-    }
 
     private fun credentialsPersonhendelse() =
         Base64.getEncoder().encodeToString("$usernamePersonhendelse:$passwordPersonhendelse".toByteArray(Charsets.UTF_8))

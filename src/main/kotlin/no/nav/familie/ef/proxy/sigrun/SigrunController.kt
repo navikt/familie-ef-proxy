@@ -19,37 +19,36 @@ import java.time.YearMonth
 )
 @ProtectedWithClaims(issuer = "azuread")
 @Validated
-class SigrunController(private val sigrunClient: SigrunClient) {
+class SigrunController(
+    private val sigrunClient: SigrunClient,
+) {
     @PostMapping("/pensjonsgivendeinntekt")
     fun hentPensjonsgivendeInntekt(
         @RequestBody personIdent: PersonIdent,
         @RequestParam("inntektsaar", required = false) inntektsår: Int?,
-    ): Map<String, Any> {
-        return sigrunClient.hentPensjonsgivendeInntekt(
+    ): Map<String, Any> =
+        sigrunClient.hentPensjonsgivendeInntekt(
             personIdent.ident,
             inntektsår ?: (YearMonth.now().year - 1),
         )
-    }
 
     @PostMapping("/beregnetskatt")
     fun hentBeregnetSkatt(
         @RequestBody personIdent: PersonIdent,
         @RequestParam("inntektsaar", required = false) inntektsår: Int?,
-    ): List<Map<String, Any>> {
-        return sigrunClient.hentBeregnetSkatt(
+    ): List<Map<String, Any>> =
+        sigrunClient.hentBeregnetSkatt(
             personIdent = personIdent.ident,
             inntektsår = inntektsår ?: (YearMonth.now().year - 1),
         )
-    }
 
     @PostMapping("/summertskattegrunnlag")
     fun hentSummertSkattegrunnlag(
         @RequestBody personIdent: PersonIdent,
         @RequestParam("inntektsaar", required = false) inntektsår: Int?,
-    ): List<Map<String, Any>> {
-        return sigrunClient.hentSummertSkattegrunnlag(
+    ): List<Map<String, Any>> =
+        sigrunClient.hentSummertSkattegrunnlag(
             personIdent = personIdent.ident,
             inntektsår = inntektsår ?: (YearMonth.now().year - 1),
         )
-    }
 }

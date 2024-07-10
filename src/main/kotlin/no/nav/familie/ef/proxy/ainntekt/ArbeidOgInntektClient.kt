@@ -15,30 +15,34 @@ class ArbeidOgInntektClient(
     restOperations: RestOperations,
 ) : AbstractRestClient(restOperations, "ereg") {
     private val redirectUri =
-        UriComponentsBuilder.fromUri(uri)
-            .pathSegment("api/v2/redirect/sok/a-inntekt").build().toUri()
+        UriComponentsBuilder
+            .fromUri(uri)
+            .pathSegment("api/v2/redirect/sok/a-inntekt")
+            .build()
+            .toUri()
 
     private val redirectUriArbeidsforhold =
-        UriComponentsBuilder.fromUri(uri)
-            .pathSegment("api/v2/redirect/sok/arbeidstaker").build().toUri()
+        UriComponentsBuilder
+            .fromUri(uri)
+            .pathSegment("api/v2/redirect/sok/arbeidstaker")
+            .build()
+            .toUri()
 
-    fun hentUrlTilArbeidOgInntekt(personIdent: String): String {
-        return getForEntity(
+    fun hentUrlTilArbeidOgInntekt(personIdent: String): String =
+        getForEntity(
             redirectUri,
             HttpHeaders().apply {
                 accept = listOf(MediaType.TEXT_PLAIN)
                 set("Nav-Personident", personIdent)
             },
         )
-    }
 
-    fun hentUrlTilArbeidsforhold(personIdent: String): String {
-        return getForEntity(
+    fun hentUrlTilArbeidsforhold(personIdent: String): String =
+        getForEntity(
             redirectUriArbeidsforhold,
             HttpHeaders().apply {
                 accept = listOf(MediaType.TEXT_PLAIN)
                 set("Nav-Personident", personIdent)
             },
         )
-    }
 }

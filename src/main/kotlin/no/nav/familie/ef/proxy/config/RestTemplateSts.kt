@@ -17,10 +17,10 @@ class RestTemplateSts {
     fun restTemplateNoToken(
         restTemplateBuilder: RestTemplateBuilder,
         consumerIdClientInterceptor: ConsumerIdClientInterceptor,
-    ): RestOperations {
-        return restTemplateBuilder.additionalInterceptors(
-            consumerIdClientInterceptor,
-            MdcValuesPropagatingClientInterceptor(),
-        ).build()
-    }
+    ): RestOperations =
+        restTemplateBuilder
+            .additionalInterceptors(
+                consumerIdClientInterceptor,
+                MdcValuesPropagatingClientInterceptor(),
+            ).build()
 }

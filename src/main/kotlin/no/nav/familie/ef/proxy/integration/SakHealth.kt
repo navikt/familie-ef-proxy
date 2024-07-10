@@ -6,4 +6,6 @@ import org.springframework.stereotype.Component
 
 @Component
 @Profile("!local")
-class SakHealth(client: SakClient) : AbstractHealthIndicator(client, "familie.sak")
+class SakHealth(
+    client: SakClient,
+) : AbstractHealthIndicator(client, "familie.sak")
