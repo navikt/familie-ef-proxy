@@ -3,15 +3,14 @@ name: Dev - Build, push, and deploy app
 on:
   workflow_dispatch:
 
-env:
-  IMAGE: ghcr.io/navikt/familie-ef-proxy:${{ github.sha }}
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
   build:
     name: Build, push and deploy to dev-fss
     runs-on: ubuntu-latest
-    permissions:
-      packages: "write"
     steps:
       - uses: actions/checkout@v4
         with:
@@ -27,21 +26,20 @@ jobs:
           GITHUB_USERNAME: x-access-token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn -B --no-transfer-progress package --settings .m2/maven-settings.xml --file pom.xml
-      - name: Login to Github Package Registry
-        env:
-          DOCKER_USERNAME: x-access-token
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          docker build --tag ${IMAGE} .
-          docker login ghcr.io -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
-          docker push ${IMAGE}
+      - name: Build and publish Docker image
+        id: docker-push
+        uses: nais/docker-build-push@v0
+        with:
+          team: teamfamilie
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+          byosbom: target/classes/META-INF/sbom/application.cdx.json
+    outputs:
+      image: ${{ steps.docker-push.outputs.image }}
   deploy:
-    name: Deploy to NAIS
+    name: Deploy to dev
     needs: build
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
     steps:
       - uses: actions/checkout@v4
       - name: Deploy til dev-fss
@@ -49,3 +47,4 @@ jobs:
         env:
           CLUSTER: dev-fss
           RESOURCE: .deploy/nais-dev.yaml
+          IMAGE: ${{ needs.build.outputs.image }}
