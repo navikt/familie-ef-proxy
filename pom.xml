@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.1</version>
+        <version>3.3.2</version>
     </parent>
 
     <repositories>
@@ -29,8 +29,8 @@
         <jvmTarget>21</jvmTarget>
         <kotlin.version>2.0.0</kotlin.version>
         <springdoc.version>2.6.0</springdoc.version>
-        <mockk.version>1.13.11</mockk.version>
-        <felles.version>3.20240624143824_64bf8f2</felles.version>
+        <mockk.version>1.13.12</mockk.version>
+        <felles.version>3.20240715145751_fc025c1</felles.version>
         <start-class>no.nav.familie.ef.proxy.ApplicationKt</start-class>
 
         <nav.security.version>5.0.1</nav.security.version> <!-- Denne burde være samme versjon som i felles -->
@@ -272,7 +272,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.3.1</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
