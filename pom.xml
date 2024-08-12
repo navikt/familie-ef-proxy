@@ -27,10 +27,10 @@
         <sha1/>
         <changelist>-SNAPSHOT</changelist>
         <jvmTarget>21</jvmTarget>
-        <kotlin.version>2.0.0</kotlin.version>
+        <kotlin.version>2.0.10</kotlin.version>
         <springdoc.version>2.6.0</springdoc.version>
         <mockk.version>1.13.12</mockk.version>
-        <felles.version>3.20240715145751_fc025c1</felles.version>
+        <felles.version>3.20240806111424_fff2930</felles.version>
         <start-class>no.nav.familie.ef.proxy.ApplicationKt</start-class>
 
         <nav.security.version>5.0.1</nav.security.version> <!-- Denne burde være samme versjon som i felles -->
