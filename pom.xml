@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.3</version>
+        <version>3.3.4</version>
     </parent>
 
     <repositories>
@@ -36,7 +36,7 @@
         <nav.security.version>5.0.5</nav.security.version> <!-- Denne burde være samme versjon som i felles -->
         <okhttp3.version>4.10.0</okhttp3.version> <!-- overskrever spring sin versjon, blir brukt av mock-oauth2-server -->
 
-        <kontrakter.version>3.0_20240913135049_042822f</kontrakter.version>
+        <kontrakter.version>3.0_20240919121839_57daa74</kontrakter.version>
     </properties>
 
     <dependencies>
