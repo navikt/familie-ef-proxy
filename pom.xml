@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.5</version>
+        <version>3.4.0</version>
     </parent>
 
     <repositories>
@@ -28,9 +28,9 @@
         <changelist>-SNAPSHOT</changelist>
         <jvmTarget>21</jvmTarget>
         <kotlin.version>2.0.21</kotlin.version>
-        <springdoc.version>2.6.0</springdoc.version>
+        <springdoc.version>2.7.0</springdoc.version>
         <mockk.version>1.13.13</mockk.version>
-        <felles.version>3.20241111113426_be51eee</felles.version>
+        <felles.version>3.20241121151626_836e7ca</felles.version>
         <start-class>no.nav.familie.ef.proxy.ApplicationKt</start-class>
 
         <nav.security.version>5.0.11</nav.security.version> <!-- Denne burde være samme versjon som i felles -->
