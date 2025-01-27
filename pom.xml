@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.1</version>
+        <version>3.4.2</version>
     </parent>
 
     <repositories>
@@ -28,15 +28,15 @@
         <changelist>-SNAPSHOT</changelist>
         <jvmTarget>21</jvmTarget>
         <kotlin.version>2.1.0</kotlin.version>
-        <springdoc.version>2.8.0</springdoc.version>
-        <mockk.version>1.13.14</mockk.version>
-        <felles.version>3.20241216102134_145872f</felles.version>
+        <springdoc.version>2.8.3</springdoc.version>
+        <mockk.version>1.13.16</mockk.version>
+        <felles.version>3.20250122103549_5bcb4dc</felles.version>
         <start-class>no.nav.familie.ef.proxy.ApplicationKt</start-class>
 
-        <nav.security.version>5.0.13</nav.security.version> <!-- Denne burde være samme versjon som i felles -->
+        <nav.security.version>5.0.14</nav.security.version> <!-- Denne burde være samme versjon som i felles -->
         <okhttp3.version>4.10.0</okhttp3.version> <!-- overskrever spring sin versjon, blir brukt av mock-oauth2-server -->
 
-        <kontrakter.version>3.0_20241220141021_9e86ad8</kontrakter.version>
+        <kontrakter.version>3.0_20250113155636_bb71360</kontrakter.version>
     </properties>
 
     <dependencies>
