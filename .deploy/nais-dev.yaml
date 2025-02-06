@@ -8,7 +8,6 @@ metadata:
 
 spec:
   image: {{ image }}
-  webproxy: true
   liveness:
     path: /internal/status/isAlive
     initialDelay: 30
@@ -71,6 +70,6 @@ spec:
     - name: SPRING_PROFILES_ACTIVE
       value: dev
     - name: JDK_JAVA_OPTIONS
-      value: "$(JAVA_PROXY_OPTIONS) -XX:MaxRAMPercentage=75"
+      value: "-XX:MaxRAMPercentage=75"
   envFrom:
     - secret: familie-ef-proxy-serviceusers
