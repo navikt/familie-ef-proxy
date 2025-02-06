@@ -70,6 +70,6 @@ spec:
     - name: SPRING_PROFILES_ACTIVE
       value: dev
     - name: JDK_JAVA_OPTIONS
-      value: $(JAVA_PROXY_OPTIONS)
+      value: "$(JAVA_PROXY_OPTIONS)"
   envFrom:
     - secret: familie-ef-proxy-serviceusers
