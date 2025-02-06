@@ -66,3 +66,7 @@ spec:
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: prod
+    - name: JDK_JAVA_OPTIONS
+      value: "-XX:MaxRAMPercentage=75"
+  envFrom:
+    - secret: familie-ef-proxy-serviceusers
