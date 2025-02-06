@@ -7,3 +7,4 @@ ENV JAVA_OPTS="-XX:MaxRAMPercentage=75"
 
 COPY init.sh /init-scripts/init.sh
 COPY ./target/familie-ef-proxy.jar "app.jar"
+CMD ["-jar", "/app/app.jar"]
