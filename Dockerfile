@@ -6,7 +6,6 @@ ENV LANGUAGE='nb_NO:nb'
 ENV LC_ALL='nb_NO.UTF-8'
 ENV TZ='Europe/Oslo'
 ENV APP_NAME=familie-ef-proxy
-ENV JAVA_OPTS="-XX:MaxRAMPercentage=75"
 
 COPY ./target/familie-ef-proxy.jar /app/app.jar
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]

@@ -70,6 +70,6 @@ spec:
     - name: SPRING_PROFILES_ACTIVE
       value: dev
     - name: JDK_JAVA_OPTIONS
-      value: "$(JAVA_OPTS)"
+      value: "$(JAVA_PROXY_OPTIONS) -XX:MaxRAMPercentage=75"
   envFrom:
     - secret: familie-ef-proxy-serviceusers
