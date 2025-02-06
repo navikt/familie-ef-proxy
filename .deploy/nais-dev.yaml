@@ -33,13 +33,6 @@ spec:
   ingresses:
     - https://familie-ef-proxy.dev.intern.nav.no
     - https://familie-ef-proxy.dev-fss-pub.nais.io
-  vault:
-    enabled: true
-    paths:
-      - kvPath: /serviceuser/data/dev/srvfamilie-ef-sak
-        mountPath: /var/run/secrets/serviceuser/efsak
-      - kvPath: /serviceuser/data/dev/srvfamilie-ef-person
-        mountPath: /var/run/secrets/serviceuser/personhendelse
   azure:
     application:
       enabled: true
