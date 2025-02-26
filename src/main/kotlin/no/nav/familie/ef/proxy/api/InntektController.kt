@@ -35,15 +35,44 @@ class InntektController(
             tom = tom ?: YearMonth.now(),
         )
 
-    @PostMapping("/historikk")
-    fun hentInntektshistorikk(
-        @RequestBody request: PersonIdent,
-        @RequestParam("fom", required = false) fom: YearMonth?,
-        @RequestParam("tom", required = false) tom: YearMonth?,
-    ): Map<String, Any> =
-        inntektClient.hentInntektshistorikk(
-            personIdent = request.ident,
-            fom = fom ?: YearMonth.now().minusMonths(12),
-            tom = tom ?: YearMonth.now(),
+    @RestController
+    @RequestMapping(
+        "/api/inntektV2",
+        consumes = [MediaType.APPLICATION_JSON_VALUE],
+        produces = [MediaType.APPLICATION_JSON_VALUE],
+    )
+    @ProtectedWithClaims(issuer = "azuread")
+    @Validated
+    class InntektController(
+        private val inntektClient: InntektClient,
+    ) {
+        @PostMapping
+        fun hentInntektV2(
+            @RequestBody request: InntektV2Request,
+        ): Map<String, Any> =
+            inntektClient.hentInntektV2(
+                personIdent = request.personIdent,
+                maanedFom = request.maanedFom ?: YearMonth.now().minusMonths(2),
+                maanedTom = request.maanedTom ?: YearMonth.now(),
+            )
+
+        // TODO Flytt?
+        data class InntektV2Request(
+            val personIdent: String,
+            val maanedFom: YearMonth?,
+            val maanedTom: YearMonth?,
         )
+
+        @PostMapping("/historikk")
+        fun hentInntektshistorikk(
+            @RequestBody request: PersonIdent,
+            @RequestParam("fom", required = false) fom: YearMonth?,
+            @RequestParam("tom", required = false) tom: YearMonth?,
+        ): Map<String, Any> =
+            inntektClient.hentInntektshistorikk(
+                personIdent = request.ident,
+                fom = fom ?: YearMonth.now().minusMonths(12),
+                tom = tom ?: YearMonth.now(),
+            )
+    }
 }

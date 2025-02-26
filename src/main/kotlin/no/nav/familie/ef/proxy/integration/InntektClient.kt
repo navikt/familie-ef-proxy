@@ -25,11 +25,34 @@ class InntektClient(
             .build()
             .toUri()
 
+    private val inntektUriV2 =
+        UriComponentsBuilder
+            .fromUri(uri)
+            .pathSegment("/rest/v2/inntekt")
+            .build()
+            .toUri()
+
     fun hentInntekt(
         personIdent: String,
         fom: YearMonth,
         tom: YearMonth,
-    ): Map<String, Any> = postForEntity(inntektUri, lagRequest(personIdent, fom, tom), headers(personIdent, stsClient.hentStsToken().token))
+    ): Map<String, Any> =
+        postForEntity(
+            inntektUri,
+            lagRequest(personIdent, fom, tom),
+            headers(personIdent, stsClient.hentStsToken().token),
+        )
+
+    fun hentInntektV2(
+        personIdent: String,
+        maanedFom: YearMonth,
+        maanedTom: YearMonth,
+    ): Map<String, Any> =
+        postForEntity(
+            uri = inntektUriV2,
+            payload = lagRequestV2(personIdent = personIdent, maanedFom = maanedFom, maanedTom = maanedTom),
+            httpHeaders = headers(personIdent, stsClient.hentStsToken().token),
+        )
 
     fun hentInntektshistorikk(
         personIdent: String,
@@ -62,6 +85,18 @@ class InntektClient(
             ),
         "maanedFom" to fom,
         "maanedTom" to tom,
+    )
+
+    private fun lagRequestV2(
+        personIdent: String,
+        maanedFom: YearMonth,
+        maanedTom: YearMonth,
+    ) = mapOf(
+        "personIdent" to personIdent,
+        "filter" to "StoenadEnsligMorEllerFarA-inntekt",
+        "formaal" to "StoenadEnsligMorEllerFar",
+        "maanedFom" to maanedFom,
+        "maanedTom" to maanedTom,
     )
 
     private fun headers(
