@@ -14,7 +14,10 @@ import java.time.YearMonth
 
 @Component
 class InntektClient(
-    @Value("\${INNTEKT_URL}") private val uri: URI,
+    @Value("\${INNTEKT_URL}")
+    private val uri: URI,
+    @Value("\${INNTEKTV2_URL}")
+    private val inntektV2Uri: URI,
     private val stsClient: StsClient,
     @Qualifier("noToken") restOperations: RestOperations,
 ) : AbstractRestClient(restOperations, "inntekt") {
@@ -27,8 +30,8 @@ class InntektClient(
 
     private val inntektUriV2 =
         UriComponentsBuilder
-            .fromUri(uri)
-            .pathSegment("rest/v2/inntekt")
+            .fromUri(inntektV2Uri)
+            .pathSegment("/inntekt")
             .build()
             .toUri()
 
@@ -50,11 +53,12 @@ class InntektClient(
     ): Map<String, Any> =
         postForEntity(
             uri = inntektUriV2,
-            payload = lagRequestV2(
-                personident = personIdent,
-                maanedFom = maanedFom,
-                maanedTom = maanedTom
-            ),
+            payload =
+                lagRequestV2(
+                    personident = personIdent,
+                    maanedFom = maanedFom,
+                    maanedTom = maanedTom,
+                ),
             httpHeaders = headers(personIdent, stsClient.hentStsToken().token),
         )
 
@@ -83,10 +87,10 @@ class InntektClient(
         "ainntektsfilter" to "StoenadEnsligMorEllerFarA-inntekt",
         "formaal" to "StoenadEnsligMorEllerFar",
         "ident" to
-                mapOf(
-                    "identifikator" to personIdent,
-                    "aktoerType" to "NATURLIG_IDENT",
-                ),
+            mapOf(
+                "identifikator" to personIdent,
+                "aktoerType" to "NATURLIG_IDENT",
+            ),
         "maanedFom" to fom,
         "maanedTom" to tom,
     )
