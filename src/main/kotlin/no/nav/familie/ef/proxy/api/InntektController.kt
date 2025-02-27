@@ -51,6 +51,9 @@ class InntektController(
         fun hentInntektV2(
             @RequestBody request: InntektV2Request,
         ): Map<String, Any> {
+            val logger = LoggerFactory.getLogger(::javaClass.name)
+
+            logger.info("FAMILIE-EF-PROXY --- Henter inntekt for med fom: ${request.maanedFom} og tom: ${request.maanedTom}")
             val inntekt =
                 inntektClient.hentInntektV2(
                     personident = request.personident,
@@ -59,7 +62,6 @@ class InntektController(
                 )
 
             // TODO: Husk å fjern meg.
-            val logger = LoggerFactory.getLogger(::javaClass.name)
             logger.info("FAMILIE-EF-PROXY --- Henter inntekt for personident med data: $inntekt")
 
             return inntekt

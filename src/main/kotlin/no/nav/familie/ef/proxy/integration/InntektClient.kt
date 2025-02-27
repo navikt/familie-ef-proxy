@@ -100,11 +100,11 @@ class InntektClient(
         maanedFom: YearMonth,
         maanedTom: YearMonth,
     ) = mapOf(
-        "personident" to personident,
+        "personident" to "10108000398",
         "filter" to "StoenadEnsligMorEllerFarA-inntekt",
         "formaal" to "StoenadEnsligMorEllerFar",
-        "maanedFom" to maanedFom,
-        "maanedTom" to maanedTom,
+        "maanedFom" to "2020-01",
+        "maanedTom" to "2020-12",
     )
 
     private fun headers(
