@@ -103,8 +103,8 @@ class InntektClient(
         "personident" to personident,
         "filter" to "StoenadEnsligMorEllerFarA-inntekt",
         "formaal" to "StoenadEnsligMorEllerFar",
-        maanedFom to maanedFom,
-        maanedTom to maanedTom,
+        "maanedFom" to maanedFom,
+        "maanedTom" to maanedTom,
     )
 
     private fun headers(
