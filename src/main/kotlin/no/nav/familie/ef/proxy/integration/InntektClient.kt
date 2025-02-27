@@ -31,7 +31,7 @@ class InntektClient(
     private val inntektUriV2 =
         UriComponentsBuilder
             .fromUri(inntektV2Uri)
-            .pathSegment("/inntekt")
+            .pathSegment("inntekt")
             .build()
             .toUri()
 
