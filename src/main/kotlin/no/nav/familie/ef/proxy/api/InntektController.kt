@@ -3,6 +3,7 @@ package no.nav.familie.ef.proxy.api
 import no.nav.familie.ef.proxy.integration.InntektClient
 import no.nav.familie.kontrakter.felles.PersonIdent
 import no.nav.security.token.support.core.api.ProtectedWithClaims
+import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping
@@ -49,12 +50,20 @@ class InntektController(
         @PostMapping
         fun hentInntektV2(
             @RequestBody request: InntektV2Request,
-        ): Map<String, Any> =
-            inntektClient.hentInntektV2(
-                personIdent = request.personIdent,
-                maanedFom = request.maanedFom ?: YearMonth.now().minusMonths(2),
-                maanedTom = request.maanedTom ?: YearMonth.now(),
-            )
+        ): Map<String, Any> {
+            val inntekt =
+                inntektClient.hentInntektV2(
+                    personIdent = request.personIdent,
+                    maanedFom = request.maanedFom ?: YearMonth.now().minusMonths(2),
+                    maanedTom = request.maanedTom ?: YearMonth.now(),
+                )
+
+            // TODO: Husk å fjern meg.
+            val logger = LoggerFactory.getLogger(::javaClass.name)
+            logger.info("FAMILIE-EF-PROXY --- Henter inntekt for personident med data: $inntekt")
+
+            return inntekt
+        }
 
         // TODO Flytt?
         data class InntektV2Request(

@@ -28,7 +28,7 @@ class InntektClient(
     private val inntektUriV2 =
         UriComponentsBuilder
             .fromUri(uri)
-            .pathSegment("/rest/v2/inntekt")
+            .pathSegment("v2/inntekt")
             .build()
             .toUri()
 
@@ -50,7 +50,7 @@ class InntektClient(
     ): Map<String, Any> =
         postForEntity(
             uri = inntektUriV2,
-            payload = lagRequestV2(personIdent = personIdent, maanedFom = maanedFom, maanedTom = maanedTom),
+            payload = lagRequestV2(personident = personIdent, maanedFom = maanedFom, maanedTom = maanedTom),
             httpHeaders = headers(personIdent, stsClient.hentStsToken().token),
         )
 
@@ -88,15 +88,15 @@ class InntektClient(
     )
 
     private fun lagRequestV2(
-        personIdent: String,
+        personident: String,
         maanedFom: YearMonth,
         maanedTom: YearMonth,
     ) = mapOf(
-        "personIdent" to personIdent,
+        personident to personident,
         "filter" to "StoenadEnsligMorEllerFarA-inntekt",
         "formaal" to "StoenadEnsligMorEllerFar",
-        "maanedFom" to maanedFom,
-        "maanedTom" to maanedTom,
+        maanedFom to maanedFom,
+        maanedTom to maanedTom,
     )
 
     private fun headers(
