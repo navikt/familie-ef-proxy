@@ -28,7 +28,7 @@ class InntektClient(
     private val inntektUriV2 =
         UriComponentsBuilder
             .fromUri(uri)
-            .pathSegment("v2/inntekt")
+            .pathSegment("rest/v2/inntekt")
             .build()
             .toUri()
 
@@ -50,7 +50,11 @@ class InntektClient(
     ): Map<String, Any> =
         postForEntity(
             uri = inntektUriV2,
-            payload = lagRequestV2(personident = personIdent, maanedFom = maanedFom, maanedTom = maanedTom),
+            payload = lagRequestV2(
+                personident = personIdent,
+                maanedFom = maanedFom,
+                maanedTom = maanedTom
+            ),
             httpHeaders = headers(personIdent, stsClient.hentStsToken().token),
         )
 
@@ -79,10 +83,10 @@ class InntektClient(
         "ainntektsfilter" to "StoenadEnsligMorEllerFarA-inntekt",
         "formaal" to "StoenadEnsligMorEllerFar",
         "ident" to
-            mapOf(
-                "identifikator" to personIdent,
-                "aktoerType" to "NATURLIG_IDENT",
-            ),
+                mapOf(
+                    "identifikator" to personIdent,
+                    "aktoerType" to "NATURLIG_IDENT",
+                ),
         "maanedFom" to fom,
         "maanedTom" to tom,
     )
