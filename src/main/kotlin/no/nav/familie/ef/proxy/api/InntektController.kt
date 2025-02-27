@@ -38,7 +38,7 @@ class InntektController(
 
     @RestController
     @RequestMapping(
-        "/api/inntektV2",
+        "/api/inntektv2",
         consumes = [MediaType.APPLICATION_JSON_VALUE],
         produces = [MediaType.APPLICATION_JSON_VALUE],
     )
