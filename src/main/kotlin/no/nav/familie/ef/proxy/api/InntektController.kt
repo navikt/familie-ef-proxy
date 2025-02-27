@@ -53,7 +53,7 @@ class InntektController(
         ): Map<String, Any> {
             val inntekt =
                 inntektClient.hentInntektV2(
-                    personIdent = request.personIdent,
+                    personident = request.personident,
                     maanedFom = request.maanedFom ?: YearMonth.now().minusMonths(2),
                     maanedTom = request.maanedTom ?: YearMonth.now(),
                 )
@@ -67,7 +67,7 @@ class InntektController(
 
         // TODO Flytt?
         data class InntektV2Request(
-            val personIdent: String,
+            val personident: String,
             val maanedFom: YearMonth?,
             val maanedTom: YearMonth?,
         )

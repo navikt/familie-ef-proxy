@@ -47,7 +47,7 @@ class InntektClient(
         )
 
     fun hentInntektV2(
-        personIdent: String,
+        personident: String,
         maanedFom: YearMonth,
         maanedTom: YearMonth,
     ): Map<String, Any> =
@@ -55,11 +55,11 @@ class InntektClient(
             uri = inntektUriV2,
             payload =
                 lagRequestV2(
-                    personident = personIdent,
+                    personident = personident,
                     maanedFom = maanedFom,
                     maanedTom = maanedTom,
                 ),
-            httpHeaders = headers(personIdent, stsClient.hentStsToken().token),
+            httpHeaders = headersv2(personident, stsClient.hentStsToken().token),
         )
 
     fun hentInntektshistorikk(
@@ -100,7 +100,7 @@ class InntektClient(
         maanedFom: YearMonth,
         maanedTom: YearMonth,
     ) = mapOf(
-        personident to personident,
+        "personident" to personident,
         "filter" to "StoenadEnsligMorEllerFarA-inntekt",
         "formaal" to "StoenadEnsligMorEllerFar",
         maanedFom to maanedFom,
@@ -116,5 +116,16 @@ class InntektClient(
             contentType = MediaType.APPLICATION_JSON
             accept = listOf(MediaType.APPLICATION_JSON)
             add(NavHttpHeaders.NAV_PERSONIDENT.asString(), personIdent)
+        }
+
+    private fun headersv2(
+        personident: String,
+        token: String,
+    ): HttpHeaders =
+        HttpHeaders().apply {
+            setBearerAuth(token)
+            contentType = MediaType.APPLICATION_JSON
+            accept = listOf(MediaType.APPLICATION_JSON)
+            add(NavHttpHeaders.NAV_PERSONIDENT.asString(), personident)
         }
 }
