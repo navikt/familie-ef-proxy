@@ -1,5 +1,6 @@
 package no.nav.familie.ef.proxy.integration
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.familie.http.client.AbstractRestClient
 import no.nav.familie.log.NavHttpHeaders
 import org.slf4j.LoggerFactory
@@ -21,6 +22,7 @@ class InntektClient(
     private val inntektV2Uri: URI,
     private val stsClient: StsClient,
     @Qualifier("noToken") restOperations: RestOperations,
+    @Qualifier("objectMapper") private val objectMapper: ObjectMapper,
 ) : AbstractRestClient(restOperations, "inntekt") {
     private val inntektUri =
         UriComponentsBuilder
@@ -55,14 +57,17 @@ class InntektClient(
         val secureLogger = LoggerFactory.getLogger("secureLogger")
 
         val request = lagRequestV2(personident, maanedFom, maanedTom)
-
+        val payload = objectMapper.writeValueAsString(request)
         secureLogger.info("FAMILIE-EF-PROXY --- lag request: $request")
-        return postForEntity(
-            uri = inntektUriV2,
-            payload =
-            request,
-            httpHeaders = headersv2(personident, stsClient.hentStsToken().token),
-        )
+
+        val entity =
+            postForEntity<Map<String, Any>>(
+                uri = inntektUriV2,
+                payload = payload,
+                httpHeaders = headersv2(personident, stsClient.hentStsToken().token),
+            )
+        secureLogger.info("FAMILIE-EF-PROXY --- entity: $entity")
+        return entity
     }
 
     fun hentInntektshistorikk(
@@ -103,7 +108,7 @@ class InntektClient(
         maanedFom: YearMonth,
         maanedTom: YearMonth,
     ) = mapOf(
-        "personident" to "22420180601",
+        "personident" to personident,
         "filter" to "StoenadEnsligMorEllerFarA-inntekt",
         "formaal" to "StoenadEnsligMorEllerFar",
         "maanedFom" to maanedFom,
