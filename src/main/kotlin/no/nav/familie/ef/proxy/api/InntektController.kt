@@ -3,7 +3,6 @@ package no.nav.familie.ef.proxy.api
 import no.nav.familie.ef.proxy.integration.InntektClient
 import no.nav.familie.kontrakter.felles.PersonIdent
 import no.nav.security.token.support.core.api.ProtectedWithClaims
-import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping
@@ -36,56 +35,31 @@ class InntektController(
             tom = tom ?: YearMonth.now(),
         )
 
-    @RestController
-    @RequestMapping(
-        "/api/inntektv2",
-        consumes = [MediaType.APPLICATION_JSON_VALUE],
-        produces = [MediaType.APPLICATION_JSON_VALUE],
-    )
-    @ProtectedWithClaims(issuer = "azuread")
-    @Validated
-    class InntektController(
-        private val inntektClient: InntektClient,
-    ) {
-        @PostMapping
-        fun hentInntektV2(
-            @RequestBody request: InntektV2Request,
-        ): Map<String, Any> {
-            val logger = LoggerFactory.getLogger(::javaClass.name)
-            val secureLogger = LoggerFactory.getLogger("secureLogger")
-
-            logger.info("FAMILIE-EF-PROXY --- Henter inntekt for med fom: ${request.maanedFom} og tom: ${request.maanedTom}")
-            val inntekt =
-                inntektClient.hentInntektV2(
-                    personident = request.personident,
-                    maanedFom = request.maanedFom ?: YearMonth.now().minusMonths(2),
-                    maanedTom = request.maanedTom ?: YearMonth.now(),
-                )
-
-            // TODO: Kan slettes
-            secureLogger.info("FAMILIE-EF-PROXY --- Henter inntekt med request: $request")
-            logger.info("FAMILIE-EF-PROXY --- Henter inntekt for personident med data: $inntekt")
-
-            return inntekt
-        }
-
-        // TODO Flytt?
-        data class InntektV2Request(
-            val personident: String,
-            val maanedFom: YearMonth?,
-            val maanedTom: YearMonth?,
+    @PostMapping
+    fun hentInntektV2(
+        @RequestBody inntektV2Request: InntektV2Request,
+    ): Map<String, Any> =
+        inntektClient.hentInntektV2(
+            personIdent = inntektV2Request.personIdent,
+            maanedFom = inntektV2Request.maanedFom ?: YearMonth.now().minusMonths(2),
+            maanedTom = inntektV2Request.maanedTom ?: YearMonth.now(),
         )
 
-        @PostMapping("/historikk")
-        fun hentInntektshistorikk(
-            @RequestBody request: PersonIdent,
-            @RequestParam("fom", required = false) fom: YearMonth?,
-            @RequestParam("tom", required = false) tom: YearMonth?,
-        ): Map<String, Any> =
-            inntektClient.hentInntektshistorikk(
-                personIdent = request.ident,
-                fom = fom ?: YearMonth.now().minusMonths(12),
-                tom = tom ?: YearMonth.now(),
-            )
-    }
+    @PostMapping("/historikk")
+    fun hentInntektshistorikk(
+        @RequestBody request: PersonIdent,
+        @RequestParam("fom", required = false) fom: YearMonth?,
+        @RequestParam("tom", required = false) tom: YearMonth?,
+    ): Map<String, Any> =
+        inntektClient.hentInntektshistorikk(
+            personIdent = request.ident,
+            fom = fom ?: YearMonth.now().minusMonths(12),
+            tom = tom ?: YearMonth.now(),
+        )
 }
+
+data class InntektV2Request(
+    val personIdent: String,
+    val maanedFom: YearMonth?,
+    val maanedTom: YearMonth?,
+)

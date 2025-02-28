@@ -3,7 +3,6 @@ package no.nav.familie.ef.proxy.integration
 import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.familie.http.client.AbstractRestClient
 import no.nav.familie.log.NavHttpHeaders
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
@@ -44,30 +43,39 @@ class InntektClient(
         tom: YearMonth,
     ): Map<String, Any> =
         postForEntity(
-            inntektUri,
-            lagRequest(personIdent, fom, tom),
-            headers(personIdent, stsClient.hentStsToken().token),
+            uri = inntektUri,
+            payload = lagInntektRequest(personIdent, fom, tom),
+            httpHeaders = headers(
+                token = stsClient.hentStsToken().token,
+                personIdent = personIdent)
+            ,
         )
 
+    // TODO: Endre returtype til det som faktisk er forventet. Foreløpig satt til String, Any.
     fun hentInntektV2(
-        personident: String,
+        personIdent: String,
         maanedFom: YearMonth,
         maanedTom: YearMonth,
     ): Map<String, Any> {
-        val secureLogger = LoggerFactory.getLogger("secureLogger")
+        val request =
+            lagInntektV2Request(
+                personident = personIdent,
+                maanedFom = maanedFom,
+                maanedTom = maanedTom,
+            )
 
-        val request = lagRequestV2(personident, maanedFom, maanedTom)
         val payload = objectMapper.writeValueAsString(request)
-        secureLogger.info("FAMILIE-EF-PROXY --- lag request: $request")
-        secureLogger.info("FAMILIE-EF-PROXY --- lag payload: $payload")
 
         val entity =
             postForEntity<Map<String, Any>>(
                 uri = inntektUriV2,
                 payload = payload,
-                httpHeaders = headersv2(personident, stsClient.hentStsToken().token),
+                httpHeaders = headers(
+                    token = stsClient.hentStsToken().token,
+                    personIdent = null
+                ),
             )
-        secureLogger.info("FAMILIE-EF-PROXY --- entity: $entity")
+
         return entity
     }
 
@@ -88,7 +96,7 @@ class InntektClient(
         return getForEntity(inntektshistorikkUri, headers(personIdent, stsClient.hentStsToken().token))
     }
 
-    private fun lagRequest(
+    private fun lagInntektRequest(
         personIdent: String,
         fom: YearMonth,
         tom: YearMonth,
@@ -104,7 +112,7 @@ class InntektClient(
         "maanedTom" to tom,
     )
 
-    private fun lagRequestV2(
+    private fun lagInntektV2Request(
         personident: String,
         maanedFom: YearMonth,
         maanedTom: YearMonth,
@@ -117,24 +125,13 @@ class InntektClient(
     )
 
     private fun headers(
-        personIdent: String,
         token: String,
+        personIdent: String?,
     ): HttpHeaders =
         HttpHeaders().apply {
             setBearerAuth(token)
             contentType = MediaType.APPLICATION_JSON
             accept = listOf(MediaType.APPLICATION_JSON)
             add(NavHttpHeaders.NAV_PERSONIDENT.asString(), personIdent)
-        }
-
-    private fun headersv2(
-        personident: String,
-        token: String,
-    ): HttpHeaders =
-        HttpHeaders().apply {
-            setBearerAuth(token)
-            contentType = MediaType.APPLICATION_JSON
-            accept = listOf(MediaType.APPLICATION_JSON)
-            add(NavHttpHeaders.NAV_PERSONIDENT.asString(), personident)
         }
 }
