@@ -100,7 +100,7 @@ class InntektClient(
         maanedFom: YearMonth,
         maanedTom: YearMonth,
     ) = mapOf(
-        "personident" to "10108000398",
+        "personident" to personident,
         "filter" to "StoenadEnsligMorEllerFarA-inntekt",
         "formaal" to "StoenadEnsligMorEllerFar",
         "maanedFom" to maanedFom,
