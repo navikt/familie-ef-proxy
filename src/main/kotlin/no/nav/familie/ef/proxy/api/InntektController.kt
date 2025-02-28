@@ -40,7 +40,7 @@ class InntektController(
         @RequestBody inntektV2Request: InntektV2Request,
     ): Map<String, Any> =
         inntektClient.hentInntektV2(
-            personIdent = inntektV2Request.personIdent,
+            personIdent = inntektV2Request.personident,
             maanedFom = inntektV2Request.maanedFom ?: YearMonth.now().minusMonths(2),
             maanedTom = inntektV2Request.maanedTom ?: YearMonth.now(),
         )
@@ -59,7 +59,7 @@ class InntektController(
 }
 
 data class InntektV2Request(
-    val personIdent: String,
+    val personident: String,
     val maanedFom: YearMonth?,
     val maanedTom: YearMonth?,
 )
