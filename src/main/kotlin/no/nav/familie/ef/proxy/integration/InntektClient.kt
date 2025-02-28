@@ -59,6 +59,7 @@ class InntektClient(
         val request = lagRequestV2(personident, maanedFom, maanedTom)
         val payload = objectMapper.writeValueAsString(request)
         secureLogger.info("FAMILIE-EF-PROXY --- lag request: $request")
+        secureLogger.info("FAMILIE-EF-PROXY --- lag payload: $payload")
 
         val entity =
             postForEntity<Map<String, Any>>(
