@@ -2,6 +2,7 @@ package no.nav.familie.ef.proxy.integration
 
 import no.nav.familie.http.client.AbstractRestClient
 import no.nav.familie.log.NavHttpHeaders
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
@@ -50,17 +51,19 @@ class InntektClient(
         personident: String,
         maanedFom: YearMonth,
         maanedTom: YearMonth,
-    ): Map<String, Any> =
-        postForEntity(
+    ): Map<String, Any> {
+        val secureLogger = LoggerFactory.getLogger("secureLogger")
+
+        val request = lagRequestV2(personident, maanedFom, maanedTom)
+
+        secureLogger.info("FAMILIE-EF-PROXY --- lag request: $request")
+        return postForEntity(
             uri = inntektUriV2,
             payload =
-                lagRequestV2(
-                    personident = personident,
-                    maanedFom = maanedFom,
-                    maanedTom = maanedTom,
-                ),
+            request,
             httpHeaders = headersv2(personident, stsClient.hentStsToken().token),
         )
+    }
 
     fun hentInntektshistorikk(
         personIdent: String,

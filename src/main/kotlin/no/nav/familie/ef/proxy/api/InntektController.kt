@@ -52,6 +52,7 @@ class InntektController(
             @RequestBody request: InntektV2Request,
         ): Map<String, Any> {
             val logger = LoggerFactory.getLogger(::javaClass.name)
+            val secureLogger = LoggerFactory.getLogger("secureLogger")
 
             logger.info("FAMILIE-EF-PROXY --- Henter inntekt for med fom: ${request.maanedFom} og tom: ${request.maanedTom}")
             val inntekt =
@@ -61,7 +62,8 @@ class InntektController(
                     maanedTom = request.maanedTom ?: YearMonth.now(),
                 )
 
-            // TODO: Husk å fjern meg.
+            // TODO: Kan slettes
+            secureLogger.info("FAMILIE-EF-PROXY --- Henter inntekt med request: $request")
             logger.info("FAMILIE-EF-PROXY --- Henter inntekt for personident med data: $inntekt")
 
             return inntekt
