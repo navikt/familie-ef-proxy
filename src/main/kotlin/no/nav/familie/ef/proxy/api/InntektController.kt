@@ -35,7 +35,7 @@ class InntektController(
             tom = tom ?: YearMonth.now(),
         )
 
-    @PostMapping
+    @PostMapping("v2")
     fun hentInntektV2(
         @RequestBody inntektV2Request: InntektV2Request,
     ): Map<String, Any> =

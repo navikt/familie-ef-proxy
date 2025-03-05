@@ -45,13 +45,13 @@ class InntektClient(
         postForEntity(
             uri = inntektUri,
             payload = lagInntektRequest(personIdent, fom, tom),
-            httpHeaders = headers(
-                token = stsClient.hentStsToken().token,
-                personIdent = personIdent)
-            ,
+            httpHeaders =
+                headers(
+                    token = stsClient.hentStsToken().token,
+                    personIdent = personIdent,
+                ),
         )
 
-    // TODO: Endre returtype til det som faktisk er forventet. Foreløpig satt til String, Any.
     fun hentInntektV2(
         personIdent: String,
         maanedFom: YearMonth,
@@ -70,10 +70,11 @@ class InntektClient(
             postForEntity<Map<String, Any>>(
                 uri = inntektUriV2,
                 payload = payload,
-                httpHeaders = headers(
-                    token = stsClient.hentStsToken().token,
-                    personIdent = null
-                ),
+                httpHeaders =
+                    headers(
+                        token = stsClient.hentStsToken().token,
+                        personIdent = null,
+                    ),
             )
 
         return entity
