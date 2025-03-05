@@ -35,6 +35,16 @@ class InntektController(
             tom = tom ?: YearMonth.now(),
         )
 
+    @PostMapping("v2")
+    fun hentInntektV2(
+        @RequestBody inntektV2Request: InntektV2Request,
+    ): Map<String, Any> =
+        inntektClient.hentInntektV2(
+            personIdent = inntektV2Request.personident,
+            maanedFom = inntektV2Request.maanedFom ?: YearMonth.now().minusMonths(2),
+            maanedTom = inntektV2Request.maanedTom ?: YearMonth.now(),
+        )
+
     @PostMapping("/historikk")
     fun hentInntektshistorikk(
         @RequestBody request: PersonIdent,
@@ -47,3 +57,9 @@ class InntektController(
             tom = tom ?: YearMonth.now(),
         )
 }
+
+data class InntektV2Request(
+    val personident: String,
+    val maanedFom: YearMonth?,
+    val maanedTom: YearMonth?,
+)
