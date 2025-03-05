@@ -1,7 +1,7 @@
 package no.nav.familie.ef.proxy.integration
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.familie.http.client.AbstractRestClient
+import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.log.NavHttpHeaders
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
@@ -21,7 +21,6 @@ class InntektClient(
     private val inntektV2Uri: URI,
     private val stsClient: StsClient,
     @Qualifier("noToken") restOperations: RestOperations,
-    @Qualifier("objectMapper") private val objectMapper: ObjectMapper,
 ) : AbstractRestClient(restOperations, "inntekt") {
     private val inntektUri =
         UriComponentsBuilder
