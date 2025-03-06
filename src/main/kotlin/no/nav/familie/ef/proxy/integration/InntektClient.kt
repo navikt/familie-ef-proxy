@@ -1,6 +1,7 @@
 package no.nav.familie.ef.proxy.integration
 
 import no.nav.familie.http.client.AbstractRestClient
+import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.log.NavHttpHeaders
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
@@ -14,7 +15,10 @@ import java.time.YearMonth
 
 @Component
 class InntektClient(
-    @Value("\${INNTEKT_URL}") private val uri: URI,
+    @Value("\${INNTEKT_URL}")
+    private val uri: URI,
+    @Value("\${INNTEKTV2_URL}")
+    private val inntektV2Uri: URI,
     private val stsClient: StsClient,
     @Qualifier("noToken") restOperations: RestOperations,
 ) : AbstractRestClient(restOperations, "inntekt") {
@@ -25,11 +29,55 @@ class InntektClient(
             .build()
             .toUri()
 
+    private val inntektUriV2 =
+        UriComponentsBuilder
+            .fromUri(inntektV2Uri)
+            .pathSegment("inntekt")
+            .build()
+            .toUri()
+
     fun hentInntekt(
         personIdent: String,
         fom: YearMonth,
         tom: YearMonth,
-    ): Map<String, Any> = postForEntity(inntektUri, lagRequest(personIdent, fom, tom), headers(personIdent, stsClient.hentStsToken().token))
+    ): Map<String, Any> =
+        postForEntity(
+            uri = inntektUri,
+            payload = lagInntektRequest(personIdent, fom, tom),
+            httpHeaders =
+                headers(
+                    token = stsClient.hentStsToken().token,
+                    personIdent = personIdent,
+                ),
+        )
+
+    fun hentInntektV2(
+        personIdent: String,
+        maanedFom: YearMonth,
+        maanedTom: YearMonth,
+    ): Map<String, Any> {
+        val request =
+            lagInntektV2Request(
+                personident = personIdent,
+                maanedFom = maanedFom,
+                maanedTom = maanedTom,
+            )
+
+        val payload = objectMapper.writeValueAsString(request)
+
+        val entity =
+            postForEntity<Map<String, Any>>(
+                uri = inntektUriV2,
+                payload = payload,
+                httpHeaders =
+                    headers(
+                        token = stsClient.hentStsToken().token,
+                        personIdent = null,
+                    ),
+            )
+
+        return entity
+    }
 
     fun hentInntektshistorikk(
         personIdent: String,
@@ -48,7 +96,7 @@ class InntektClient(
         return getForEntity(inntektshistorikkUri, headers(personIdent, stsClient.hentStsToken().token))
     }
 
-    private fun lagRequest(
+    private fun lagInntektRequest(
         personIdent: String,
         fom: YearMonth,
         tom: YearMonth,
@@ -64,9 +112,21 @@ class InntektClient(
         "maanedTom" to tom,
     )
 
+    private fun lagInntektV2Request(
+        personident: String,
+        maanedFom: YearMonth,
+        maanedTom: YearMonth,
+    ) = mapOf(
+        "personident" to personident,
+        "filter" to "StoenadEnsligMorEllerFarA-inntekt",
+        "formaal" to "StoenadEnsligMorEllerFar",
+        "maanedFom" to maanedFom,
+        "maanedTom" to maanedTom,
+    )
+
     private fun headers(
-        personIdent: String,
         token: String,
+        personIdent: String?,
     ): HttpHeaders =
         HttpHeaders().apply {
             setBearerAuth(token)

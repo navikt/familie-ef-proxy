@@ -18,6 +18,7 @@ funksjonsbrytere:
 EF_SAK_URL: http://localhost:8385
 EREG_URL: http://localhost:8385
 INNTEKT_URL: http://localhost:8385
+INNTEKTV2_URRL: http://localhost:8385
 SIGRUN_URL: http://localhost:8385
 
 CREDENTIAL_USERNAME: not-a-real-srvuser
