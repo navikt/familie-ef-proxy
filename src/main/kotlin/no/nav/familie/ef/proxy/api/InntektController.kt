@@ -23,23 +23,11 @@ import java.time.YearMonth
 class InntektController(
     private val inntektClient: InntektClient,
 ) {
-    @PostMapping
-    fun hentInntekt(
-        @RequestBody request: PersonIdent,
-        @RequestParam("fom", required = false) fom: YearMonth?,
-        @RequestParam("tom", required = false) tom: YearMonth?,
-    ): Map<String, Any> =
-        inntektClient.hentInntekt(
-            personIdent = request.ident,
-            fom = fom ?: YearMonth.now().minusMonths(2),
-            tom = tom ?: YearMonth.now(),
-        )
-
     @PostMapping("v2")
     fun hentInntektV2(
         @RequestBody inntektV2Request: InntektV2Request,
     ): Map<String, Any> =
-        inntektClient.hentInntektV2(
+        inntektClient.hentInntekt(
             personIdent = inntektV2Request.personident,
             maanedFom = inntektV2Request.maanedFom ?: YearMonth.now().minusMonths(2),
             maanedTom = inntektV2Request.maanedTom ?: YearMonth.now(),
