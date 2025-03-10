@@ -16,14 +16,12 @@ import java.time.YearMonth
 class InntektClient(
     @Value("\${INNTEKT_URL}")
     private val uri: URI,
-    @Value("\${INNTEKTV2_URL}")
-    private val inntektV2Uri: URI,
     private val stsClient: StsClient,
     @Qualifier("noToken") restOperations: RestOperations,
 ) : AbstractRestClient(restOperations, "inntekt") {
-    private val inntektUri =
+    private val inntektV2Uri =
         UriComponentsBuilder
-            .fromUri(inntektV2Uri)
+            .fromUri(uri)
             .pathSegment("inntekt")
             .build()
             .toUri()
@@ -44,7 +42,7 @@ class InntektClient(
 
         val entity =
             postForEntity<Map<String, Any>>(
-                uri = inntektUri,
+                uri = inntektV2Uri,
                 payload = payload,
                 httpHeaders =
                     headers(
@@ -53,23 +51,6 @@ class InntektClient(
             )
 
         return entity
-    }
-
-    fun hentInntektshistorikk(
-        personIdent: String,
-        fom: YearMonth,
-        tom: YearMonth,
-    ): Map<String, Any> {
-        val inntektshistorikkUri =
-            UriComponentsBuilder
-                .fromUri(uri)
-                .pathSegment("v1/inntektshistorikk")
-                .queryParam("maaned-fom", fom)
-                .queryParam("maaned-tom", tom)
-                .queryParam("filter", "StoenadEnsligMorEllerFarA-inntekt")
-                .build()
-                .toUri()
-        return getForEntity(inntektshistorikkUri, headers(stsClient.hentStsToken().token))
     }
 
     private fun genererInntektRequest(
@@ -84,9 +65,7 @@ class InntektClient(
         "maanedTom" to maanedTom,
     )
 
-    private fun headers(
-        token: String,
-    ): HttpHeaders =
+    private fun headers(token: String): HttpHeaders =
         HttpHeaders().apply {
             setBearerAuth(token)
             contentType = MediaType.APPLICATION_JSON

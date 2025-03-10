@@ -1,14 +1,12 @@
 package no.nav.familie.ef.proxy.api
 
 import no.nav.familie.ef.proxy.integration.InntektClient
-import no.nav.familie.kontrakter.felles.PersonIdent
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.http.MediaType
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.time.YearMonth
 
@@ -24,30 +22,18 @@ class InntektController(
     private val inntektClient: InntektClient,
 ) {
     @PostMapping("v2")
-    fun hentInntektV2(
+    fun hentInntekt(
         @RequestBody inntektV2Request: InntektV2Request,
     ): Map<String, Any> =
         inntektClient.hentInntekt(
-            personIdent = inntektV2Request.personident,
-            maanedFom = inntektV2Request.maanedFom ?: YearMonth.now().minusMonths(2),
-            maanedTom = inntektV2Request.maanedTom ?: YearMonth.now(),
-        )
-
-    @PostMapping("/historikk")
-    fun hentInntektshistorikk(
-        @RequestBody request: PersonIdent,
-        @RequestParam("fom", required = false) fom: YearMonth?,
-        @RequestParam("tom", required = false) tom: YearMonth?,
-    ): Map<String, Any> =
-        inntektClient.hentInntektshistorikk(
-            personIdent = request.ident,
-            fom = fom ?: YearMonth.now().minusMonths(12),
-            tom = tom ?: YearMonth.now(),
+            personIdent = inntektV2Request.personIdent,
+            maanedFom = inntektV2Request.månedFom ?: YearMonth.now().minusMonths(2),
+            maanedTom = inntektV2Request.månedTom ?: YearMonth.now(),
         )
 }
 
 data class InntektV2Request(
-    val personident: String,
-    val maanedFom: YearMonth?,
-    val maanedTom: YearMonth?,
+    val personIdent: String,
+    val månedFom: YearMonth?,
+    val månedTom: YearMonth?,
 )
