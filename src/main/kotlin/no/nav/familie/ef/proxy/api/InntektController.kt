@@ -27,8 +27,8 @@ class InntektController(
     ): Map<String, Any> =
         inntektClient.hentInntekt(
             personIdent = inntektV2Request.personIdent,
-            maanedFom = inntektV2Request.månedFom ?: YearMonth.now().minusMonths(2),
-            maanedTom = inntektV2Request.månedTom ?: YearMonth.now(),
+            månedFom = inntektV2Request.månedFom ?: YearMonth.now().minusMonths(2),
+            månedTom = inntektV2Request.månedTom ?: YearMonth.now(),
         )
 }
 

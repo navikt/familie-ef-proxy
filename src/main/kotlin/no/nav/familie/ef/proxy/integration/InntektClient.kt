@@ -28,14 +28,14 @@ class InntektClient(
 
     fun hentInntekt(
         personIdent: String,
-        maanedFom: YearMonth,
-        maanedTom: YearMonth,
+        månedFom: YearMonth,
+        månedTom: YearMonth,
     ): Map<String, Any> {
         val request =
             genererInntektRequest(
                 personIdent = personIdent,
-                månedFom = maanedFom,
-                månedTom = maanedTom,
+                månedFom = månedFom,
+                månedTom = månedTom,
             )
 
         val payload = objectMapper.writeValueAsString(request)
