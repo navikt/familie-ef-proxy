@@ -34,8 +34,8 @@ class InntektClient(
         val request =
             genererInntektRequest(
                 personIdent = personIdent,
-                maanedFom = maanedFom,
-                maanedTom = maanedTom,
+                månedFom = maanedFom,
+                månedTom = maanedTom,
             )
 
         val payload = objectMapper.writeValueAsString(request)
@@ -55,14 +55,14 @@ class InntektClient(
 
     private fun genererInntektRequest(
         personIdent: String,
-        maanedFom: YearMonth,
-        maanedTom: YearMonth,
+        månedFom: YearMonth,
+        månedTom: YearMonth,
     ) = mapOf(
         "personident" to personIdent,
         "filter" to "StoenadEnsligMorEllerFarA-inntekt",
         "formaal" to "StoenadEnsligMorEllerFar",
-        "maanedFom" to maanedFom,
-        "maanedTom" to maanedTom,
+        "maanedFom" to månedFom,
+        "maanedTom" to månedTom,
     )
 
     private fun headers(token: String): HttpHeaders =
