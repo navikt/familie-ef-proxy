@@ -2,7 +2,6 @@ package no.nav.familie.ef.proxy.integration
 
 import no.nav.familie.http.client.AbstractRestClient
 import no.nav.familie.kontrakter.felles.objectMapper
-import no.nav.familie.log.NavHttpHeaders
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
@@ -17,121 +16,59 @@ import java.time.YearMonth
 class InntektClient(
     @Value("\${INNTEKT_URL}")
     private val uri: URI,
-    @Value("\${INNTEKTV2_URL}")
-    private val inntektV2Uri: URI,
     private val stsClient: StsClient,
     @Qualifier("noToken") restOperations: RestOperations,
 ) : AbstractRestClient(restOperations, "inntekt") {
-    private val inntektUri =
+    private val inntektV2Uri =
         UriComponentsBuilder
             .fromUri(uri)
-            .pathSegment("v1/hentinntektliste")
-            .build()
-            .toUri()
-
-    private val inntektUriV2 =
-        UriComponentsBuilder
-            .fromUri(inntektV2Uri)
             .pathSegment("inntekt")
             .build()
             .toUri()
 
     fun hentInntekt(
         personIdent: String,
-        fom: YearMonth,
-        tom: YearMonth,
-    ): Map<String, Any> =
-        postForEntity(
-            uri = inntektUri,
-            payload = lagInntektRequest(personIdent, fom, tom),
-            httpHeaders =
-                headers(
-                    token = stsClient.hentStsToken().token,
-                    personIdent = personIdent,
-                ),
-        )
-
-    fun hentInntektV2(
-        personIdent: String,
-        maanedFom: YearMonth,
-        maanedTom: YearMonth,
+        månedFom: YearMonth,
+        månedTom: YearMonth,
     ): Map<String, Any> {
         val request =
-            lagInntektV2Request(
-                personident = personIdent,
-                maanedFom = maanedFom,
-                maanedTom = maanedTom,
+            genererInntektRequest(
+                personIdent = personIdent,
+                månedFom = månedFom,
+                månedTom = månedTom,
             )
 
         val payload = objectMapper.writeValueAsString(request)
 
         val entity =
             postForEntity<Map<String, Any>>(
-                uri = inntektUriV2,
+                uri = inntektV2Uri,
                 payload = payload,
                 httpHeaders =
                     headers(
                         token = stsClient.hentStsToken().token,
-                        personIdent = null,
                     ),
             )
 
         return entity
     }
 
-    fun hentInntektshistorikk(
+    private fun genererInntektRequest(
         personIdent: String,
-        fom: YearMonth,
-        tom: YearMonth,
-    ): Map<String, Any> {
-        val inntektshistorikkUri =
-            UriComponentsBuilder
-                .fromUri(uri)
-                .pathSegment("v1/inntektshistorikk")
-                .queryParam("maaned-fom", fom)
-                .queryParam("maaned-tom", tom)
-                .queryParam("filter", "StoenadEnsligMorEllerFarA-inntekt")
-                .build()
-                .toUri()
-        return getForEntity(inntektshistorikkUri, headers(personIdent, stsClient.hentStsToken().token))
-    }
-
-    private fun lagInntektRequest(
-        personIdent: String,
-        fom: YearMonth,
-        tom: YearMonth,
+        månedFom: YearMonth,
+        månedTom: YearMonth,
     ) = mapOf(
-        "ainntektsfilter" to "StoenadEnsligMorEllerFarA-inntekt",
-        "formaal" to "StoenadEnsligMorEllerFar",
-        "ident" to
-            mapOf(
-                "identifikator" to personIdent,
-                "aktoerType" to "NATURLIG_IDENT",
-            ),
-        "maanedFom" to fom,
-        "maanedTom" to tom,
-    )
-
-    private fun lagInntektV2Request(
-        personident: String,
-        maanedFom: YearMonth,
-        maanedTom: YearMonth,
-    ) = mapOf(
-        "personident" to personident,
+        "personident" to personIdent,
         "filter" to "StoenadEnsligMorEllerFarA-inntekt",
         "formaal" to "StoenadEnsligMorEllerFar",
-        "maanedFom" to maanedFom,
-        "maanedTom" to maanedTom,
+        "maanedFom" to månedFom,
+        "maanedTom" to månedTom,
     )
 
-    private fun headers(
-        token: String,
-        personIdent: String?,
-    ): HttpHeaders =
+    private fun headers(token: String): HttpHeaders =
         HttpHeaders().apply {
             setBearerAuth(token)
             contentType = MediaType.APPLICATION_JSON
             accept = listOf(MediaType.APPLICATION_JSON)
-            add(NavHttpHeaders.NAV_PERSONIDENT.asString(), personIdent)
         }
 }
