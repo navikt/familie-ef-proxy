@@ -7,14 +7,6 @@ no.nav.security.jwt:
     accepted_audience: aud-localhost
     proxy_url: #Default satt, skal være null i integrasjonstest
 
-funksjonsbrytere:
-  enabled: false
-  unleash:
-    uri: http://localhost:4242/api
-    environment: local
-    applicationName: familie-ef-sak
-
-
 EF_SAK_URL: http://localhost:8385
 EREG_URL: http://localhost:8385
 INNTEKT_URL: http://localhost:8385
