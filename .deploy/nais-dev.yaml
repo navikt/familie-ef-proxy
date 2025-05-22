@@ -65,13 +65,6 @@ spec:
   envFrom:
     - secret: familie-ef-proxy-serviceusers
   observability:
-    logging:
-      destinations:
-        - id: elastic
-        - id: loki
     autoInstrumentation:
       enabled: true
       runtime: java
-      destinations:
-        - id: "grafana-lgtm"
-        - id: "elastic-apm"
