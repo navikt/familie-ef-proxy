@@ -64,7 +64,3 @@ spec:
       value: dev
   envFrom:
     - secret: familie-ef-proxy-serviceusers
-  observability:
-    autoInstrumentation:
-      enabled: true
-      runtime: java
