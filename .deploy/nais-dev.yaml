@@ -64,3 +64,11 @@ spec:
       value: dev
   envFrom:
     - secret: familie-ef-proxy-serviceusers
+  observability:
+    logging:
+      destinations:
+        - id: loki
+        - id: elastic
+    autoInstrumentation:
+      enabled: true
+      runtime: java
