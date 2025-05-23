@@ -61,3 +61,11 @@ spec:
       value: prod
   envFrom:
     - secret: familie-ef-proxy-serviceusers
+  observability:
+    logging:
+      destinations:
+        - id: elastic
+        - id: loki
+    autoInstrumentation:
+      enabled: true
+      runtime: java

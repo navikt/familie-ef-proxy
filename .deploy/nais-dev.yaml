@@ -24,7 +24,7 @@ spec:
     max: 3
   resources:
     limits:
-      memory: 256Mi
+      memory: 512Mi
     requests:
       memory: 256Mi
       cpu: 2m
@@ -64,3 +64,11 @@ spec:
       value: dev
   envFrom:
     - secret: familie-ef-proxy-serviceusers
+  observability:
+    logging:
+      destinations:
+        - id: elastic
+        - id: loki
+    autoInstrumentation:
+      enabled: true
+      runtime: java
