@@ -33,10 +33,10 @@
         <felles.version>3.20250616113100_41d23f2</felles.version>
         <start-class>no.nav.familie.ef.proxy.ApplicationKt</start-class>
 
-        <nav.security.version>5.0.33</nav.security.version> <!-- Denne burde være samme versjon som i felles -->
+        <nav.security.version>5.0.34</nav.security.version> <!-- Denne burde være samme versjon som i felles -->
         <okhttp3.version>4.10.0</okhttp3.version> <!-- overskrever spring sin versjon, blir brukt av mock-oauth2-server -->
 
-        <kontrakter.version>3.0_20250724145643_3e1e3e4</kontrakter.version>
+        <kontrakter.version>3.0_20250730094742_b263f30</kontrakter.version>
     </properties>
 
     <dependencies>
