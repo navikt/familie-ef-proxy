@@ -29,14 +29,14 @@
         <jvmTarget>21</jvmTarget>
         <kotlin.version>2.2.20</kotlin.version>
         <springdoc.version>2.8.13</springdoc.version>
-        <mockk.version>1.14.5</mockk.version>
+        <mockk.version>1.14.6</mockk.version>
         <felles.version>3.20250915092837_153983f</felles.version>
         <start-class>no.nav.familie.ef.proxy.ApplicationKt</start-class>
 
         <nav.security.version>5.0.37</nav.security.version> <!-- Denne burde være samme versjon som i felles -->
         <okhttp3.version>4.10.0</okhttp3.version> <!-- overskrever spring sin versjon, blir brukt av mock-oauth2-server -->
 
-        <kontrakter.version>3.0_20250916123655_5035eb9</kontrakter.version>
+        <kontrakter.version>3.0_20250929124430_91dd0fd</kontrakter.version>
     </properties>
 
     <dependencies>
