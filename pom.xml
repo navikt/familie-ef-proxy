@@ -36,7 +36,7 @@
         <nav.security.version>5.0.37</nav.security.version> <!-- Denne burde være samme versjon som i felles -->
         <okhttp3.version>4.10.0</okhttp3.version> <!-- overskrever spring sin versjon, blir brukt av mock-oauth2-server -->
 
-        <kontrakter.version>3.0_20250929124430_91dd0fd</kontrakter.version>
+        <kontrakter.version>3.0_20251010090545_ece0054</kontrakter.version>
     </properties>
 
     <dependencies>
@@ -185,7 +185,7 @@
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.8.13</version>
+                    <version>0.8.14</version>
                 </plugin>
             </plugins>
         </pluginManagement>
