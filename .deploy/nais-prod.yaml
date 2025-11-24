@@ -56,6 +56,8 @@ spec:
         - application: sigrun
           namespace: team-inntekt
           cluster: prod-fss
+        - application: logging
+          namespace: nais-system
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: prod
