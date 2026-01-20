@@ -28,8 +28,6 @@ spec:
     requests:
       memory: 256Mi
       cpu: 2m
-  secureLogs:
-    enabled: true
   ingresses:
     - https://familie-ef-proxy.dev.intern.nav.no
     - https://familie-ef-proxy.dev-fss-pub.nais.io
