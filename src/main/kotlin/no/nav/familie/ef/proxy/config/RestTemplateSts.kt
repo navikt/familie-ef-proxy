@@ -3,11 +3,14 @@ package no.nav.familie.ef.proxy.config
 import no.nav.familie.http.config.RestTemplateBuilderBean
 import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor
 import no.nav.familie.http.interceptor.MdcValuesPropagatingClientInterceptor
-import org.springframework.boot.web.client.RestTemplateBuilder
+import no.nav.familie.kontrakter.felles.objectMapper
+import org.springframework.boot.restclient.RestTemplateBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.web.client.RestOperations
+import org.springframework.web.client.RestTemplate
 
 @Suppress("SpringFacetCodeInspection")
 @Configuration
@@ -19,7 +22,9 @@ class RestTemplateSts {
         consumerIdClientInterceptor: ConsumerIdClientInterceptor,
     ): RestOperations =
         restTemplateBuilder
-            .additionalInterceptors(
+            .additionalMessageConverters(
+                listOf(MappingJackson2HttpMessageConverter(objectMapper)) + RestTemplate().messageConverters,
+            ).additionalInterceptors(
                 consumerIdClientInterceptor,
                 MdcValuesPropagatingClientInterceptor(),
             ).build()
