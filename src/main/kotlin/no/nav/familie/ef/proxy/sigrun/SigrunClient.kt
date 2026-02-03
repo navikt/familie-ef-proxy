@@ -3,7 +3,6 @@ package no.nav.familie.ef.proxy.sigrun
 import no.nav.familie.http.client.AbstractRestClient
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Component
 import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.client.RestOperations
@@ -39,52 +38,10 @@ class SigrunClient(
             emptyMap()
         }
     }
-
-    fun hentBeregnetSkatt(
-        personIdent: String,
-        inntektsår: Int,
-    ): List<Map<String, Any>> {
-        val uriComponentsBuilder =
-            UriComponentsBuilder
-                .fromUri(uri)
-                .pathSegment("beregnetskatt")
-                .queryParam("inntektsaar", inntektsår)
-
-        val headers = HttpHeaders()
-        headers.set("x-filter", "BeregnetSkattPensjonsgivendeInntekt")
-        headers.set("x-naturligident", personIdent)
-        headers.set("x-inntektsaar", inntektsår.toString())
-
-        return try {
-            getForEntity(uriComponentsBuilder.build().toUri(), headers)
-        } catch (e: HttpClientErrorException.NotFound) {
-            secureLogger.warn(e.message)
-            emptyList()
-        }
-    }
-
-    fun hentSummertSkattegrunnlag(
-        personIdent: String,
-        inntektsår: Int,
-    ): List<Map<String, Any>> {
-        val url =
-            UriComponentsBuilder
-                .fromUri(uri)
-                .pathSegment("v2", "summertskattegrunnlag")
-                .build()
-                .toUri()
-
-        val request =
-            SummertSkattegrunnlagRequest(
-                personident = personIdent,
-                inntektsaar = inntektsår.toString(),
-            )
-
-        return try {
-            postForEntity(url, request)
-        } catch (e: HttpClientErrorException.NotFound) {
-            secureLogger.warn(e.message)
-            emptyList()
-        }
-    }
 }
+
+data class PensjonsgivendeInntektRequest(
+    val personident: String,
+    val inntektsaar: String,
+    val rettighetspakke: String = "navEnsligForsoerger",
+)

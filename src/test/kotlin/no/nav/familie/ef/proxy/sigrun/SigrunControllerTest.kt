@@ -34,49 +34,4 @@ internal class SigrunControllerTest : IntegrationSpringRunnerTest() {
 
         verify(exactly = 1) { sigrunClient.hentPensjonsgivendeInntekt("123", 2022) }
     }
-
-    @Test
-    internal fun `kall beregnetskatt med inntektsaar`() {
-        val url = localhost("/api/sigrun/beregnetskatt?inntektsaar=2020")
-        val response =
-            restTemplate.exchange<List<Map<String, String>>>(
-                url,
-                HttpMethod.POST,
-                HttpEntity(mapOf("ident" to "123"), headers),
-            )
-        Assertions.assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
-        Assertions.assertThat(response.body!!).isEqualTo(emptyList<Map<String, Any>>())
-
-        verify(exactly = 1) { sigrunClient.hentBeregnetSkatt("123", 2020) }
-    }
-
-    @Test
-    internal fun `kall beregnetskatt uten inntektsaar`() {
-        val url = localhost("/api/sigrun/beregnetskatt")
-        val response =
-            restTemplate.exchange<List<Map<String, String>>>(
-                url,
-                HttpMethod.POST,
-                HttpEntity(mapOf("ident" to "1234"), headers),
-            )
-        Assertions.assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
-        Assertions.assertThat(response.body!!).isEqualTo(emptyList<Map<String, Any>>())
-
-        verify(exactly = 1) { sigrunClient.hentBeregnetSkatt("1234", YearMonth.now().year - 1) }
-    }
-
-    @Test
-    internal fun `kall summertskattegrunnlag`() {
-        val url = localhost("/api/sigrun/summertskattegrunnlag")
-        val response =
-            restTemplate.exchange<List<Map<String, String>>>(
-                url,
-                HttpMethod.POST,
-                HttpEntity(mapOf("ident" to "12345"), headers),
-            )
-        Assertions.assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
-        Assertions.assertThat(response.body!!).isEqualTo(emptyList<Map<String, Any>>())
-
-        verify(exactly = 1) { sigrunClient.hentSummertSkattegrunnlag("12345", YearMonth.now().year - 1) }
-    }
 }
