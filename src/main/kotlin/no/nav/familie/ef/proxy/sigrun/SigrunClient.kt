@@ -28,8 +28,8 @@ class SigrunClient(
 
         val request =
             PensjonsgivendeInntektRequest(
-                personidentifikator = personIdent,
-                inntektsaar = inntektsår,
+                personident = personIdent,
+                inntektsaar = inntektsår.toString(),
             )
 
         return try {
@@ -76,8 +76,8 @@ class SigrunClient(
 
         val request =
             SummertSkattegrunnlagRequest(
-                personidentifikator = personIdent,
-                inntektsaar = inntektsår,
+                personident = personIdent,
+                inntektsaar = inntektsår.toString(),
             )
 
         return try {

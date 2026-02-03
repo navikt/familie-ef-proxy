@@ -1,13 +1,13 @@
 package no.nav.familie.ef.proxy.sigrun
 
 data class PensjonsgivendeInntektRequest(
-    val personidentifikator: String,
-    val inntektsaar: Int,
+    val personident: String,
+    val inntektsaar: String,
     val rettighetspakke: String = "navEnsligForsoerger",
 )
 
 data class SummertSkattegrunnlagRequest(
-    val personidentifikator: String,
-    val inntektsaar: Int,
+    val personident: String,
+    val inntektsaar: String,
     val inntektsfilter: String = "SummertSkattegrunnlagEnsligForsorger",
 )
