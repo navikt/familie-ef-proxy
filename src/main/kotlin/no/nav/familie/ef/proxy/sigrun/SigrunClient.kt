@@ -19,17 +19,21 @@ class SigrunClient(
         personIdent: String,
         inntektsår: Int,
     ): Map<String, Any> {
-        val uriComponentsBuilder = UriComponentsBuilder.fromUri(uri).pathSegment("v1/pensjonsgivendeinntektforfolketrygden")
+        val url =
+            UriComponentsBuilder
+                .fromUri(uri)
+                .pathSegment("api", "v1", "pensjonsgivendeinntektforfolketrygden")
+                .build()
+                .toUri()
 
-        val headers = HttpHeaders()
-        headers.set("Nav-Personident", personIdent)
-        // Kan fjerne norskident når pensjonsgivende inntekt er tilgjengelig i Dolly og dermed ikke trenger å gå mot stub-endepunktet
-        headers.set("norskident", personIdent)
-        headers.set("inntektsaar", inntektsår.toString())
-        headers.set("rettighetspakke", "navEnsligForsoerger")
+        val request =
+            PensjonsgivendeInntektRequest(
+                personIdent = personIdent,
+                inntektsår = inntektsår,
+            )
 
         return try {
-            getForEntity(uriComponentsBuilder.build().toUri(), headers)
+            postForEntity(url, request)
         } catch (e: HttpClientErrorException.NotFound) {
             secureLogger.warn(e.message)
             emptyMap()
@@ -63,18 +67,21 @@ class SigrunClient(
         personIdent: String,
         inntektsår: Int,
     ): List<Map<String, Any>> {
-        val uriComponentsBuilder =
+        val url =
             UriComponentsBuilder
                 .fromUri(uri)
-                .pathSegment("v1/summertskattegrunnlag")
-                .queryParam("inntektsaar", inntektsår)
-                .queryParam("inntektsfilter", "SummertSkattegrunnlagEnsligForsorger")
+                .pathSegment("api", "v2", "summertskattegrunnlag")
+                .build()
+                .toUri()
 
-        val headers = HttpHeaders()
-        headers.set("x-naturligident", personIdent)
+        val request =
+            SummertSkattegrunnlagRequest(
+                personIdent = personIdent,
+                inntektsår = inntektsår,
+            )
 
         return try {
-            getForEntity(uriComponentsBuilder.build().toUri(), headers)
+            postForEntity(url, request)
         } catch (e: HttpClientErrorException.NotFound) {
             secureLogger.warn(e.message)
             emptyList()
