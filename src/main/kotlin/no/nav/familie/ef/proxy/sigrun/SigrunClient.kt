@@ -22,7 +22,7 @@ class SigrunClient(
         val url =
             UriComponentsBuilder
                 .fromUri(uri)
-                .pathSegment("api", "v1", "pensjonsgivendeinntektforfolketrygden")
+                .pathSegment("v1", "pensjonsgivendeinntektforfolketrygden")
                 .build()
                 .toUri()
 
@@ -70,7 +70,7 @@ class SigrunClient(
         val url =
             UriComponentsBuilder
                 .fromUri(uri)
-                .pathSegment("api", "v2", "summertskattegrunnlag")
+                .pathSegment("v2", "summertskattegrunnlag")
                 .build()
                 .toUri()
 
