@@ -32,10 +32,7 @@ class SigrunClient(
             )
 
         return try {
-            // TODO: Fjern
-            val response: Map<String, Any> = postForEntity(url, request)
-            secureLogger.info("Sigrun pensjonsgivende inntekt response: $response")
-            response
+            postForEntity(url, request)
         } catch (e: HttpClientErrorException.NotFound) {
             secureLogger.warn(e.message)
             emptyMap()
