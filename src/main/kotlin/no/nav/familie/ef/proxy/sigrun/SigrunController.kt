@@ -31,24 +31,4 @@ class SigrunController(
             personIdent.ident,
             inntektsår ?: (YearMonth.now().year - 1),
         )
-
-    @PostMapping("/beregnetskatt")
-    fun hentBeregnetSkatt(
-        @RequestBody personIdent: PersonIdent,
-        @RequestParam("inntektsaar", required = false) inntektsår: Int?,
-    ): List<Map<String, Any>> =
-        sigrunClient.hentBeregnetSkatt(
-            personIdent = personIdent.ident,
-            inntektsår = inntektsår ?: (YearMonth.now().year - 1),
-        )
-
-    @PostMapping("/summertskattegrunnlag")
-    fun hentSummertSkattegrunnlag(
-        @RequestBody personIdent: PersonIdent,
-        @RequestParam("inntektsaar", required = false) inntektsår: Int?,
-    ): List<Map<String, Any>> =
-        sigrunClient.hentSummertSkattegrunnlag(
-            personIdent = personIdent.ident,
-            inntektsår = inntektsår ?: (YearMonth.now().year - 1),
-        )
 }

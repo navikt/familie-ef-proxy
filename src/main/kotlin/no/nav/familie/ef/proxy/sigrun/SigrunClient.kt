@@ -3,7 +3,6 @@ package no.nav.familie.ef.proxy.sigrun
 import no.nav.familie.http.client.AbstractRestClient
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Component
 import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.client.RestOperations
@@ -19,65 +18,30 @@ class SigrunClient(
         personIdent: String,
         inntektsår: Int,
     ): Map<String, Any> {
-        val uriComponentsBuilder = UriComponentsBuilder.fromUri(uri).pathSegment("v1/pensjonsgivendeinntektforfolketrygden")
+        val url =
+            UriComponentsBuilder
+                .fromUri(uri)
+                .pathSegment("v1", "pensjonsgivendeinntektforfolketrygden")
+                .build()
+                .toUri()
 
-        val headers = HttpHeaders()
-        headers.set("Nav-Personident", personIdent)
-        // Kan fjerne norskident når pensjonsgivende inntekt er tilgjengelig i Dolly og dermed ikke trenger å gå mot stub-endepunktet
-        headers.set("norskident", personIdent)
-        headers.set("inntektsaar", inntektsår.toString())
-        headers.set("rettighetspakke", "navEnsligForsoerger")
+        val request =
+            PensjonsgivendeInntektRequest(
+                personident = personIdent,
+                inntektsaar = inntektsår.toString(),
+            )
 
         return try {
-            getForEntity(uriComponentsBuilder.build().toUri(), headers)
+            postForEntity(url, request)
         } catch (e: HttpClientErrorException.NotFound) {
             secureLogger.warn(e.message)
             emptyMap()
         }
     }
-
-    fun hentBeregnetSkatt(
-        personIdent: String,
-        inntektsår: Int,
-    ): List<Map<String, Any>> {
-        val uriComponentsBuilder =
-            UriComponentsBuilder
-                .fromUri(uri)
-                .pathSegment("beregnetskatt")
-                .queryParam("inntektsaar", inntektsår)
-
-        val headers = HttpHeaders()
-        headers.set("x-filter", "BeregnetSkattPensjonsgivendeInntekt")
-        headers.set("x-naturligident", personIdent)
-        headers.set("x-inntektsaar", inntektsår.toString())
-
-        return try {
-            getForEntity(uriComponentsBuilder.build().toUri(), headers)
-        } catch (e: HttpClientErrorException.NotFound) {
-            secureLogger.warn(e.message)
-            emptyList()
-        }
-    }
-
-    fun hentSummertSkattegrunnlag(
-        personIdent: String,
-        inntektsår: Int,
-    ): List<Map<String, Any>> {
-        val uriComponentsBuilder =
-            UriComponentsBuilder
-                .fromUri(uri)
-                .pathSegment("v1/summertskattegrunnlag")
-                .queryParam("inntektsaar", inntektsår)
-                .queryParam("inntektsfilter", "SummertSkattegrunnlagEnsligForsorger")
-
-        val headers = HttpHeaders()
-        headers.set("x-naturligident", personIdent)
-
-        return try {
-            getForEntity(uriComponentsBuilder.build().toUri(), headers)
-        } catch (e: HttpClientErrorException.NotFound) {
-            secureLogger.warn(e.message)
-            emptyList()
-        }
-    }
 }
+
+data class PensjonsgivendeInntektRequest(
+    val personident: String,
+    val inntektsaar: String,
+    val rettighetspakke: String = "navEnsligForsoerger",
+)
