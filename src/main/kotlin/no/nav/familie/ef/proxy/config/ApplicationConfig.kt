@@ -1,18 +1,15 @@
 package no.nav.familie.ef.proxy.config
 
-import com.fasterxml.jackson.module.kotlin.KotlinModule
-import no.nav.familie.http.client.RetryOAuth2HttpClient
-import no.nav.familie.http.config.NaisProxyCustomizer
-import no.nav.familie.http.config.RestTemplateAzure
-import no.nav.familie.http.config.RestTemplateSts
-import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor
-import no.nav.familie.http.interceptor.InternLoggerInterceptor
-import no.nav.familie.http.interceptor.MdcValuesPropagatingClientInterceptor
-import no.nav.familie.http.sts.StsRestClient
-import no.nav.familie.kontrakter.felles.objectMapper
+import no.nav.familie.kontrakter.felles.jsonMapper
 import no.nav.familie.log.NavSystemtype
 import no.nav.familie.log.filter.LogFilter
 import no.nav.familie.log.filter.RequestTimeFilter
+import no.nav.familie.restklient.client.RetryOAuth2HttpClient
+import no.nav.familie.restklient.config.NaisProxyCustomizer
+import no.nav.familie.restklient.config.RestTemplateAzure
+import no.nav.familie.restklient.interceptor.ConsumerIdClientInterceptor
+import no.nav.familie.restklient.interceptor.MdcValuesPropagatingClientInterceptor
+import no.nav.familie.restklient.sts.StsRestClient
 import no.nav.security.token.support.client.core.http.OAuth2HttpClient
 import no.nav.security.token.support.client.spring.oauth2.EnableOAuth2Client
 import no.nav.security.token.support.spring.api.EnableJwtTokenValidation
@@ -25,7 +22,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Primary
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter
 import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.RestOperations
@@ -44,11 +41,8 @@ class ApplicationConfig {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     @Bean
-    fun kotlinModule(): KotlinModule = KotlinModule.Builder().build()
-
-    @Bean
     @Primary
-    fun objectMapper() = objectMapper
+    fun jsonMapper() = jsonMapper
 
     @Bean
     fun logFilter(): FilterRegistrationBean<LogFilter> {
@@ -70,12 +64,10 @@ class ApplicationConfig {
     fun restOperations(
         restTemplateBuilder: RestTemplateBuilder,
         consumerIdClientInterceptor: ConsumerIdClientInterceptor,
-        internLoggerInterceptor: InternLoggerInterceptor,
     ): RestOperations =
         restTemplateBuilder
-            .additionalMessageConverters(
-                listOf(MappingJackson2HttpMessageConverter(objectMapper)) + RestTemplate().messageConverters,
-            ).additionalInterceptors(
+            .additionalMessageConverters(listOf(JacksonJsonHttpMessageConverter(jsonMapper)) + RestTemplate().messageConverters)
+            .additionalInterceptors(
                 consumerIdClientInterceptor,
                 MdcValuesPropagatingClientInterceptor(),
             ).build()
@@ -87,9 +79,8 @@ class ApplicationConfig {
             RestClient.create(
                 RestTemplateBuilder()
                     .additionalCustomizers(NaisProxyCustomizer(2_000, 2_000, 4_000))
-                    .additionalMessageConverters(
-                        listOf(MappingJackson2HttpMessageConverter(objectMapper)) + RestTemplate().messageConverters,
-                    ).connectTimeout(Duration.of(2, ChronoUnit.SECONDS))
+                    .additionalMessageConverters(listOf(JacksonJsonHttpMessageConverter(jsonMapper)) + RestTemplate().messageConverters)
+                    .connectTimeout(Duration.of(2, ChronoUnit.SECONDS))
                     .readTimeout(Duration.of(4, ChronoUnit.SECONDS))
                     .build(),
             ),
