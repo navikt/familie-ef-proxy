@@ -79,7 +79,6 @@ class ApplicationConfig {
             RestClient.create(
                 RestTemplateBuilder()
                     .additionalCustomizers(NaisProxyCustomizer(2_000, 2_000, 4_000))
-                    .additionalMessageConverters(listOf(JacksonJsonHttpMessageConverter(jsonMapper)) + RestTemplate().messageConverters)
                     .connectTimeout(Duration.of(2, ChronoUnit.SECONDS))
                     .readTimeout(Duration.of(4, ChronoUnit.SECONDS))
                     .build(),
