@@ -30,13 +30,13 @@
         <kotlin.version>2.2.21</kotlin.version>
         <springdoc.version>2.8.14</springdoc.version>
         <mockk.version>1.14.6</mockk.version>
-        <felles.version>4.20251203153147_ca40cc5</felles.version>
+        <felles.version>4.20260205114838_3a4c3dc</felles.version>
         <start-class>no.nav.familie.ef.proxy.ApplicationKt</start-class>
 
         <nav.security.version>6.0.1</nav.security.version> <!-- Denne burde være samme versjon som i felles -->
 
 
-        <kontrakter.version>3.0_20260105094547_ba7be0b</kontrakter.version>
+        <kontrakter.version>4.0_20260204122732_558ee1d</kontrakter.version>
     </properties>
 
     <dependencies>
@@ -109,7 +109,7 @@
         </dependency>
         <dependency>
             <groupId>no.nav.familie.felles</groupId>
-            <artifactId>http-client</artifactId>
+            <artifactId>rest-klient</artifactId>
             <version>${felles.version}</version>
         </dependency>
         <dependency>

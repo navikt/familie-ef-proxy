@@ -1,14 +1,14 @@
 package no.nav.familie.ef.proxy.config
 
-import no.nav.familie.http.config.RestTemplateBuilderBean
-import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor
-import no.nav.familie.http.interceptor.MdcValuesPropagatingClientInterceptor
-import no.nav.familie.kontrakter.felles.objectMapper
+import no.nav.familie.kontrakter.felles.jsonMapper
+import no.nav.familie.restklient.config.RestTemplateBuilderBean
+import no.nav.familie.restklient.interceptor.ConsumerIdClientInterceptor
+import no.nav.familie.restklient.interceptor.MdcValuesPropagatingClientInterceptor
 import org.springframework.boot.restclient.RestTemplateBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter
 import org.springframework.web.client.RestOperations
 import org.springframework.web.client.RestTemplate
 
@@ -23,7 +23,7 @@ class RestTemplateSts {
     ): RestOperations =
         restTemplateBuilder
             .additionalMessageConverters(
-                listOf(MappingJackson2HttpMessageConverter(objectMapper)) + RestTemplate().messageConverters,
+                listOf(JacksonJsonHttpMessageConverter(jsonMapper)) + RestTemplate().messageConverters,
             ).additionalInterceptors(
                 consumerIdClientInterceptor,
                 MdcValuesPropagatingClientInterceptor(),
