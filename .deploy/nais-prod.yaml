@@ -27,7 +27,7 @@ spec:
       memory: 512Mi
     requests:
       memory: 512Mi
-      cpu: 5m
+      cpu: 50m
   ingresses:
     - https://familie-ef-proxy.intern.nav.no
     - https://familie-ef-proxy.prod-fss-pub.nais.io
