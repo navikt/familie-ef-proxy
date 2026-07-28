@@ -52,13 +52,13 @@ jobs:
         uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb # ratchet:nais/deploy/actions/deploy@v2
         env:
           CLUSTER: dev-fss
-          RESOURCE: .deploy/nais-dev.yaml
+          RESOURCE: .nais/nais-dev.yaml
           IMAGE: ${{ needs.build.outputs.image }}
       - name: Deploy til prod-fss
         uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb # ratchet:nais/deploy/actions/deploy@v2
         env:
           CLUSTER: prod-fss
-          RESOURCE: .deploy/nais-prod.yaml
+          RESOURCE: .nais/nais-prod.yaml
           IMAGE: ${{ needs.build.outputs.image }}
       - name: Post deploy failures to Slack
         if: failure()
