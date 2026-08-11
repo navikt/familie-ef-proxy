@@ -26,11 +26,11 @@ spec:
     limits:
       memory: 512Mi
     requests:
-      memory: 384Mi
-      cpu: 5m
+      memory: 512Mi
+      cpu: 50m
   ingresses:
-    - https://familie-ef-proxy.intern.nav.no
-    - https://familie-ef-proxy.prod-fss-pub.nais.io
+    - https://familie-ef-proxy.dev.intern.nav.no
+    - https://familie-ef-proxy.dev-fss-pub.nais.io
   azure:
     application:
       enabled: true
@@ -42,23 +42,26 @@ spec:
       rules:
         - application: familie-ef-sak
           namespace: teamfamilie
-          cluster: prod-gcp
+          cluster: dev-gcp
         - application: familie-klage
           namespace: teamfamilie
-          cluster: prod-gcp
+          cluster: dev-gcp
         - application: familie-ef-personhendelse
           namespace: teamfamilie
-          cluster: prod-gcp
+          cluster: dev-gcp
+        - application: familie-ef-sak-lokal
+          namespace: teamfamilie
+          cluster: dev-gcp
     outbound:
       rules:
         - application: sigrun
           namespace: team-inntekt
-          cluster: prod-fss
+          cluster: dev-fss
         - application: logging
           namespace: nais-system
   env:
     - name: SPRING_PROFILES_ACTIVE
-      value: prod
+      value: dev
   envFrom:
     - secret: familie-ef-proxy-serviceusers
   observability:
