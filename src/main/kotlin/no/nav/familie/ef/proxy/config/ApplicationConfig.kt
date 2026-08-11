@@ -4,12 +4,13 @@ import no.nav.familie.kontrakter.felles.jsonMapper
 import no.nav.familie.log.NavSystemtype
 import no.nav.familie.log.filter.LogFilter
 import no.nav.familie.log.filter.RequestTimeFilter
+import no.nav.familie.log.interceptor.ConsumerIdClientInterceptor
+import no.nav.familie.log.interceptor.MdcValuesPropagatingClientInterceptor
 import no.nav.familie.restklient.client.RetryOAuth2HttpClient
 import no.nav.familie.restklient.config.NaisProxyCustomizer
 import no.nav.familie.restklient.config.RestTemplateAzure
-import no.nav.familie.restklient.interceptor.ConsumerIdClientInterceptor
-import no.nav.familie.restklient.interceptor.MdcValuesPropagatingClientInterceptor
 import no.nav.familie.restklient.sts.StsRestClient
+import no.nav.familie.sikkerhet.context.FamilieFellesNavTokenSupportKonfigurasjon
 import no.nav.security.token.support.client.core.http.OAuth2HttpClient
 import no.nav.security.token.support.client.spring.oauth2.EnableOAuth2Client
 import no.nav.security.token.support.spring.api.EnableJwtTokenValidation
@@ -34,7 +35,7 @@ import java.time.temporal.ChronoUnit
 @ConfigurationPropertiesScan
 @ComponentScan("no.nav.familie.ef.proxy", "no.nav.familie.sikkerhet")
 @EnableJwtTokenValidation(ignore = ["org.springframework"])
-@Import(RestTemplateAzure::class, RestTemplateSts::class, StsRestClient::class)
+@Import(RestTemplateAzure::class, RestTemplateSts::class, StsRestClient::class, FamilieFellesNavTokenSupportKonfigurasjon::class)
 @EnableOAuth2Client(cacheEnabled = true)
 @EnableScheduling
 class ApplicationConfig {
