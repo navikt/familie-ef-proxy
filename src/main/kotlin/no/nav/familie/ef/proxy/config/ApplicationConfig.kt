@@ -33,7 +33,7 @@ import java.time.temporal.ChronoUnit
 @SpringBootConfiguration
 @ConfigurationPropertiesScan
 @ComponentScan("no.nav.familie.ef.proxy", "no.nav.familie.sikkerhet")
-@EnableJwtTokenValidation(ignore = ["org.springframework", "org.springdoc"])
+@EnableJwtTokenValidation(ignore = ["org.springframework"])
 @Import(RestTemplateAzure::class, RestTemplateSts::class, StsRestClient::class)
 @EnableOAuth2Client(cacheEnabled = true)
 @EnableScheduling
