@@ -35,7 +35,7 @@ import java.time.temporal.ChronoUnit
 @ConfigurationPropertiesScan
 @ComponentScan("no.nav.familie.ef.proxy", "no.nav.familie.sikkerhet")
 @EnableJwtTokenValidation(ignore = ["org.springframework"])
-@Import(RestTemplateAzure::class, RestTemplateSts::class, StsRestClient::class, FamilieFellesNavTokenSupportKonfigurasjon::class)
+@Import(RestTemplateAzure::class, StsRestClient::class, FamilieFellesNavTokenSupportKonfigurasjon::class)
 @EnableOAuth2Client(cacheEnabled = true)
 @EnableScheduling
 class ApplicationConfig {
