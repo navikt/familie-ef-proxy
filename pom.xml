@@ -30,10 +30,10 @@
         <kotlin.version>2.4.10</kotlin.version>
         <springdoc.version>3.1.0</springdoc.version>
         <mockk.version>1.14.11</mockk.version>
-        <felles.version>4.20260807140555_998c828</felles.version>
+        <felles.version>4.20260809152656_dbeaaee</felles.version>
         <start-class>no.nav.familie.ef.proxy.ApplicationKt</start-class>
-        <nav.security.version>6.0.11</nav.security.version> <!-- Denne burde være samme versjon som i felles -->
-        <kontrakter.version>4.0_20260730124851_08988e0</kontrakter.version>
+        <nav.security.version>6.0.12</nav.security.version> <!-- Denne burde være samme versjon som i felles -->
+        <kontrakter.version>4.0_20260810095031_5908ad3</kontrakter.version>
     </properties>
 
     <dependencies>
